@@ -3,6 +3,7 @@ package hi.hugboverkefni1;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 //Hermann Ingi - hih65@hi.is
+//Freydís Xuan - fxl1hi.is
 @SpringBootApplication
 public class HugboVerkefni1Application {
 
