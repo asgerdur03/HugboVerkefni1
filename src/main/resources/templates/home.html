@@ -2,141 +2,33 @@
 <html xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Task System</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" th:href="@{/css/look.css}">
+    <title>Note System</title>
 </head>
 <body>
-
-
-
-
-    <div class="navbar">
-
-        <a href="/settings">Stillingar</a>
-
-        <a class="active" href="/">Heim</a>
-
-        <a href="/logout" class="split">Logout</a>
-
-
-    </div>
-
-
-   <h1><span>Velkominn, <span th:text="${loggedInUser.username}"></span>!</span></h1>
-
-    <!-- Birtir profile mynd user, bein vitnun var ekki að virka með thymeleaf þannig þetta er lengri workaround með  -->
-    <span id="profilePicturePath" th:text="${loggedInUser.profilePicture}" style="display: none;"></span>
-    <img id="profilePicture" alt="Profile Picture" width="100" height="100"/>
-    <script>
-        const profilePicturePath = document.getElementById('profilePicturePath').textContent;
-
-        // Ef user ekki með mynd þá er beint í default
-        const imgElement = document.getElementById('profilePicture');
-        imgElement.src = profilePicturePath ? profilePicturePath : '/profilePics/default.png';
-    </script>
-
-
-
-<form action="/" method="get">
-    <label for="priority">Priority:</label>
-    <select id="priority" name="priority">
-        <option value="">All</option>
-        <option value="LOW">Low</option>
-        <option value="MEDIUM">Medium</option>
-        <option value="HIGH">High</option>
-    </select>
-
-    <label for="status">Status:</label>
-    <select id="status" name="status">
-        <option value="">All</option>
-        <option value="PENDING">Pending</option>
-        <option value="COMPLETED">Completed</option>
-        <option value="IN_PROGRESS">In progress</option>
-        <option value="CANCELLED">Cancelled</option>
-    </select>
-
-    <label for="startDate">Due Date (From):</label>
-    <input type="date" id="startDate" name="startDate">
-
-    <label for="endDate">Due Date (To):</label>
-    <input type="date" id="endDate" name="endDate">
-
-    <label for="favorites">Favorites:</label>
-    <select id="favorites" name="favorites">
-        <option value="">All</option>
-        <option value="true">Favorites</option>
-        <option value="false">Non-favorites</option>
-    </select>
-
-
-
-    <button type="submit">Filter</button>
-</form>
-
-    <div th:switch="${tasks}">
-    <h2 th:case="null">No Tasks yet!</h2>
+<div th:switch="${notes}">
+    <h2 th:case="null">No Notes yet!</h2>
     <div th:case="*">
         <h2>Notes</h2>
         <table>
             <thead>
             <tr>
-                <th>Task</th>
-                <th>Note</th>
-                <th>Status</th>
-                <th>Priority</th>
-                <th>Duedate</th>
-                <th>Delete/edit</th>
-                <th>Add to favorites</th>
-                <th>Archive</th>
+                <th>Content</th>
+                <th>Title</th>
+                <th>Delete</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="task : ${tasks}">
-                <td th:text="${task.taskName}"></td>
-                <td th:text="${task.taskNote}"></td>
-                <td th:text="${task.status}"></td>
-                <td th:text="${task.priority}"></td>
-                <td th:text="${task.dueDate}"></td>
-                <td>
-                    <a th:href="@{/delete/{id}(id=${task.id})}">Delete</a>
-                    <a th:href="@{/editTask/{id}(id=${task.id})}">Edit</a>
-
-                </td>
-                <td>
-                    <form th:action="@{/addToFavorites/{id}(id=${task.id})}" method="post" style="display:inline;">
-                        <button type="submit" th:if="${!task.favorite}">Add</button>
-                        <span th:if="${task.favorite}" style="color: green;">Favorite</span>
-                    </form>
-                    <form th:if="${task.favorite}" th:action="@{/removeFromFavorites/{id}(id=${task.id})}" method="post" style="display:inline;">
-                        <button type="submit">Remove</button>
-                    </form>
-
-                </td>
-                <td>
-                    <form th:action="@{'/archive/' + ${task.id}}" method="post">
-                        <button type="submit">Archive</button>
-                    </form>
-                </td>
-
+            <tr th:each="note : ${notes}">
+                <td th:text="${note.title}"></td>
+                <td><a th:href="@{/delete/{id}(id=${book.ID})}">Delete</a></td>
             </tr>
             </tbody>
         </table>
     </div>
-
-    <p><a href="/newTask">Add a new task</a></p>
-
-    <div th:if="${user != null}">
-        <p>User is logged in as: <span th:text="${user.username}"></span></p>
-        <a th:href="@{/update-username/{id}(id=${user.id})}">Update Username</a>
-    </div>
-
-
-    <a th:href="@{/archive}">Archived tasks</a>
-
-
+    <p><a href="/addnote">Add a new note</a></p>
 </div>
+
+
 
 
 </body>
