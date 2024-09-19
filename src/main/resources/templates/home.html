@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Note System</title>
+</head>
+<body>
+<div th:switch="${notes}">
+    <h2 th:case="null">No Notes yet!</h2>
+    <div th:case="*">
+        <h2>Notes</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Content</th>
+                <th>Title</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="note : ${notes}">
+                <td th:text="${note.title}"></td>
+                <td><a th:href="@{/delete/{id}(id=${book.ID})}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="/addnote">Add a new note</a></p>
+</div>
+
+
+
+
+</body>
+</html>
