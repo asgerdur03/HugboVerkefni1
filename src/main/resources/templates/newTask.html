@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>add new Task</title>
+</head>
+<body>
+<form action="#" th:action="@{/home/newTask}" th:object="${task}" method="post">
+
+    <div>
+        <label for="taskName">Task Name: </label>
+        <input type="text" id="taskName" th:field="*{taskName}" placeholder="Ente taskname" required>
+    </div>
+
+    <div>
+        <label for="taskNote" >addidtional notes: </label>
+        <input type="text" id="taskNote" th:field="*{taskNote}">
+    </div>
+
+    <input type="submit" value="Save task">
+</form>
+
+</body>
+</html>

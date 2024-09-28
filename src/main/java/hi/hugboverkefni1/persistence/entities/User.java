@@ -1,6 +1,6 @@
 package hi.hugboverkefni1.persistence.entities;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import org.springframework.scheduling.config.Task;
 import java.util.*;
 
@@ -8,15 +8,20 @@ import java.util.*;
 import java.awt.*;
 import java.util.List;
 
-// @Entity
+//@Entity
+//@Table(name="users")
 public class User {
 
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     private String username;
     private String password;
     private String gmail;
 
-    // private List<Task> tasks = new ArrayList<>();
+    //@(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    //List<Task> tasks = new ArrayList<>();
     //private List<Category> categories = new ArrayList<>();
 
     private String profilePicture; //url

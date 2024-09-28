@@ -1,12 +1,22 @@
 package hi.hugboverkefni1.persistence.entities;
 
 
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+
+
+
+//@Entity
+//@Table(name = "tasks")
 public class Task {
 
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     private String taskName;
     private String taskNote;
 
@@ -15,23 +25,27 @@ public class Task {
 
     private LocalDate dueDate;
 
-    private User user;
-    private Category category;
+
+    //private User user;
+    //private Category category;
 
 
     public Task() {
 
     }
 
-    public Task(long id, String taskName, String taskNote, TaskStatus status, TaskPriority priority, LocalDate dueDate, User user, Category category) {
-        this.id = id;
+    public Task(String taskName, String taskNote) {
+        this.taskName = taskName;
+        this.taskNote = taskNote;
+    }
+
+    public Task(String taskName, String taskNote, TaskStatus status, TaskPriority priority, LocalDate dueDate, User user, Category category) {
         this.taskName = taskName;
         this.taskNote = taskNote;
         this.status = status;
         this.priority = priority;
         this.dueDate = dueDate;
-        this.user = user;
-        this.category = category;
+
     }
 
     public long getId() {
@@ -82,19 +96,5 @@ public class Task {
         this.dueDate = dueDate;
     }
 
-    public User getUser() {
-        return user;
-    }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
 }

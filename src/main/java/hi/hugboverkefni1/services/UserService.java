@@ -9,7 +9,7 @@ public interface UserService {
     void deleteUser(User user);
 
     User loginUser(User user);
-    User signUpUser(User user);
+    User signUpUser(String username, String password, String email);
 
     Boolean validateInput(User user);
     Boolean userExists(User user);

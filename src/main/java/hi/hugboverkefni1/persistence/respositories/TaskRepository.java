@@ -1,4 +1,13 @@
 package hi.hugboverkefni1.persistence.respositories;
 
-public interface TaskRepository {
+import hi.hugboverkefni1.persistence.entities.Task;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface TaskRepository /*extends JpaRepository<Task, Long> */{
+
+
+
+
 }
