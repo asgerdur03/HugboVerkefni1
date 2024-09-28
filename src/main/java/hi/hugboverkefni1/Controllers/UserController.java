@@ -12,7 +12,18 @@ public class UserController {
         //busines logic
         //call a methodd in a service class
         // add some data to the model
-        return "home"; //leitar að html file clalled home
+        return "opening-page"; //leitar að html file clalled opening-page
     }
 
+    @RequestMapping("/signup")
+    public String signupPage() {
+        return "signup";
+    }
+
+
 }
+
+/*
+Create account Verify log-in POST
+Create account Update username PATCH
+ */
