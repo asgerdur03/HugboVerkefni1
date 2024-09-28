@@ -5,7 +5,24 @@
     <title>User page</title>
 </head>
 <body>
-    <p><a href="/login">Login</a></p>
+
+<form action="#" th:action="@{/}" th:object="${user}" method="post">
+
+    <div>
+        <label >username: </label>
+        <input type="text"required>
+    </div>
+
+    <div>
+        <label >password: </label>
+        <input type="text" required>
+    </div>
+
+    <input type="submit" value="Login">
+
+</form>
+
+
     <p><a href="/signup">Sign Up</a></p>
 </body>
 </html>
