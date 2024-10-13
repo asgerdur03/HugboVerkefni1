@@ -8,12 +8,12 @@ import java.util.*;
 import java.awt.*;
 import java.util.List;
 
-//@Entity
-//@Table(name="users")
+@Entity
+@Table(name="users")
 public class User {
 
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String username;
@@ -22,7 +22,9 @@ public class User {
 
     //@(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     //List<Task> tasks = new ArrayList<>();
-    //private List<Category> categories = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL , orphanRemoval = true )
+    List<Category> categories = new ArrayList<>();
 
     private String profilePicture; //url
 

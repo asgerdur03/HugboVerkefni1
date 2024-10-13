@@ -2,20 +2,23 @@
 <html xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>User page</title>
+    <title>Login page</title>
 </head>
 <body>
 
-<form action="#" th:action="@{/}" th:object="${user}" method="post">
+<h2> Login </h2>
+
+
+<form action="#" th:action="@{/}" method="post">
 
     <div>
         <label >username: </label>
-        <input type="text"required>
+        <input type="text" id="username" name="username" required>
     </div>
 
     <div>
         <label >password: </label>
-        <input type="text" required>
+        <input type="password"  id="password" name="password" required>
     </div>
 
     <input type="submit" value="Login">
@@ -23,6 +26,34 @@
 </form>
 
 
-    <p><a href="/signup">Sign Up</a></p>
+
+<div th:switch="${users}">
+    <h2 th:case="null">No users yet!</h2>
+    <div th:case="*">
+        <h2>Users</h2>
+        <p>For testing purposes only (And maybe for admin privaleges) </p>
+        <table>
+            <thead>
+            <tr>
+                <th>name</th>
+                <th>passsword</th>
+                <th>email</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.username}"></td>
+                <td th:text="${user.password}"></td>
+                <td th:text="${user.gmail}"></td>
+                <td><a th:href="@{/delete/{id}(id=${user.id})}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+
+<p><a href="/signup">signup</a></p>
 </body>
 </html>

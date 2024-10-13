@@ -9,87 +9,69 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImplementation implements UserService {
-    //private UserRepository userRepository;
+    UserRepository userRepository;
 
-    /*
     @Autowired
-    public UserServiceImplementation(UserRepository userRepository){
+    public UserServiceImplementation(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-    */
-    private List<User> userRepository =new ArrayList<User>();
-    private int id_counter=0;
 
-
-
-    @Autowired
-    public UserServiceImplementation() {
-        // mock data
-        userRepository.add(new User("john_doe", "password123", "john.doe@gmail.com"));
-        userRepository.add(new User("jane_smith", "securePass456", "jane.smith@gmail.com"));
-        userRepository.add(new User("alice_wonder", "wonderland2024", "alice.wonder@gmail.com"));
-        userRepository.add(new User("bob_builder", "builderStrong77", "bob.builder@gmail.com"));
-        userRepository.add(new User("charlie_brown", "peanuts42", "charlie.brown@gmail.com"));
-
-        for (User user : userRepository) {
-            user.setId(id_counter);
-            id_counter++;
-        }
-
+    @Override
+    public List<User> getUsers() {
+        return userRepository.findAll();
     }
 
     @Override
-    public User getUserByID(int id) {
-        for(User user:userRepository){
-            if(user.getId()==id){
-                return user;
-            }
-        }
-        return null;
+    public User findUserById(long id) {
+
+        return userRepository.findById(id);
     }
 
     @Override
-    public User saveUser(User user) {
-        userRepository.add(user);
-        return null;
+    public void saveUser(User user) {
+        userRepository.save(user);
+
     }
 
     @Override
     public void deleteUser(User user) {
-        userRepository.remove(user);
+        userRepository.delete(user);
+
     }
 
     @Override
-    public User loginUser(User user) {
-        if (userRepository.contains(user) && user.getPassword().equals(userRepository.get(0).getPassword())) {
-            System.out.println("logged in");
+    public User findUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public User validateUser(String username, String password) {
+        User user = userRepository.findByUsername(username);
+
+        if (user.getPassword().equals(password) && user != null) {
             return user;
         }
         return null;
     }
 
-    @Override
-    public User signUpUser(String username, String password, String email) {
-        userRepository.add(new User(username, password, email));
-        System.out.println("signed up");
-        return null;
-    }
 
-    @Override
-    public Boolean validateInput(User user) {
-        return null;
-    }
 
+
+    /*
     @Override
-    public Boolean userExists(User user) {
-        for (User user1 : userRepository) {
-            if(user1.getId()==user.getId()){
-                return true;
-            }
+    public void addNewUser(User user) {
+        Optional<User> userByGmail = userRepository.findUserByGmail(user.getGmail());
+        if(userByGmail.isPresent()){
+            throw new IllegalStateException("User with Gmail address " + user.getGmail() + " already exists");
         }
-        return false;
-    }
+        System.out.println(user);
+        userRepository.save(user);
+    }*/
+
+
+
 }

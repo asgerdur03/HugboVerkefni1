@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>add new Task</title>
+</head>
+<body>
+<form action="#" th:action="@{/home/editTask/{id}}" th:object="${task}" method="post">
+
+  <!-- Hidden ID Field -->
+  <input type="hidden" th:field="*{id}"/>
+
+  <!-- Hidden _method field to simulate PATCH request -->
+  <input type="hidden" name="_method" value="PATCH" />
+
+  <div>
+    <label for="taskName">Task Name: </label>
+    <input type="text" id="taskName" th:field="*{taskName}" placeholder="Ente taskname" required>
+  </div>
+
+  <div>
+    <label for="taskNote" >addidtional notes: </label>
+    <textarea id="taskNote" th:field="*{taskNote}"></textarea>
+  </div>
+
+  <div>
+    <label for="status">Task Status:</label>
+    <select id="status" th:field="*{status}">
+      <option th:each="status : ${taskStatuses}" th:value="${status}" th:text="${status}"></option>
+    </select>
+  </div>
+  <div>
+    <label for="priority">Task Priority:</label>
+    <select id="priority" th:field="*{priority}">
+      <option th:each="priority : ${taskPriorities}" th:value="${priority}" th:text="${priority}"></option>
+    </select>
+  </div>
+
+  <div>
+    <label for="dueDate">Due Date:</label>
+    <input type="date" id="dueDate" th:field="*{dueDate}">
+  </div>
+
+  <input type="submit" value="Save changes">
+</form>
+
+</body>
+</html>

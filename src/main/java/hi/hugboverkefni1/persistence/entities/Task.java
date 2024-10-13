@@ -9,25 +9,25 @@ import java.time.LocalDateTime;
 
 
 
-//@Entity
-//@Table(name = "tasks")
+@Entity
+@Table(name = "tasks")
 public class Task {
 
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String taskName;
     private String taskNote;
+
 
     private TaskStatus status;
     private TaskPriority priority;
 
     private LocalDate dueDate;
 
-
-    //private User user;
-    //private Category category;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Category category;
 
 
     public Task() {
@@ -45,6 +45,7 @@ public class Task {
         this.status = status;
         this.priority = priority;
         this.dueDate = dueDate;
+        this.category = category;
 
     }
 
@@ -95,6 +96,7 @@ public class Task {
     public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
+
 
 
 }
