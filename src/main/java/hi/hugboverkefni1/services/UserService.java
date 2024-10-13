@@ -9,5 +9,9 @@ public interface UserService {
     User findUserById(long id);
     void saveUser(User user);
     void deleteUser(User user);
+    User findUsername(String username);
+
+    User validateUser(String username, String password);
+
 
 }

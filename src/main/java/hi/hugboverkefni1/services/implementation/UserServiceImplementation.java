@@ -43,6 +43,23 @@ public class UserServiceImplementation implements UserService {
 
     }
 
+    @Override
+    public User findUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public User validateUser(String username, String password) {
+        User user = userRepository.findByUsername(username);
+
+        if (user.getPassword().equals(password) && user != null) {
+            return user;
+        }
+        return null;
+    }
+
+
+
 
     /*
     @Override

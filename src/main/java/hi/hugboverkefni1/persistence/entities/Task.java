@@ -26,9 +26,6 @@ public class Task {
     private LocalDate dueDate;
 
 
-    //private User user;
-    //private Category category;
-
 
     public Task() {
 
