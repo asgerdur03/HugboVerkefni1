@@ -6,6 +6,7 @@
 </head>
 <body>
 
+<h2> Login </h2>
 <form action="#" th:action="@{/}" th:object="${user}" method="post">
 
     <div>
@@ -23,6 +24,33 @@
 </form>
 
 
-    <p><a href="/signup">Sign Up</a></p>
+
+<div th:switch="${users}">
+    <h2 th:case="null">No users yet!</h2>
+    <div th:case="*">
+        <h2>Users</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>name</th>
+                <th>passsword</th>
+                <th>email</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.username}"></td>
+                <td th:text="${user.password}"></td>
+                <td th:text="${user.gmail}"></td>
+                <td><a th:href="@{/delete/{id}(id=${user.id})}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+
+<p><a href="/signup">signup</a></p>
 </body>
 </html>
