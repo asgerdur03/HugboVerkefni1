@@ -1,32 +1,19 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="https://thymeleaf.org">
 <head>
-  <title>Task List</title>
+  <meta charset="UTF-8">
+  <title>testpage</title>
 </head>
 <body>
-<ul id="taskList">
-  <li th:each="task : ${tasks}">
-    <input type="checkbox" class="task-checkbox" th:data-task-name="${task.taskName}"/>
-    <span th:text="${task.taskName}"></span>
-  </li>
-</ul>
+<h1>Test page to redirect to</h1>
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    // Select all checkboxes with the class 'task-checkbox'
-    const checkboxes = document.querySelectorAll('.task-checkbox');
+<p>Username: <span th:text="${name}"></span></p>
+<p>Gmail: <span th:text="${gmail}"></span></p>
 
-    // Loop through each checkbox and add an event listener
-    checkboxes.forEach(checkbox => {
-      checkbox.addEventListener('change', (event) => {
-        if (event.target.checked) {
-          // Get the task name from the data attribute
-          const taskName = event.target.getAttribute('data-task-name');
-          alert(`${taskName} checkbox is checked`);
-        }
-      });
-    });
-  });
-</script>
+
+<p><a href="/home">Task page</a></p>
+<p><a href="/">login page</a></p>
+
+
 </body>
 </html>

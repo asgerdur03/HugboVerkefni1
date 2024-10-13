@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,15 +23,18 @@ public class UserController {
     }
 
 
-    // Wep opening page, opens to login and signup screen
+    // Wep opening page, opens to login  and a link to signup screen
     @RequestMapping("/")
     public String home(Model model) {
         List<User> allUsers = userService.getUsers();
         model.addAttribute("users", allUsers);
+
+        model.addAttribute("loginUser", new User());
         return "opening-page";
     }
 
-    @RequestMapping("/signup")
+    // Add user from signup form
+    @RequestMapping(value ="/signup", method = RequestMethod.GET)
     public String signup(Model model) {
         model.addAttribute("user", new User());
         return "signup";
@@ -47,10 +47,14 @@ public class UserController {
         if(result.hasErrors()) {
             return "opening-page";
         }
-        userService.saveUser(user);
+        User exists = userService.findUsername(user.getUsername());
+        if(exists == null) {
+            userService.saveUser(user);
+        }
         return "redirect:/";
     }
 
+    // Deletes user (modify to delete account?)
     @RequestMapping(value="/delete/{id}")
     public String deleteUser(@PathVariable("id") long id, Model model) {
         User userToDelete = userService.findUserById(id);
@@ -58,16 +62,10 @@ public class UserController {
         return "redirect:/";
     }
 
-
-
-
-
-
-
+    // Handle login submission from the root URL
+    @RequestMapping("/user")
+    public String login(){
+        return "testpage";
+    }
 
 }
-
-/*
-Create account Verify log-in POST
-Create account Update username PATCH
- */
