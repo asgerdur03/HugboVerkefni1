@@ -8,12 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class TaskController {
@@ -26,11 +25,31 @@ public class TaskController {
     }
 
     //home page, adds all tasks to page
+    // filters
     @RequestMapping("/home")
-    public String home(Model model) {
+    public String home(@RequestParam(required = false) String priority,
+                       @RequestParam(required = false) String status,
+                       @RequestParam(required = false) String startDate,
+                       @RequestParam(required = false) String endDate,
+                       Model model) {
 
-        List<Task> allTasks = taskService.findAllTasks();
-        model.addAttribute("tasks", allTasks);
+        List<Task> tasks = taskService.findAllTasks();
+        model.addAttribute("statuses", TaskStatus.values());
+        // Apply filters
+        if (priority != null && !priority.isEmpty()) {
+            tasks = tasks.stream().filter(task -> task.getPriority().toString().equals(priority)).collect(Collectors.toList());
+        }
+        if (status != null && !status.isEmpty()) {
+            tasks = tasks.stream().filter(task -> task.getStatus().toString().equals(status)).collect(Collectors.toList());
+        }
+        if (startDate != null && endDate != null && !startDate.isEmpty() && !endDate.isEmpty()) {
+            LocalDate start = LocalDate.parse(startDate);
+            LocalDate end = LocalDate.parse(endDate);
+            tasks = tasks.stream().filter(task -> task.getDueDate().isAfter(start) && task.getDueDate().isBefore(end)).collect(Collectors.toList());
+        }
+
+
+        model.addAttribute("tasks", tasks);
         return "home";
     }
 
@@ -81,8 +100,27 @@ public class TaskController {
         return "redirect:/home";
     }
 
+    // edit task
+    @RequestMapping(value="/home/editTask/{id}", method = RequestMethod.GET)
+    public String editTaskForm(@PathVariable("id") long id, Model model) {
+        Task taskToEdit = taskService.findById(id);
 
+        model.addAttribute("task", taskToEdit);
+        model.addAttribute("taskStatuses", TaskStatus.values());
+        model.addAttribute("taskPriorities", TaskPriority.values());
+        return "edittask";
+    }
+
+    // update task
+    /*
+    not working currently
+     */
 
 
 
 }
+
+
+
+
+

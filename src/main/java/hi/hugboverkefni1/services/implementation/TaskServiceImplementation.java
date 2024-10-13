@@ -49,6 +49,11 @@ public class TaskServiceImplementation implements TaskService {
 
     }
 
+    public List<Task> findFilteredTasks(String priority, String status, LocalDate startDate, LocalDate endDate) {
+        return taskRepository.findFilteredTasks(priority, status, startDate, endDate);
+    }
+
+
 
 
 

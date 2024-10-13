@@ -5,6 +5,32 @@
     <title>Task System</title>
 </head>
 <body>
+<form action="/home" method="get">
+    <label for="priority">Priority:</label>
+    <select id="priority" name="priority">
+        <option value="">All</option>
+        <option value="LOW">Low</option>
+        <option value="MEDIUM">Medium</option>
+        <option value="HIGH">High</option>
+    </select>
+
+    <label for="status">Status:</label>
+    <select id="status" name="status">
+        <option value="">All</option>
+        <option value="PENDING">Pending</option>
+        <option value="COMPLETED">Completed</option>
+        <option value="IN_PROGRESS">In progress</option>
+        <option value="CANCELLED">Cancelled</option>
+    </select>
+
+    <label for="startDate">Due Date (From):</label>
+    <input type="date" id="startDate" name="startDate">
+
+    <label for="endDate">Due Date (To):</label>
+    <input type="date" id="endDate" name="endDate">
+
+    <button type="submit">Filter</button>
+</form>
 <div th:switch="${tasks}">
     <h2 th:case="null">No Tasks yet!</h2>
     <div th:case="*">
@@ -17,7 +43,8 @@
                 <th>Status</th>
                 <th>Priority</th>
                 <th>Duedate</th>
-                <th>Delete</th>
+                <th>Delete/edit</th>
+                <th>Add to favorites</th>
             </tr>
             </thead>
             <tbody>
@@ -27,16 +54,23 @@
                 <td th:text="${task.status}"></td>
                 <td th:text="${task.priority}"></td>
                 <td th:text="${task.dueDate}"></td>
-                <td><a th:href="@{/home/delete/{id}(id=${task.id})}">Delete</a></td>
+                <td>
+                    <a th:href="@{/home/delete/{id}(id=${task.id})}">Delete</a>
+                    <a th:href="@{/home/editTask/{id}(id=${task.id})}">Edit</a>
+
+                </td>
+                <td>
+                    <input type="checkbox" id="favorites" name="favorites" value="true">
+
+                </td>
+
             </tr>
             </tbody>
         </table>
     </div>
     <p><a href="/home/newTask">Add a new task</a></p>
+
 </div>
-
-
-
 
 </body>
 </html>
