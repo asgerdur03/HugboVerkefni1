@@ -6,6 +6,25 @@
 </head>
 <body>
     <p>Sign up page</p>
+    <form action="#" th:action="@{/}" th:object="${user}" method="post">
+
+        <div>
+            <label >username: </label>
+            <input type="text"required>
+        </div>
+        <div>
+            <label >email: </label>
+            <input type="text" required>
+        </div>
+
+        <div>
+            <label >password: </label>
+            <input type="text" required>
+        </div>
+
+        <input type="submit" value="Signup">
+
+    </form>
 
 </body>
 </html>

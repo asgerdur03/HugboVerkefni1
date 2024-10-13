@@ -9,12 +9,12 @@ import java.time.LocalDateTime;
 
 
 
-//@Entity
-//@Table(name = "tasks")
+@Entity
+@Table(name = "tasks")
 public class Task {
 
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String taskName;

@@ -1,18 +1,13 @@
 package hi.hugboverkefni1.services;
 
 import hi.hugboverkefni1.persistence.entities.User;
+import java.util.List;
 
 public interface UserService {
-    User getUserByID(int id);
 
-    User saveUser(User user);
+    List<User> getUsers();
+    User findUserById(int id);
+    void saveUser(User user);
     void deleteUser(User user);
-
-    User loginUser(User user);
-    User signUpUser(String username, String password, String email);
-
-    Boolean validateInput(User user);
-    Boolean userExists(User user);
-
 
 }

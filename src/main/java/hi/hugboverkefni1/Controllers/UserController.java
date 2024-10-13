@@ -1,11 +1,23 @@
 package hi.hugboverkefni1.Controllers;
 
 
+import hi.hugboverkefni1.persistence.entities.User;
+import hi.hugboverkefni1.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class UserController {
+
+    private final UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
 
     @RequestMapping("/")
     public String UserController() {
@@ -19,6 +31,7 @@ public class UserController {
     public String signupPage() {
         return "signup";
     }
+
 
 
 }
