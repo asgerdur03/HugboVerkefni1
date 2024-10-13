@@ -1,8 +1,16 @@
 package hi.hugboverkefni1.persistence.entities;
 
 import jakarta.persistence.*;
-
+import jakarta.persistence.CascadeType;
 import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.*;
+
+import java.util.*;
+
+
+import java.awt.*;
 import java.util.List;
 
 @Entity
@@ -18,14 +26,19 @@ public class Category {
 
     private String categoryName;
 
-    //@ManyToOne(fetch = FetchType.LAZY)
-   // private List<Task> tasks = new ArrayList<Task>();
-
+    @OneToMany(mappedBy = "category", cascade= CascadeType.ALL, orphanRemoval = true)
+    private List<Task> tasks = new ArrayList<Task>();
 
     public Category() {
     }
 
+    // to create category
     public Category(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public Category(User user, String categoryName) {
+        this.user = user;
         this.categoryName = categoryName;
     }
 

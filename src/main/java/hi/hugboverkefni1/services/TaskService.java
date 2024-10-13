@@ -13,8 +13,16 @@ public interface TaskService {
     //Task findByPriority( priority);
 
     List<Task> findAllTasks();
+
     Task findById(long id);
+
     Task save(Task task);
+
     void delete(Task task);
 
+    List<Task> findFilteredTasks(String priority, String status, LocalDate startDate, LocalDate endDate);
+
 }
+
+
+

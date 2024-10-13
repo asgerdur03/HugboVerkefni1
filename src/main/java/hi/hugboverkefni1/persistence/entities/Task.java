@@ -20,11 +20,14 @@ public class Task {
     private String taskName;
     private String taskNote;
 
+
     private TaskStatus status;
     private TaskPriority priority;
 
     private LocalDate dueDate;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Category category;
 
 
     public Task() {
@@ -42,6 +45,7 @@ public class Task {
         this.status = status;
         this.priority = priority;
         this.dueDate = dueDate;
+        this.category = category;
 
     }
 
@@ -92,6 +96,7 @@ public class Task {
     public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
+
 
 
 }
