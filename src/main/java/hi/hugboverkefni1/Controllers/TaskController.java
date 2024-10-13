@@ -23,6 +23,7 @@ public class TaskController {
         this.taskService = taskService;
     }
 
+    //home page
     @RequestMapping("/home")
     public String home(Model model) {
 

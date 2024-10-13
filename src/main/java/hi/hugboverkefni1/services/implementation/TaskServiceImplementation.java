@@ -35,7 +35,7 @@ public class TaskServiceImplementation implements TaskService {
 
     @Override
     public Task findById(long id) {
-        return null;
+        return taskRepository.findById(id);
     }
 
     @Override
@@ -50,63 +50,7 @@ public class TaskServiceImplementation implements TaskService {
     }
 
 
-    //standinn for database
 
-    /*
-    private List<Task> taskRepository = new ArrayList<Task>();
-    private int id_counter=0;
-
-    @Autowired
-    public TaskServiceImplementation() {
-        //random tasks
-        taskRepository.add(new Task("task1", "note1"));
-        taskRepository.add(new Task("task2", "note2"));
-        taskRepository.add(new Task("task3", "note3"));
-        taskRepository.add(new Task("task4", "note4"));
-
-        for(Task task : taskRepository) {
-            task.setId(id_counter);
-            id_counter++;
-        }
-
-    }
-
-    @Override
-    public Task findByTitle(String taskname) {
-        for(Task task : taskRepository) {
-            if(task.getTaskName().equals(taskname)) {
-                return task;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public List<Task> findAllTasks() {
-        return taskRepository;
-    }
-
-    @Override
-    public Task findById(long id) {
-        for(Task task : taskRepository) {
-            if(task.getId() == id) {
-                return task;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public Task save(Task task) {
-        taskRepository.add(task);
-        return null;
-    }
-
-    @Override
-    public void delete(Task task) {
-        taskRepository.remove(task);
-
-    }*/
 
 
 }
