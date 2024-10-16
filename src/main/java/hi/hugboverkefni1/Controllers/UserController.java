@@ -7,6 +7,7 @@ import hi.hugboverkefni1.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -67,5 +68,21 @@ public class UserController {
     public String login(){
         return "testpage";
     }
+
+    @RequestMapping(value="/opening-page", method = RequestMethod.POST)
+    public String home(ModelMap model, @RequestParam String username, @RequestParam String password) {
+      boolean isValidUser = userService.validateUser(username, password);
+
+      if(!isValidUser) {
+          model.put("Error message", "Access Denied , Invalid Credentials");
+                  return "opening-page";
+      }
+      model.put("username", username);
+      model.put("password", password);
+
+      return "home";
+
+    }
+
 
 }
