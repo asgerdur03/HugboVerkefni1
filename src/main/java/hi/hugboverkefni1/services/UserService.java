@@ -12,7 +12,6 @@ public interface UserService {
     void saveUser(User user);
     void deleteUser(User user);
     User findUsername(String username);
-
     boolean validateUser(String username, String password);
 
 

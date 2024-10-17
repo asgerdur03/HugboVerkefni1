@@ -45,29 +45,11 @@ public class UserServiceImplementation implements UserService {
         userRepository.delete(user);
 
     }
-/*
-    @Override
-    public User findUsername(String username) {
-        return userRepository.findByUsername(username);
-    } */
+
     /*
-
-    @Override
-    public User validateUser(String username, String password) {
-        User user = userRepository.findByUsername(username);
-
-        if (user.getPassword().equals(password) && user != null) {
-            return user;
-        }
-        return null;
-    }*/
-
-    /* validate user boolean í vinnslu'/
-
-     */ /*
-    public boolean validateUser(String username, String password){
-        return username.equalsIgnoreCase("admin") && password.equalsIgnoreCase("password");
-    }  Version 2 , virkar ekki*/
+    *Validates user by checking if the username exists and if the password matches the username
+    * returns true if both conditions are met otherwise false.
+    */
 
     @Override
     public boolean validateUser(String username, String password) {
@@ -87,18 +69,6 @@ public class UserServiceImplementation implements UserService {
             return false;
         }
     }
-
-
-    /*
-    @Override
-    public void addNewUser(User user) {
-        Optional<User> userByGmail = userRepository.findUserByGmail(user.getGmail());
-        if(userByGmail.isPresent()){
-            throw new IllegalStateException("User with Gmail address " + user.getGmail() + " already exists");
-        }
-        System.out.println(user);
-        userRepository.save(user);
-    }*/
 
 
 

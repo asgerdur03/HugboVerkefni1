@@ -24,6 +24,8 @@ public class TaskController {
         this.taskService = taskService;
     }
 
+    // Tasks dont save to users account, need to add that.
+
     //home page, adds all tasks to page
     // filters
     @RequestMapping("/home")
