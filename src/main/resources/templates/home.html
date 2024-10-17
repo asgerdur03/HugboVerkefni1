@@ -70,7 +70,13 @@
     </div>
     <p><a href="/home/newTask">Add a new task</a></p>
 
+    <div th:if="${user != null}">
+        <p>User is logged in as: <span th:text="${user.username}"></span></p>
+        <a th:href="@{/update-username/{id}(id=${user.id})}">Update Username</a>
+    </div>
+
 </div>
+
 
 </body>
 </html>

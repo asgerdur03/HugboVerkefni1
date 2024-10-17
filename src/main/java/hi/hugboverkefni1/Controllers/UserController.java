@@ -75,9 +75,46 @@ public class UserController {
             model.put("users", allUsers);
             return "opening-page";
         }
+        // Connects username to login
+        User loggedInUser = userService.findUsername(username);
+        model.put("user", loggedInUser);
 
-        // If the login is successful, redirect to the home page
-        model.put("username", username);
         return "home";
+
+    }
+
+    // Show update username form
+    @GetMapping("/update-username/{id}")
+    public String showUpdateUsernameForm(@PathVariable("id") long id, Model model) {
+        User user = userService.findUserById(id);
+        if (user == null) {
+            model.addAttribute("errorMessage", "User not found");
+            return "redirect:/";
+        }
+        model.addAttribute("user", user);
+        return "update-username";
+    }
+
+    // Handle username update
+    @PostMapping("/update-username")
+    public String updateUsername(@RequestParam("id") long id, @RequestParam("newUsername") String newUsername, ModelMap model) {
+        User user = userService.findUserById(id);
+        if (user == null) {
+            model.put("errorMessage", "User not found");
+            return "redirect:/";
+        }
+
+        // Check if new username already exists
+        User existingUser = userService.findUsername(newUsername);
+        if (existingUser != null) {
+            model.put("errorMessage", "Username already exists");
+            return "update-username";
+        }
+
+        // Update username and save the user
+        user.setUsername(newUsername);
+        userService.saveUser(user);
+
+        return "redirect:/";  // Redirect back to home after successful update
     }
 }
