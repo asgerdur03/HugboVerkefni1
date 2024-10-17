@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/*
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
@@ -18,4 +19,21 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findByUsername(String username);
 
 
+} */
+
+
+import java.util.Optional;
+
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+
+
+    Optional<User> findByUsername(String username);
+    User save(User user);
+    void delete(User user);
+
+    List<User> findAll();
+    User findById(long id);
+
+    /*User findByUsername(String username);*/
 }
