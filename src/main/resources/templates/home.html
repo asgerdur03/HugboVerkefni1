@@ -29,6 +29,15 @@
     <label for="endDate">Due Date (To):</label>
     <input type="date" id="endDate" name="endDate">
 
+    <label for="favorites">Favorites:</label>
+    <select id="favorites" name="favorites">
+        <option value="">All</option>
+        <option value="true">Favorites</option>
+        <option value="false">Non-favorites</option>
+    </select>
+
+
+
     <button type="submit">Filter</button>
 </form>
 <div th:switch="${tasks}">
@@ -60,7 +69,13 @@
 
                 </td>
                 <td>
-                    <input type="checkbox" id="favorites" name="favorites" value="true">
+                    <form th:action="@{/home/addToFavorites/{id}(id=${task.id})}" method="post" style="display:inline;">
+                        <button type="submit" th:if="${!task.favorite}">Add</button>
+                        <span th:if="${task.favorite}" style="color: green;">Favorite</span>
+                    </form>
+                    <form th:if="${task.favorite}" th:action="@{/home/removeFromFavorites/{id}(id=${task.id})}" method="post" style="display:inline;">
+                        <button type="submit">Remove</button>
+                    </form>
 
                 </td>
 
@@ -75,7 +90,11 @@
         <a th:href="@{/update-username/{id}(id=${user.id})}">Update Username</a>
     </div>
 
+
+
+
 </div>
+
 
 
 </body>

@@ -24,6 +24,24 @@ public class TaskServiceImplementation implements TaskService {
     }
 
     @Override
+    public void addToFavorites(long id){
+        Task task = taskRepository.findById(id);
+        if(task != null){
+            task.setFavorite(true);
+            taskRepository.save(task);
+        }
+
+    }
+    @Override
+    public void removeFromFavorites(long id){
+        Task task = taskRepository.findById(id);
+        if(task != null){
+            task.setFavorite(false);
+            taskRepository.save(task);
+        }
+    }
+
+    @Override
     public Task findByTitle(String title) {
         return null;
     }

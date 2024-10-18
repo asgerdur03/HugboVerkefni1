@@ -92,7 +92,7 @@ public class UserController {
             return "redirect:/";
         }
         model.addAttribute("user", user);
-        return "update-username";
+        return "user-page";
     }
 
     // Handle username update
@@ -108,13 +108,13 @@ public class UserController {
         User existingUser = userService.findUsername(newUsername);
         if (existingUser != null) {
             model.put("errorMessage", "Username already exists");
-            return "update-username";
+            return "user-page";
         }
 
         // Update username and save the user
         user.setUsername(newUsername);
         userService.saveUser(user);
 
-        return "redirect:/";  // Redirect back to home after successful update
+        return "redirect:/home";  // Redirect back to home after successful update
     }
 }
