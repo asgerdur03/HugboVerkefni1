@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
+
 public class UserController {
 
     private final UserService userService;
@@ -92,7 +93,7 @@ public class UserController {
             return "redirect:/";
         }
         model.addAttribute("user", user);
-        return "user-page";
+        return "update-username";
     }
 
     // Handle username update
@@ -108,13 +109,17 @@ public class UserController {
         User existingUser = userService.findUsername(newUsername);
         if (existingUser != null) {
             model.put("errorMessage", "Username already exists");
-            return "user-page";
+            return "update-username";
         }
 
         // Update username and save the user
         user.setUsername(newUsername);
         userService.saveUser(user);
 
-        return "redirect:/home";  // Redirect back to home after successful update
+        return "redirect:/";  // Redirect back to home after successful update
     }
+
+
+
+
 }

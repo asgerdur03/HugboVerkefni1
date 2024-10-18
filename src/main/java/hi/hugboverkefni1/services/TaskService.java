@@ -25,6 +25,10 @@ public interface TaskService {
 
     List<Task> findFilteredTasks(String priority, String status, LocalDate startDate, LocalDate endDate);
 
+    List<Task> findActiveTasks();
+    List<Task> findArchivedTasks();
+    void archiveTask(long id);
+    void unarchiveTask(long id);
 }
 
 

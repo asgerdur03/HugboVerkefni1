@@ -32,6 +32,9 @@ public class Task {
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean favorite= false;
 
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean isArchived=false;
+
     public Task() {
 
     }
@@ -41,7 +44,7 @@ public class Task {
         this.taskNote = taskNote;
     }
 
-    public Task(String taskName, String taskNote, TaskStatus status, TaskPriority priority, LocalDate dueDate, User user, Category category, boolean favorite) {
+    public Task(String taskName, String taskNote, TaskStatus status, TaskPriority priority, LocalDate dueDate, User user, Category category, boolean favorite, boolean isArchived) {
         this.taskName = taskName;
         this.taskNote = taskNote;
         this.status = status;
@@ -49,8 +52,17 @@ public class Task {
         this.dueDate = dueDate;
         this.category = category;
         this.favorite = favorite;
+        this.isArchived = isArchived;
 
 
+    }
+
+    public boolean isArchived() {
+        return isArchived;
+    }
+
+    public void setArchived(boolean archived) {
+        isArchived = archived;
     }
 
     public long getId() {
