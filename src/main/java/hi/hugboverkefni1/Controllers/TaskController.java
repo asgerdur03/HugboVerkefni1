@@ -127,13 +127,13 @@ public class TaskController {
 
 
     // add task to favorites
-
     @PostMapping("/home/addToFavorites/{id}")
     public String addToFavorites(@PathVariable("id") long id, Model model) {
         taskService.addToFavorites(id);
         return "redirect:/home";
     }
 
+    // remove task from favorites
     @PostMapping("/home/removeFromFavorites/{id}")
     public String removeFromFavorites(@PathVariable("id") long id, Model model) {
         taskService.removeFromFavorites(id);
