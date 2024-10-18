@@ -39,14 +39,20 @@ public class UserController {
 
     // Add user to the database
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public String signup(User user, BindingResult result, Model model) {
+    public String signup(User user, BindingResult result, ModelMap model) {
         if (result.hasErrors()) {
             return "signup";
         }
         User exists = userService.findUsername(user.getUsername());
-        if (exists == null) {
-            userService.saveUser(user);
+
+        if (exists != null) {
+            model.put("errorMessage", "Username taken, pick new one");
+
+            System.out.println(exists.getUsername());
+            return "signup";
+
         }
+        userService.saveUser(user);
         return "redirect:/";
     }
 
