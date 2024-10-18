@@ -8,6 +8,11 @@
 
 <h2>Sign up</h2>
 
+<div th:if="${errorMessage != null}" style="color: #ff002f;">
+  <p th:text="${errorMessage}"></p>
+</div>
+
+
 <form action="#" th:action="@{/signup}" th:object="${user}" method="post">
 
   <div>
