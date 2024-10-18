@@ -54,6 +54,7 @@
                 <th>Duedate</th>
                 <th>Delete/edit</th>
                 <th>Add to favorites</th>
+                <th>Archive</th>
             </tr>
             </thead>
             <tbody>
@@ -78,6 +79,11 @@
                     </form>
 
                 </td>
+                <td>
+                    <form th:action="@{'/home/archive/' + ${task.id}}" method="post">
+                        <button type="submit">Archive</button>
+                    </form>
+                </td>
 
             </tr>
             </tbody>
@@ -91,6 +97,7 @@
     </div>
 
 
+    <a th:href="@{/home/archive}">Archived tasks</a>
 
 
 </div>

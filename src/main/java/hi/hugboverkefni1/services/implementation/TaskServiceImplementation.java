@@ -71,9 +71,33 @@ public class TaskServiceImplementation implements TaskService {
         return taskRepository.findFilteredTasks(priority, status, startDate, endDate);
     }
 
+    @Override
+    public List<Task> findActiveTasks() {
+        return taskRepository.findByIsArchivedIsFalse();
+    }
 
+    @Override
+    public List<Task> findArchivedTasks() {
+        return taskRepository.findByIsArchivedIsTrue();
+    }
 
+    @Override
+    public void archiveTask(long id) {
+        Task task = taskRepository.findById(id);
+        if(task != null){
+            task.setArchived(true);
+            taskRepository.save(task);
+        }
 
+    }
 
+    @Override
+    public void unarchiveTask(long id) {
+        Task task = taskRepository.findById(id);
+        if(task != null){
+            task.setArchived(false);
+            taskRepository.save(task);
+        }
 
+    }
 }

@@ -474,3 +474,18 @@ select t1_0.id,t1_0.category_id,t1_0.due_date,t1_0.favorite,t1_0.priority,t1_0.s
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
 	at java.base/java.lang.Thread.run(Thread.java:1570)
+2024-10-18 21:53:27.405041Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "alter table if exists tasks add column is_archived BOOLEAN [*]DEFUALT FALSE not null"; SQL statement:
+alter table if exists tasks add column is_archived BOOLEAN DEFUALT FALSE not null [42000-224]
+2024-10-18 21:54:09.699841Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "alter table if exists tasks add column is_archived BOOLEAN [*]DEFUALT FALSE not null"; SQL statement:
+alter table if exists tasks add column is_archived BOOLEAN DEFUALT FALSE not null [42000-224]
+2024-10-18 21:55:24.923643Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "alter table if exists tasks add column is_archived BOOLEAN [*]DEFUALT FALSE not null"; SQL statement:
+alter table if exists tasks add column is_archived BOOLEAN DEFUALT FALSE not null [42000-224]
+2024-10-18 21:59:00.258839Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "alter table if exists tasks add column is_archived BOOLEAN [*]DEFUALT FALSE not null"; SQL statement:
+alter table if exists tasks add column is_archived BOOLEAN DEFUALT FALSE not null [42000-224]
+2024-10-18 21:59:38.120247Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "alter table if exists tasks add column is_archived BOOLEAN [*]DEFUALT FALSE not null"; SQL statement:
+alter table if exists tasks add column is_archived BOOLEAN DEFUALT FALSE not null [42000-224]

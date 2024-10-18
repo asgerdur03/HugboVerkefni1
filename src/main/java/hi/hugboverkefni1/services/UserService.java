@@ -15,5 +15,6 @@ public interface UserService {
     boolean validateUser(String username, String password);
 
 
+    public User updateUser(User user);
 
 }
