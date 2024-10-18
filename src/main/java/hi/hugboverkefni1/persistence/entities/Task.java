@@ -29,6 +29,8 @@ public class Task {
     @ManyToOne(fetch = FetchType.LAZY)
     private Category category;
 
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean favorite= false;
 
     public Task() {
 
@@ -39,13 +41,15 @@ public class Task {
         this.taskNote = taskNote;
     }
 
-    public Task(String taskName, String taskNote, TaskStatus status, TaskPriority priority, LocalDate dueDate, User user, Category category) {
+    public Task(String taskName, String taskNote, TaskStatus status, TaskPriority priority, LocalDate dueDate, User user, Category category, boolean favorite) {
         this.taskName = taskName;
         this.taskNote = taskNote;
         this.status = status;
         this.priority = priority;
         this.dueDate = dueDate;
         this.category = category;
+        this.favorite = favorite;
+
 
     }
 
@@ -98,5 +102,11 @@ public class Task {
     }
 
 
+    public boolean isFavorite() {
+        return favorite;
+    }
 
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
+    }
 }

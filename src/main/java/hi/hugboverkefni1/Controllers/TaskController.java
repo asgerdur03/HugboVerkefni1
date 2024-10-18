@@ -33,6 +33,7 @@ public class TaskController {
                        @RequestParam(required = false) String status,
                        @RequestParam(required = false) String startDate,
                        @RequestParam(required = false) String endDate,
+                       @RequestParam(required = false) Boolean favorites,
                        Model model) {
 
         List<Task> tasks = taskService.findAllTasks();
@@ -48,6 +49,12 @@ public class TaskController {
             LocalDate start = LocalDate.parse(startDate);
             LocalDate end = LocalDate.parse(endDate);
             tasks = tasks.stream().filter(task -> task.getDueDate().isAfter(start) && task.getDueDate().isBefore(end)).collect(Collectors.toList());
+        }
+
+        if (favorites != null) {
+            tasks = tasks.stream()
+                    .filter(task -> task.isFavorite() == favorites)
+                    .collect(Collectors.toList());
         }
 
 
@@ -117,6 +124,22 @@ public class TaskController {
     /*
     not working currently
      */
+
+
+    // add task to favorites
+
+    @PostMapping("/home/addToFavorites/{id}")
+    public String addToFavorites(@PathVariable("id") long id, Model model) {
+        taskService.addToFavorites(id);
+        return "redirect:/home";
+    }
+
+    @PostMapping("/home/removeFromFavorites/{id}")
+    public String removeFromFavorites(@PathVariable("id") long id, Model model) {
+        taskService.removeFromFavorites(id);
+        return "redirect:/home";
+    }
+
 
 
 

@@ -20,6 +20,9 @@ public interface TaskService {
 
     void delete(Task task);
 
+    void addToFavorites(long id);
+    void removeFromFavorites(long id);
+
     List<Task> findFilteredTasks(String priority, String status, LocalDate startDate, LocalDate endDate);
 
 }
