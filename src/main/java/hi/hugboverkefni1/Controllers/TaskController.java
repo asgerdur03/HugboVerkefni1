@@ -114,6 +114,7 @@ public class TaskController {
     }
 
     // edit task
+    // edit the task attributes
     @RequestMapping(value="/home/editTask/{id}", method = RequestMethod.GET)
     public String editTaskForm(@PathVariable("id") long id, Model model) {
         Task taskToEdit = taskService.findById(id);

@@ -47,3 +47,18 @@ Til að skoða local database:
 Seinna: postgres
 
 
+
+## Uppsetning Viðmóts: localhost:8080
+
+- `/` User login page, currently used as an admin page
+- `/signup` signup form, adds user to the database if username is not taken
+- `/update-username` Update username
+- `/home` The home page of all tasks
+- `/home/newTask` Create new task, and add to the `/home` page
+- `/home/archive` List of archived tasks, can be unarchived
+- More, but not mentioned (don't have their own page in the UI)
+
+
+- `/categories` List of categories
+- `/categories/new` Make new category, now working because we don't have userId
+
