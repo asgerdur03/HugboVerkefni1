@@ -489,3 +489,9 @@ alter table if exists tasks add column is_archived BOOLEAN DEFUALT FALSE not nul
 2024-10-18 21:59:38.120247Z jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "alter table if exists tasks add column is_archived BOOLEAN [*]DEFUALT FALSE not null"; SQL statement:
 alter table if exists tasks add column is_archived BOOLEAN DEFUALT FALSE not null [42000-224]
+2024-10-18 23:17:56.316911Z jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'' (CATEGORIES: ""USERS_ID"" BIGINT NOT NULL)"; SQL statement:
+INSERT INTO "PUBLIC"."CATEGORIES"("ID","CATEGORY_NAME","USER_ID","USERS_ID")VALUES(?,?,?,?) [22018-224]
+2024-10-18 23:17:56.318911Z jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'' (CATEGORIES: ""USERS_ID"" BIGINT NOT NULL)"; SQL statement:
+INSERT INTO "PUBLIC"."CATEGORIES"("ID","CATEGORY_NAME","USER_ID","USERS_ID")VALUES(?,?,?,?) [22018-224]
