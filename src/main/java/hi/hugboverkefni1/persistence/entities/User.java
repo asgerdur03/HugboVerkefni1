@@ -1,8 +1,11 @@
 package hi.hugboverkefni1.persistence.entities;
 
 import jakarta.persistence.*;
-import org.springframework.scheduling.config.Task;
-import java.util.*;
+
+
+import hi.hugboverkefni1.persistence.entities.Task;
+
+
 
 
 import java.awt.*;
@@ -20,11 +23,12 @@ public class User {
     private String password;
     private String gmail;
 
-    //@(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    //List<Task> tasks = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Task> tasks;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL , orphanRemoval = true )
-    List<Category> categories = new ArrayList<>();
+    private List<Category> categories;
+
 
     private String profilePicture; //url
 

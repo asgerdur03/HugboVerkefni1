@@ -29,6 +29,9 @@ public interface TaskService {
     List<Task> findArchivedTasks();
     void archiveTask(long id);
     void unarchiveTask(long id);
+
+
+    void assignTaskToCategory(long taskId, long categoryId);
 }
 
 
