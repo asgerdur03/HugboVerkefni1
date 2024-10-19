@@ -21,13 +21,14 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(optional = true) //(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = true)
     private User user;
 
     private String categoryName;
 
     @OneToMany(mappedBy = "category", cascade= CascadeType.ALL, orphanRemoval = true)
-    private List<Task> tasks = new ArrayList<Task>();
+    private List<Task> tasks;
 
     public Category() {
     }
@@ -50,15 +51,29 @@ public class Category {
         return id;
     }
 
-    @ManyToOne(optional = false)
-    private User users;
 
-    public User getUsers() {
-        return users;
+    public User getUser() {
+        return user;
     }
 
-    public void setUsers(User users) {
-        this.users = users;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 }
 

@@ -1,6 +1,8 @@
 package hi.hugboverkefni1.persistence.respositories;
 
+import hi.hugboverkefni1.persistence.entities.Category;
 import hi.hugboverkefni1.persistence.entities.Task;
+import hi.hugboverkefni1.persistence.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,6 +16,12 @@ public interface TaskRepository extends JpaRepository<Task, Long>{
 
     List<Task> findAll();
     Task findById(long id);
+
+    List<Task> findByIsArchivedIsFalse();
+    List<Task> findByIsArchivedIsTrue();
+
+    List<Task> findByCategory(Category category);
+    List<Task> findByUser(User user);
 
 
 

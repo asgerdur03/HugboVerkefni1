@@ -26,9 +26,18 @@ public class Task {
 
     private LocalDate dueDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Category category;
 
+    @ManyToOne
+    private User user;
+
+
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean favorite= false;
+
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean isArchived=false;
 
     public Task() {
 
@@ -39,14 +48,25 @@ public class Task {
         this.taskNote = taskNote;
     }
 
-    public Task(String taskName, String taskNote, TaskStatus status, TaskPriority priority, LocalDate dueDate, User user, Category category) {
+    public Task(String taskName, String taskNote, TaskStatus status, TaskPriority priority, LocalDate dueDate, User user, Category category, boolean favorite, boolean isArchived) {
         this.taskName = taskName;
         this.taskNote = taskNote;
         this.status = status;
         this.priority = priority;
         this.dueDate = dueDate;
         this.category = category;
+        this.favorite = favorite;
+        this.isArchived = isArchived;
 
+
+    }
+
+    public boolean isArchived() {
+        return isArchived;
+    }
+
+    public void setArchived(boolean archived) {
+        isArchived = archived;
     }
 
     public long getId() {
@@ -98,5 +118,27 @@ public class Task {
     }
 
 
+    public boolean isFavorite() {
+        return favorite;
+    }
 
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
+
 public class UserController {
 
     private final UserService userService;
@@ -117,4 +118,8 @@ public class UserController {
 
         return "redirect:/";  // Redirect back to home after successful update
     }
+
+
+
+
 }
