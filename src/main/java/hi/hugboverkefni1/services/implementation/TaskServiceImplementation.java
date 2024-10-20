@@ -1,10 +1,13 @@
 package hi.hugboverkefni1.services.implementation;
 
+import hi.hugboverkefni1.persistence.entities.Category;
 import hi.hugboverkefni1.persistence.entities.Task;
 import hi.hugboverkefni1.persistence.entities.TaskPriority;
 import hi.hugboverkefni1.persistence.entities.TaskStatus;
+import hi.hugboverkefni1.persistence.respositories.CategoryRepository;
 import hi.hugboverkefni1.persistence.respositories.TaskRepository;
 import hi.hugboverkefni1.persistence.respositories.UserRepository;
+import hi.hugboverkefni1.services.CategoryService;
 import hi.hugboverkefni1.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,11 +19,32 @@ import java.util.List;
 @Service
 public class TaskServiceImplementation implements TaskService {
 
-    public TaskRepository taskRepository;
+    private TaskRepository taskRepository;
+    private CategoryRepository categoryRepository;
+
 
     @Autowired
-    public TaskServiceImplementation(TaskRepository taskRepository) {
+    public TaskServiceImplementation(TaskRepository taskRepository, CategoryRepository categoryRepository) {
         this.taskRepository = taskRepository;
+        this.categoryRepository = categoryRepository;
+    }
+
+    @Override
+    public void addToFavorites(long id){
+        Task task = taskRepository.findById(id);
+        if(task != null){
+            task.setFavorite(true);
+            taskRepository.save(task);
+        }
+
+    }
+    @Override
+    public void removeFromFavorites(long id){
+        Task task = taskRepository.findById(id);
+        if(task != null){
+            task.setFavorite(false);
+            taskRepository.save(task);
+        }
     }
 
     @Override
@@ -53,9 +77,47 @@ public class TaskServiceImplementation implements TaskService {
         return taskRepository.findFilteredTasks(priority, status, startDate, endDate);
     }
 
+    @Override
+    public List<Task> findActiveTasks() {
+        return taskRepository.findByIsArchivedIsFalse();
+    }
+
+    @Override
+    public List<Task> findArchivedTasks() {
+        return taskRepository.findByIsArchivedIsTrue();
+    }
+
+    @Override
+    public void archiveTask(long id) {
+        Task task = taskRepository.findById(id);
+        if(task != null){
+            task.setArchived(true);
+            taskRepository.save(task);
+        }
+
+    }
+
+    @Override
+    public void unarchiveTask(long id) {
+        Task task = taskRepository.findById(id);
+        if(task != null){
+            task.setArchived(false);
+            taskRepository.save(task);
+        }
+
+    }
 
 
 
+    @Override
+    public void assignTaskToCategory(long taskId, long categoryId) {
+        Task task = taskRepository.findById(taskId);
+        Category category = categoryRepository.findById(categoryId);
+        task.setCategory(category);
+        taskRepository.save(task);
+
+
+    }
 
 
 }

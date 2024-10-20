@@ -53,3 +53,7 @@ atlassian-ide-plugin.xml
 cached-antora-playbook.yml
 
 node_modules
+
+#To prevent db from going on github
+database/dbfile.mv.db
+database/dbfile.trace.db

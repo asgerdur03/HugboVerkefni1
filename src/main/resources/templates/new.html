@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>new category</title>
+</head>
+<body>
+
+<form action="#" th:action="@{/categories/new}" th:object="${category}" method="post">
+    <label for="categoryName">Title</label>
+    <input type="text" th:field="*{categoryName}" id="categoryName" placeholder="Category name">
+    <span th:if="${#fields.hasErrors('categoryName')}" th:errors="*{categoryName}"></span>
+
+    <input type="submit" value="New Category">
+</form>
+
+</body>
+</html>

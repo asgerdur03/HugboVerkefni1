@@ -1,4 +1,8 @@
+
+
 <!DOCTYPE html>
+
+
 <html xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -9,7 +13,13 @@
 <h2> Login </h2>
 
 
-<form action="#" th:action="@{/}" method="post">
+<!-- Error message Not working, needs adjusting -->
+<div th:if="${errorMessage != null}" style="color: #ff002f;">
+    <p th:text="${errorMessage}"></p>
+</div>
+
+<!-- <form action="#" th:action="@{/}" method="post"> v.1  -->
+<form action="#" th:action="@{/opening-page}" method="post">
 
     <div>
         <label >username: </label>
