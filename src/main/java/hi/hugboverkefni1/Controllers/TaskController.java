@@ -126,10 +126,26 @@ public class TaskController {
     }
 
     // update task
-    /*
-    not working currently
-     */
+    @RequestMapping(value="/home/editTask/{id}", method = RequestMethod.POST)
+    public String updateTask(@PathVariable("id") long id, @ModelAttribute Task updatedTask, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("taskStatuses", TaskStatus.values());
+            model.addAttribute("taskPriorities", TaskPriority.values());
+            return "edittask";
+        }
 
+        // finna task með id
+        Task existingTask = taskService.findById(id);
+        // updatea með nýju infoi
+        existingTask.setTaskName(updatedTask.getTaskName());
+        existingTask.setTaskNote(updatedTask.getTaskNote());
+        existingTask.setStatus(updatedTask.getStatus());
+        existingTask.setPriority(updatedTask.getPriority());
+        existingTask.setDueDate(updatedTask.getDueDate());
+      
+        taskService.save(existingTask);
+        return "redirect:/home";
+    }
 
     // add task to favorites
     @PostMapping("/home/addToFavorites/{id}")
@@ -168,9 +184,6 @@ public class TaskController {
         taskService.unarchiveTask(id);
         return "redirect:/home/archive";
     }
-
-
-
 
 
 }
