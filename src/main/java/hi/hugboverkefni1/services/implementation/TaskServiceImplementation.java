@@ -30,6 +30,11 @@ public class TaskServiceImplementation implements TaskService {
     }
 
     @Override
+    public List<Task> findByUserId(long userId) {
+        return taskRepository.findByUserId(userId);
+    }
+
+    @Override
     public void addToFavorites(long id){
         Task task = taskRepository.findById(id);
         if(task != null){

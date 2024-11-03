@@ -17,11 +17,15 @@ public interface TaskRepository extends JpaRepository<Task, Long>{
     List<Task> findAll();
     Task findById(long id);
 
+
     List<Task> findByIsArchivedIsFalse();
     List<Task> findByIsArchivedIsTrue();
 
     List<Task> findByCategory(Category category);
     List<Task> findByUser(User user);
+
+
+    List<Task> findByUserId(long userId);
 
 
 

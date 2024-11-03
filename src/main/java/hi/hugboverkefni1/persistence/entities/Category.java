@@ -27,6 +27,8 @@ public class Category {
 
     private String categoryName;
 
+    private String color;
+
     @OneToMany(mappedBy = "category", cascade= CascadeType.ALL, orphanRemoval = true)
     private List<Task> tasks;
 

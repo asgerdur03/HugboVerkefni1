@@ -2,6 +2,7 @@ package hi.hugboverkefni1.Controllers;
 
 import hi.hugboverkefni1.persistence.entities.User;
 import hi.hugboverkefni1.services.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class UserController {
 
-    private final UserService userService;
+    private UserService userService;
 
     @Autowired
     public UserController(UserService userService) {
@@ -23,12 +24,12 @@ public class UserController {
     }
 
     // Web opening page, login form and link to signup screen
-    @RequestMapping("/")
+    @RequestMapping("/login")
     public String home(Model model) {
         List<User> allUsers = userService.getUsers();
         model.addAttribute("users", allUsers);
         model.addAttribute("loginUser", new User());
-        return "opening-page";
+        return "login";
     }
 
     // Add user from signup form
@@ -58,16 +59,40 @@ public class UserController {
     }
 
     // Delete user
-    @RequestMapping(value = "/delete/{id}")
+    @RequestMapping(value = "/login/delete/{id}")
     public String deleteUser(@PathVariable("id") long id) {
         User userToDelete = userService.findUserById(id);
         userService.deleteUser(userToDelete);
+        return "redirect:/login";
+    }
+
+
+    @PostMapping("/login")
+    public String login(ModelMap model, @RequestParam String username, @RequestParam String password, HttpSession session) {
+        boolean isValidUser = userService.validateUser(username, password);
+
+        if (!isValidUser) {
+          // model.put("errorMessage", "Invalid username or password");
+            //List<User> allUsers = userService.getUsers();
+            //model.put("users", allUsers);
+            return "login";
+        }
+        User loggedInUser = userService.findUsername(username);
+
+        session.setAttribute("loggedInUser", loggedInUser);
+        //model.put("user", loggedInUser);
+
+        System.out.println(session.getAttribute("loggedInUser").toString());
+
         return "redirect:/";
     }
 
     // Handles login submission
+    // weird, does not work correctly
+    /*
+
     @RequestMapping(value = "/opening-page", method = RequestMethod.POST)
-    public String handleLogin(ModelMap model, @RequestParam String username, @RequestParam String password) {
+    public String handleLogin(ModelMap model, @RequestParam String username, @RequestParam String password, HttpSession session ) {
         boolean isValidUser = userService.validateUser(username, password);
 
         if (!isValidUser) {
@@ -78,11 +103,22 @@ public class UserController {
         }
         // Connects username to login
         User loggedInUser = userService.findUsername(username);
+
+        session.setAttribute("loggedInUser", loggedInUser);
         model.put("user", loggedInUser);
 
         return "home";
 
+    }*/
+
+    @RequestMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        System.out.println("session invalidated");
+        return "redirect:/";
     }
+
+
 
     // Show update username form
     @GetMapping("/update-username/{id}")
@@ -120,6 +156,10 @@ public class UserController {
     }
 
 
+    @GetMapping("/settings")
+    public String settings() {
+        return "settings";
+    }
 
 
 }
