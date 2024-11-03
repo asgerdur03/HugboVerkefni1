@@ -50,15 +50,23 @@ Seinna: postgres
 
 ## Uppsetning Viðmóts: localhost:8080
 
-- `/` User login page, currently used as an admin page
+** TODO- laga þetta **
+
+- `/` home page, lists the tasks, and has navbar to logout, settings and home
+- `/login` login page, opens if no current user is logged in, else it's linked in the nav?
 - `/signup` signup form, adds user to the database if username is not taken
-- `/update-username` Update username
-- `/home` The home page of all tasks
-- `/home/newTask` Create new task, and add to the `/home` page
-- `/home/archive` List of archived tasks, can be unarchived
+- `/settings` uppdate all user attributes, and delete account (not yet inmplemented)
+-
+- `/newTask` Create new task, and add to the `/home` page
+- `/archive` List of archived tasks, can be unarchived
 - More, but not mentioned (don't have their own page in the UI)
 
 
-- `/categories` List of categories
-- `/categories/new` Make new category, now working because we don't have userId
 
+
+
+## Todo sem er ekki endpoints
+
+- bæta við error message við invalid login eða signup
+- css ehv, Er frekar fugly rn
+- laga date, viljum hafa það optional

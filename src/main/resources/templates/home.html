@@ -3,9 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Task System</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/look.css}">
 </head>
 <body>
-<form action="/home" method="get">
+
+
+
+
+    <div class="navbar">
+        <a href="/settings"><img th:src="@{/img.png}"/>Stillingar</a>
+        <a class="active" href="/">Heim</a>
+
+        <a href="/logout" class="split">Logout</a>
+
+
+    </div>
+
+
+   <h1><span>Velkominn, <span th:text="${loggedInUser.username}"></span>!</span></h1>
+
+
+
+<form action="/" method="get">
     <label for="priority">Priority:</label>
     <select id="priority" name="priority">
         <option value="">All</option>
@@ -40,7 +61,8 @@
 
     <button type="submit">Filter</button>
 </form>
-<div th:switch="${tasks}">
+
+    <div th:switch="${tasks}">
     <h2 th:case="null">No Tasks yet!</h2>
     <div th:case="*">
         <h2>Notes</h2>
@@ -65,22 +87,22 @@
                 <td th:text="${task.priority}"></td>
                 <td th:text="${task.dueDate}"></td>
                 <td>
-                    <a th:href="@{/home/delete/{id}(id=${task.id})}">Delete</a>
-                    <a th:href="@{/home/editTask/{id}(id=${task.id})}">Edit</a>
+                    <a th:href="@{/delete/{id}(id=${task.id})}">Delete</a>
+                    <a th:href="@{/editTask/{id}(id=${task.id})}">Edit</a>
 
                 </td>
                 <td>
-                    <form th:action="@{/home/addToFavorites/{id}(id=${task.id})}" method="post" style="display:inline;">
+                    <form th:action="@{/addToFavorites/{id}(id=${task.id})}" method="post" style="display:inline;">
                         <button type="submit" th:if="${!task.favorite}">Add</button>
                         <span th:if="${task.favorite}" style="color: green;">Favorite</span>
                     </form>
-                    <form th:if="${task.favorite}" th:action="@{/home/removeFromFavorites/{id}(id=${task.id})}" method="post" style="display:inline;">
+                    <form th:if="${task.favorite}" th:action="@{/removeFromFavorites/{id}(id=${task.id})}" method="post" style="display:inline;">
                         <button type="submit">Remove</button>
                     </form>
 
                 </td>
                 <td>
-                    <form th:action="@{'/home/archive/' + ${task.id}}" method="post">
+                    <form th:action="@{'/archive/' + ${task.id}}" method="post">
                         <button type="submit">Archive</button>
                     </form>
                 </td>
@@ -89,7 +111,8 @@
             </tbody>
         </table>
     </div>
-    <p><a href="/home/newTask">Add a new task</a></p>
+
+    <p><a href="/newTask">Add a new task</a></p>
 
     <div th:if="${user != null}">
         <p>User is logged in as: <span th:text="${user.username}"></span></p>
@@ -97,11 +120,10 @@
     </div>
 
 
-    <a th:href="@{/home/archive}">Archived tasks</a>
+    <a th:href="@{/archive}">Archived tasks</a>
 
 
 </div>
-
 
 
 </body>

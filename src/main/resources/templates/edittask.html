@@ -5,7 +5,7 @@
   <title>add new Task</title>
 </head>
 <body>
-<form th:action="@{/home/editTask/{id}(id=${task.id})}" th:object="${task}" method="post">
+<form th:action="@{/editTask/{id}(id=${task.id})}" th:object="${task}" method="post">
 
   <!-- Hidden ID Field -->
   <input type="hidden" th:field="*{id}"/>
