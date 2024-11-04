@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>add new Task</title>
+</head>
+<body>
+<form action="#" th:action="@{/newTask}" th:object="${task}" method="post">
+
+    <div>
+        <label for="taskName">Task Name: </label>
+        <input type="text" id="taskName" th:field="*{taskName}" placeholder="Ente taskname" required>
+    </div>
+
+    <div>
+        <label for="taskNote" >addidtional notes: </label>
+        <textarea id="taskNote" th:field="*{taskNote}"></textarea>
+    </div>
+
+    <div>
+        <label for="status">Task Status:</label>
+        <select id="status" th:field="*{status}">
+            <option th:each="status : ${taskStatuses}" th:value="${status}" th:text="${status}"></option>
+        </select>
+    </div>
+    <div>
+        <label for="priority">Task Priority:</label>
+        <select id="priority" th:field="*{priority}">
+            <option th:each="priority : ${taskPriorities}" th:value="${priority}" th:text="${priority}"></option>
+        </select>
+    </div>
+
+    <div>
+        <label for="dueDate">Due Date:</label>
+        <input type="date" id="dueDate" th:field="*{dueDate}" required>
+    </div>
+
+    <div>
+        <label for="category">Category:</label>
+        <select id="category" th:field="*{category}">
+            <option th:each="category : ${categoryNames}" th:value="${category}" th:text="${category}"></option>
+        </select>
+    </div>
+
+    <input type="submit" value="Save task">
+</form>
+
+</body>
+</html>
