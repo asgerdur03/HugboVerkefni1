@@ -19,15 +19,15 @@
 </div>
 
 <!-- <form action="#" th:action="@{/}" method="post"> v.1  -->
-<form action="#" th:action="@{/opening-page}" method="post">
+<form action="#" th:action="@{/login}" method="post">
 
     <div>
-        <label >username: </label>
+        <label for="username">username: </label>
         <input type="text" id="username" name="username" required>
     </div>
 
     <div>
-        <label >password: </label>
+        <label for="password">password: </label>
         <input type="password"  id="password" name="password" required>
     </div>
 
@@ -55,7 +55,7 @@
                 <td th:text="${user.username}"></td>
                 <td th:text="${user.password}"></td>
                 <td th:text="${user.gmail}"></td>
-                <td><a th:href="@{/delete/{id}(id=${user.id})}">Delete</a></td>
+                <td><a th:href="@{/login/delete/{id}(id=${user.id})}">Delete</a></td>
             </tr>
             </tbody>
         </table>

@@ -3,7 +3,11 @@ package hi.hugboverkefni1.Controllers;
 import hi.hugboverkefni1.persistence.entities.Task;
 import hi.hugboverkefni1.persistence.entities.TaskPriority;
 import hi.hugboverkefni1.persistence.entities.TaskStatus;
+import hi.hugboverkefni1.persistence.entities.User;
 import hi.hugboverkefni1.services.TaskService;
+import hi.hugboverkefni1.services.UserService;
+import jakarta.servlet.http.HttpSession;
+import jdk.jshell.spi.ExecutionControl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,33 +15,57 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
 public class TaskController {
 
-    private final TaskService taskService;
+    private TaskService taskService;
+    private UserService userService;
 
     @Autowired
-    public TaskController(TaskService taskService) {
+    public TaskController(TaskService taskService, UserService userService) {
         this.taskService = taskService;
+        this.userService = userService;
     }
 
-    // Tasks dont save to users account, need to add that.
 
-    //home page, adds all tasks to page
+    //home page, add all task by user_id
     // filters
-    @RequestMapping("/home")
+    @RequestMapping("/")
     public String home(@RequestParam(required = false) String priority,
                        @RequestParam(required = false) String status,
                        @RequestParam(required = false) String startDate,
                        @RequestParam(required = false) String endDate,
                        @RequestParam(required = false) Boolean favorites,
-                       Model model) {
+                       Model model,
+                       HttpSession session) {
 
-        List<Task> tasks = taskService.findActiveTasks();
-        model.addAttribute("statuses", TaskStatus.values());
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+
+
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+
+
+        List<Task> activeTasks= taskService.findActiveTasks();
+        // get all tasks with that user id
+        List<Task> tasks = taskService.findByUserId(loggedInUser.getId());
+
+        //tasks á báðum listum
+        tasks.retainAll(activeTasks);
+
+        model.addAttribute("tasks", tasks);
+
+        model.addAttribute("loggedInUser", loggedInUser);
+
+
+        //List<Task> tasks = taskService.findActiveTasks();
+        //model.addAttribute("statuses", TaskStatus.values());
         // Apply filters
         if (priority != null && !priority.isEmpty()) {
             tasks = tasks.stream().filter(task -> task.getPriority().toString().equals(priority)).collect(Collectors.toList());
@@ -59,63 +87,61 @@ public class TaskController {
 
 
         model.addAttribute("tasks", tasks);
+
+
         return "home";
+
+
     }
 
     // Show the new task form and add enums to the model
-   // @RequestMapping(value = "/home/newTask", method = RequestMethod.GET)
+    @GetMapping("/newTask")
+    public String newTaskForm(Model model, HttpSession session) {
 
-    @GetMapping("home/newTask")
-    public String newTaskForm(Model model) {
+        User user = (User) session.getAttribute("loggedInUser");
+        if (user == null) {
+            return "redirect:/";
+        }
         model.addAttribute("task", new Task()); // Add an empty task object to bind form data
         model.addAttribute("taskStatuses", TaskStatus.values()); // Pass TaskStatus enum values to the form
         model.addAttribute("taskPriorities", TaskPriority.values()); // Pass TaskPriority enum values to the form
+
         return "newTask";
     }
 
     // Add task to database and redirect to the home page
     //@RequestMapping(value = "/home/newTask", method = RequestMethod.POST)
 
-    @PostMapping("home/newTask")
-    public String newTask(@ModelAttribute Task task, BindingResult result, Model model) {
+    @PostMapping("/newTask")
+    public String newTask(@ModelAttribute Task task, BindingResult result, Model model, HttpSession session) {
+        User user = (User) session.getAttribute("loggedInUser");
+        if (user == null) {
+            return "redirect:/";
+        }
+
         if (result.hasErrors()) {
             model.addAttribute("taskStatuses", TaskStatus.values()); //
             model.addAttribute("taskPriorities", TaskPriority.values()); //
             return "newTask";
         }
+        task.setUser(user);
+        //task.setUserId(user.getId());
         taskService.save(task);
-        return "redirect:/home";
+        return "redirect:/";
     }
 
-    /*
-    // get task from form
-    @RequestMapping(value ="/home/newTask", method= RequestMethod.GET)
-    public String newTaskForm(Task task) {
-        return "newTask";
-    }
-
-    // add task to database, and home page
-    @RequestMapping(value = "/home/newTask", method = RequestMethod.POST)
-    public String newTask(Task task, BindingResult result, Model model) {
-        if(result.hasErrors()) {
-            return "newTask";
-        }
-        taskService.save(task);
-        return "redirect:/home";
-    }
-     */
 
     // delete task
-    @RequestMapping(value="/home/delete/{id}")
+    @RequestMapping(value="/delete/{id}")
     public String deleteTask(@PathVariable("id") long id) {
         Task taskToDelete = taskService.findById(id);
         taskService.delete(taskToDelete);
-        return "redirect:/home";
+        return "redirect:/";
     }
 
     // edit task
     // edit the task attributes
-    @RequestMapping(value="/home/editTask/{id}", method = RequestMethod.GET)
+    @RequestMapping(value="/editTask/{id}", method = RequestMethod.GET)
     public String editTaskForm(@PathVariable("id") long id, Model model) {
         Task taskToEdit = taskService.findById(id);
 
@@ -126,7 +152,7 @@ public class TaskController {
     }
 
     // update task
-    @RequestMapping(value="/home/editTask/{id}", method = RequestMethod.POST)
+    @RequestMapping(value="/editTask/{id}", method = RequestMethod.POST)
     public String updateTask(@PathVariable("id") long id, @ModelAttribute Task updatedTask, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("taskStatuses", TaskStatus.values());
@@ -142,48 +168,58 @@ public class TaskController {
         existingTask.setStatus(updatedTask.getStatus());
         existingTask.setPriority(updatedTask.getPriority());
         existingTask.setDueDate(updatedTask.getDueDate());
+
       
         taskService.save(existingTask);
-        return "redirect:/home";
+        return "redirect:/";
     }
 
     // add task to favorites
-    @PostMapping("/home/addToFavorites/{id}")
+    @PostMapping("/addToFavorites/{id}")
     public String addToFavorites(@PathVariable("id") long id, Model model) {
         taskService.addToFavorites(id);
-        return "redirect:/home";
+        return "redirect:/";
     }
 
     // remove task from favorites
-    @PostMapping("/home/removeFromFavorites/{id}")
+    @PostMapping("/removeFromFavorites/{id}")
     public String removeFromFavorites(@PathVariable("id") long id, Model model) {
         taskService.removeFromFavorites(id);
-        return "redirect:/home";
+        return "redirect:/";
     }
 
     // birta archived page
     // er ekki að birta archived tasks
-    @GetMapping("home/archive")
-    public String archivedTasks(Model model) {
+    @GetMapping("/archive")
+    public String archivedTasks(Model model,  HttpSession session) {
+        User user = (User) session.getAttribute("loggedInUser");
+        List<Task> userTask = taskService.findByUserId(user.getId());
         List<Task> archivedTasks = taskService.findArchivedTasks();
+
+        archivedTasks.retainAll(userTask);
         model.addAttribute("tasks", archivedTasks);
         return "archived";
     }
 
     // Archive a task
-    @PostMapping("/home/archive/{id}")
+    @PostMapping("/archive/{id}")
     public String archiveTask(@PathVariable("id") long id) {
         taskService.archiveTask(id);
-        return "redirect:/home";
+        return "redirect:/";
     }
 
     // Unarchive a task
-    @PostMapping("home/archive/unarchived/{id}")
+    @PostMapping("/archive/unarchived/{id}")
     public String unarchiveTask(@PathVariable("id") long id) {
         System.out.println("unarchive task: " + id);
         taskService.unarchiveTask(id);
-        return "redirect:/home/archive";
+        return "redirect:/archive";
     }
+
+
+
+
+
 
 
 }

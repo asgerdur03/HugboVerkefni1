@@ -9,6 +9,7 @@ import hi.hugboverkefni1.persistence.entities.Task;
 
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,15 +20,21 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(unique=true, nullable=false)
     private String username;
+
+
+    @Column(nullable=false)
     private String password;
+
+
     private String gmail;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Task> tasks;
+    private List<Task> tasks = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL , orphanRemoval = true )
-    private List<Category> categories;
+    private List<Category> categories= new ArrayList<>();
 
 
     private String profilePicture; //url
@@ -80,5 +87,12 @@ public class User {
 
     public void setProfilePicture(String profilePicture) {
         this.profilePicture = profilePicture;
+    }
+
+
+
+    @Override
+    public String toString() {
+        return "Username: " + username + " Password: " + password + " Gmail: " + gmail;
     }
 }

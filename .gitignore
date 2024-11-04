@@ -57,3 +57,6 @@ node_modules
 #To prevent db from going on github
 database/dbfile.mv.db
 database/dbfile.trace.db
+
+
+MyNotes.md
