@@ -121,24 +121,24 @@ public class UserController {
 
 
     // Show update username form
-    @GetMapping("/update-username/{id}")
-    public String showUpdateUsernameForm(@PathVariable("id") long id, Model model) {
-        User user = userService.findUserById(id);
-        if (user == null) {
-            model.addAttribute("errorMessage", "User not found");
+    @GetMapping("/update-username")
+    public String showUpdateUsernameForm(HttpSession session, Model model) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            model.addAttribute("errorMessage", "Please log in to update username");
             return "redirect:/";
         }
-        model.addAttribute("user", user);
+        model.addAttribute("user", loggedInUser);
         return "update-username";
     }
 
     // Handle username update
     @PostMapping("/update-username")
-    public String updateUsername(@RequestParam("id") long id, @RequestParam("newUsername") String newUsername, ModelMap model) {
-        User user = userService.findUserById(id);
-        if (user == null) {
-            model.put("errorMessage", "User not found");
-            return "redirect:/";
+    public String updateUsername(@RequestParam("newUsername") String newUsername, HttpSession session, ModelMap model) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            model.put("errorMessage", "Please log in to update username");
+            return "redirect:/login";
         }
 
         // Check if new username already exists
@@ -149,17 +149,18 @@ public class UserController {
         }
 
         // Update username and save the user
-        user.setUsername(newUsername);
-        userService.saveUser(user);
+        loggedInUser.setUsername(newUsername);
+        userService.saveUser(loggedInUser);
 
-        return "redirect:/";  // Redirect back to home after successful update
+        return "redirect:/settings";  // Redirect back to home after successful update
     }
+
 
 
     @GetMapping("/settings")
     public String settings() {
         return "settings";
-    }
 
+    }
 
 }
