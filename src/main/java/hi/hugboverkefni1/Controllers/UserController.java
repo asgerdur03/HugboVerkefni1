@@ -162,5 +162,31 @@ public class UserController {
         return "settings";
 
     }
+    @GetMapping("/profile-pic-selection")
+    public String showProfilePicSelection(Model model, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
 
+        // Gefur options af x myndum með nafnscheme pic1,pic2.....
+        List<String> profilePics = List.of("profilePics/pic1.png", "profilePics/pic2.png", "profilePics/pic3.png");
+        model.addAttribute("profilePics", profilePics);
+        model.addAttribute("loggedInUser", loggedInUser);
+        return "profile-pic-selection";
+    }
+
+    @PostMapping("/profile-pic")
+    public String saveProfilePic(@RequestParam("profilePic") String profilePic, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+
+        loggedInUser.setProfilePicture(profilePic);
+        userService.saveUser(loggedInUser);
+
+        session.setAttribute("loggedInUser", loggedInUser);
+        return "redirect:/";
+    }
 }
