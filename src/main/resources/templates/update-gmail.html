@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Gmail</title>
+</head>
+<body>
+
+
+      <h2>Edit Gmail</h2>
+
+      <form th:action="@{/update-gmail}" method="post">
+        <div>
+          <label for="gmail">New Gmail :</label>
+          <input type="text" id="gmail" name="newGmail" required/>
+        </div>
+
+        <input type="submit" value="Update Gmail"/>
+      </form>
+
+      <!-- Back to Home button -->
+      <p>
+        <a href="/">
+          <button type="button">Back to Home</button>
+        </a>
+      </p>
+</body>
+</html>

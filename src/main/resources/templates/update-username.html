@@ -1,0 +1,29 @@
+<!-- update-username.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Update Username</title>
+</head>
+<body>
+
+<h2>Update Username</h2>
+
+<form th:action="@{/update-username}" method="post">
+  <div>
+    <label for="username">New Username:</label>
+    <input type="text" id="username" name="newUsername" required/>
+  </div>
+
+  <input type="submit" value="Update Username"/>
+</form>
+
+<!-- Back to Home button -->
+<p>
+  <a href="/">
+    <button type="button">Back to Home</button>
+  </a>
+</p>
+
+</body>
+</html>

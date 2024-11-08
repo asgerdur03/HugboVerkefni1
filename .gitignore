@@ -58,5 +58,5 @@ node_modules
 database/dbfile.mv.db
 database/dbfile.trace.db
 
-
+database
 MyNotes.md
