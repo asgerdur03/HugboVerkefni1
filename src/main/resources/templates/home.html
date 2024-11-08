@@ -12,7 +12,7 @@
 
 
 
-    <div class="navbar">
+    <div class="navbar" >
         <a href="/settings">Stillingar</a>
         <a class="active" href="/">Heim</a>
 
@@ -82,9 +82,9 @@
 </form>
 
     <div th:switch="${tasks}">
-    <h2 th:case="null">No Tasks yet!</h2>
+        <h2 th:case="null">No Tasks yet!</h2>
     <div th:case="*">
-        <h2>Notes</h2>
+        <h2>Tasks</h2>
         <table>
             <thead>
             <tr>
@@ -100,8 +100,10 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="task : ${tasks}">
-                <td th:text="${task.taskName}"></td>
+            <tr th:each="task : ${tasks}"
+                th:style="${task.category != null and task.category.color != null ? 'background-color:' + task.category.color : 'background-color: #ece9d0'}">
+
+            <td th:text="${task.taskName}" ></td>
                 <td th:text="${task.taskNote}"></td>
                 <td th:text="${task.status}"></td>
                 <td th:text="${task.priority}"></td>
