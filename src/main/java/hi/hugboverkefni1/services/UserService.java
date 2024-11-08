@@ -15,6 +15,7 @@ public interface UserService {
     boolean validateUser(String username, String password);
     User findGmail(String gmail);
     User findPassword(String password);
+    void delete(User user);
 
 
     public User updateUser(User user);

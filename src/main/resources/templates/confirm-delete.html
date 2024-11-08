@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirm Account Deletion</title>
+</head>
+<body>
+
+<h2>Are you sure you want to delete your account?</h2>
+<p>This action cannot be undone.</p>
+
+<form action="/delete-account" method="post">
+    <button type="submit" style="background-color: red; color: white;">Yes, delete my account</button>
+</form>
+
+<a href="/settings">
+    <button type="button">Cancel</button>
+</a>
+
+</body>
+</html>

@@ -32,6 +32,7 @@ public interface TaskService {
 
     List<Task> findByUserId(long userId);
     void assignTaskToCategory(long taskId, long categoryId);
+
 }
 
 
