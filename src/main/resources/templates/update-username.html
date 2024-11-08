@@ -10,8 +10,6 @@
 <h2>Update Username</h2>
 
 <form th:action="@{/update-username}" method="post">
-  <input type="hidden" th:value="${user.id}" name="id"/>
-
   <div>
     <label for="username">New Username:</label>
     <input type="text" id="username" name="newUsername" required/>
@@ -20,8 +18,12 @@
   <input type="submit" value="Update Username"/>
 </form>
 
-
-<p><a href="/">Back to settings</a></p>
+<!-- Back to Home button -->
+<p>
+  <a href="/">
+    <button type="button">Back to Home</button>
+  </a>
+</p>
 
 </body>
 </html>

@@ -152,8 +152,72 @@ public class UserController {
         loggedInUser.setUsername(newUsername);
         userService.saveUser(loggedInUser);
 
-        return "redirect:/settings";  // Redirect back to home after successful update
+        return "redirect:/";  // Redirect back to home after successful update
     }
+ // Update gmail
+    @GetMapping("/update-gmail")
+    public String showChangeGmailForm(HttpSession session, Model model) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            model.addAttribute("errorMessage", "Please log in to update email");
+            return "redirect:/";
+        }
+        model.addAttribute("user", loggedInUser);
+        return "update-gmail";
+    }
+
+    // handle gmail update
+    @PostMapping("/update-gmail")
+    public String updateGmail(@RequestParam("newGmail") String newGmail, HttpSession session, ModelMap model) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            model.put("errorMessage", "Please log in to update gmail");
+            return "redirect:/login";
+        }
+
+        // Check if new gmail already exists
+        User existingUser = userService.findGmail(newGmail);
+        if (existingUser != null) {
+            model.put("errorMessage", "Gmail is already in use");
+            return "update-gmail";
+        }
+
+        // Update gmail and save the user
+        loggedInUser.setGmail(newGmail);
+        userService.saveUser(loggedInUser);
+
+        return "redirect:/";  // Redirect back to home after successful update
+    }
+
+    //update password
+    @GetMapping("/update-password")
+    public String showChangePasswordForm(HttpSession session, Model model) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            model.addAttribute("errorMessage", "Please log in to update password");
+            return "redirect:/";
+        }
+        model.addAttribute("user", loggedInUser);
+        return "update-password";
+    }
+
+    //handle password update
+    @PostMapping("/update-password")
+    public String updatePassword(@RequestParam("newPassword") String newPassword, HttpSession session, ModelMap model) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            model.put("errorMessage", "Please log in to update password");
+            return "redirect:/login";
+        }
+
+
+        // Update password and save the user
+        loggedInUser.setPassword(newPassword);
+        userService.saveUser(loggedInUser);
+
+        return "redirect:/";  // Redirect back to home after successful update
+    }
+
 
 
 

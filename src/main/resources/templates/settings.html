@@ -2,39 +2,53 @@
 <html xmlns:th="https://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>User information</title>
+    <title>Settings</title>
+    <style>
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+    </style>
 </head>
 <body>
-<h1>Hér mun koma síða fyrir users að manage acconti, breyta username, password, profilepic etc. </h1>
+<h3>Settings</h3>
 
-<h3>Edit user information</h3>
 
+<div class="button-container">
+    <!-- Update username -->
     <a href="/update-username">
-    <button type="button">Edit Username</button>
+        <button type="button">Edit Username</button>
     </a>
 
+    <!-- Update email -->
+    <a href="/update-gmail">
+        <button type="button">Edit Email</button>
+    </a>
 
+    <!-- New profile picture -->
+    <a href="/profile-pic-selection">
+        <button type="button">Choose Profile Picture</button>
+    </a>
 
-<p>Edit email</p>
-<input type="text" placeholder="new email"/>
-<p>Edit password</p>
-<input type="text" placeholder="new password"/>
+    <!-- Edit password -->
+    <a href="/update-password">
+        <button type="button">Edit Password</button>
+    </a>
 
-<p>New profile picture</p>
-<a href="/profile-pic-selection">
-    <button type="button">Choose Profile Picture</button>
-</a>
-<br>
+    <a><!-- Update user button -->
+    <button type="button">Breyta Notenda</button>
+    </a>
 
-<button type="button" >Breyta notenda</button>
+    <!-- Delete account button -->
+    <a>
+    <button type="button">Delete Account</button>
+    </a>
+</div>
 
-
-<p>þegar takki er valin, gera ertu alveg viss dialog, svo nota delete user úr usercontroller, og redirecta á loginpage</p>
-<button type="button">Delete account</button>
-
-
-
-
+<p>Þegar takki er valin, gera ertu alveg viss dialog, svo nota delete user úr usercontroller, og redirecta á loginpage</p>
 
 </body>
 </html>
