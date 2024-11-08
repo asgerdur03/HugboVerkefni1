@@ -25,12 +25,15 @@ public class Category {
     @JoinColumn(name = "user_id", nullable = true)
     private User user;
 
+
     private String categoryName;
 
     private String color;
 
     @OneToMany(mappedBy = "category", cascade= CascadeType.ALL, orphanRemoval = true)
-    private List<Task> tasks;
+    private List<Task> tasks = new ArrayList<>();
+
+
 
     public Category() {
     }
@@ -40,9 +43,10 @@ public class Category {
         this.categoryName = categoryName;
     }
 
-    public Category(User user, String categoryName) {
+    public Category(User user, String categoryName, String color) {
         this.user = user;
         this.categoryName = categoryName;
+        this.color = color;
     }
 
     public void setId(Long id) {
@@ -77,6 +81,15 @@ public class Category {
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
     }
+
+
+    @Override
+    public String toString() {
+        return categoryName;
+    }
+
+
+
 }
 
 

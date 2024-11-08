@@ -86,6 +86,7 @@
                 <th>Delete/edit</th>
                 <th>Add to favorites</th>
                 <th>Archive</th>
+                <th>Category</th>
             </tr>
             </thead>
             <tbody>
@@ -115,6 +116,7 @@
                         <button type="submit">Archive</button>
                     </form>
                 </td>
+                <td th:text="${task.category != null ? task.category.categoryName : 'Uncategorized'}"></td> <!-- Category Column -->
 
             </tr>
             </tbody>

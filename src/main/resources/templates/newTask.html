@@ -37,8 +37,8 @@
 
     <div>
         <label for="category">Category:</label>
-        <select id="category" th:field="*{category}">
-            <option th:each="category : ${categoryNames}" th:value="${category}" th:text="${category}"></option>
+        <select id="category" th:field="*{categoryId}">
+            <option th:each="category : ${categoryNames}" th:value="${category.id}" th:text="${category.categoryName}"></option>
         </select>
     </div>
 

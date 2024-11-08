@@ -1,32 +1,35 @@
 package hi.hugboverkefni1.Controllers;
 
-import hi.hugboverkefni1.persistence.entities.Task;
-import hi.hugboverkefni1.persistence.entities.TaskPriority;
-import hi.hugboverkefni1.persistence.entities.TaskStatus;
-import hi.hugboverkefni1.persistence.entities.User;
+import hi.hugboverkefni1.persistence.entities.*;
+import hi.hugboverkefni1.services.CategoryService;
 import hi.hugboverkefni1.services.TaskService;
 import hi.hugboverkefni1.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
 public class TaskController {
 
+    private CategoryService categoryService;
     private TaskService taskService;
     private UserService userService;
 
     @Autowired
-    public TaskController(TaskService taskService, UserService userService) {
+    public TaskController(TaskService taskService, UserService userService, CategoryService categoryService) {
         this.taskService = taskService;
         this.userService = userService;
+        this.categoryService = categoryService;
     }
 
 
@@ -103,14 +106,17 @@ public class TaskController {
         model.addAttribute("taskStatuses", TaskStatus.values()); // Pass TaskStatus enum values to the form
         model.addAttribute("taskPriorities", TaskPriority.values()); // Pass TaskPriority enum values to the form
 
+
+        List<Category> userCategories = categoryService.getAllCategories();
+
+        model.addAttribute("categoryNames", userCategories);
+
         return "newTask";
     }
 
     // Add task to database and redirect to the home page
-    //@RequestMapping(value = "/home/newTask", method = RequestMethod.POST)
-
     @PostMapping("/newTask")
-    public String newTask(@ModelAttribute Task task, BindingResult result, Model model, HttpSession session) {
+    public String saveTask(@ModelAttribute Task task, BindingResult result, Model model, HttpSession session) {
         User user = (User) session.getAttribute("loggedInUser");
         if (user == null) {
             return "redirect:/";
@@ -119,9 +125,23 @@ public class TaskController {
         if (result.hasErrors()) {
             model.addAttribute("taskStatuses", TaskStatus.values()); //
             model.addAttribute("taskPriorities", TaskPriority.values()); //
+            List<Category> userCategories = categoryService.getAllCategories();
+            model.addAttribute("categoryNames", userCategories);
+
+
+            //return "newTask";
+            System.out.println(result.getAllErrors());
             return "newTask";
         }
+
+        Long categoryId = task.getCategoryId();
+        Category category = categoryService.findById(categoryId);
+        task.setCategory(category);
+
+
         task.setUser(user);
+
+
         //task.setUserId(user.getId());
         taskService.save(task);
         return "redirect:/";
@@ -145,6 +165,12 @@ public class TaskController {
         model.addAttribute("task", taskToEdit);
         model.addAttribute("taskStatuses", TaskStatus.values());
         model.addAttribute("taskPriorities", TaskPriority.values());
+
+        List<Category> userCategories = categoryService.getAllCategories();
+        model.addAttribute("categoryNames", userCategories);
+
+        taskToEdit.setCategoryId(taskToEdit.getCategory() != null ? taskToEdit.getCategory().getId() : null);
+
         return "edittask";
     }
 
@@ -154,6 +180,8 @@ public class TaskController {
         if (result.hasErrors()) {
             model.addAttribute("taskStatuses", TaskStatus.values());
             model.addAttribute("taskPriorities", TaskPriority.values());
+            List<Category> userCategories = categoryService.getAllCategories();
+            model.addAttribute("categoryNames", userCategories);
             return "edittask";
         }
 
@@ -165,6 +193,16 @@ public class TaskController {
         existingTask.setStatus(updatedTask.getStatus());
         existingTask.setPriority(updatedTask.getPriority());
         existingTask.setDueDate(updatedTask.getDueDate());
+
+
+        Long categoryId = updatedTask.getCategoryId();
+        if (categoryId != null) {
+            Category category = categoryService.findById(categoryId);
+            existingTask.setCategory(category);
+        } else {
+            existingTask.setCategory(null); // Clear category if no category is selected
+        }
+
 
 
         taskService.save(existingTask);
