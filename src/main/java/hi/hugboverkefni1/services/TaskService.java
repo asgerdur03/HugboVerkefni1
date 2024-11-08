@@ -31,8 +31,8 @@ public interface TaskService {
     void unarchiveTask(long id);
 
     List<Task> findByUserId(long userId);
-    void assignTaskToCategory(long taskId, long categoryId);
 
+    List<Task> findByCategoryId(long id);
 }
 
 

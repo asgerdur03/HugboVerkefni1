@@ -12,7 +12,7 @@
 
 
 
-    <div class="navbar">
+    <div class="navbar" >
         <a href="/settings">Stillingar</a>
         <a class="active" href="/">Heim</a>
 
@@ -66,15 +66,25 @@
         <option value="false">Non-favorites</option>
     </select>
 
+    <div>
+        <label for="category">Category:</label>
+        <select id="category" name="category">
+            <option value="">All</option>
+            <option th:each="category : ${categoryNames}" th:value="${category.id}" th:text="${category.categoryName}"></option>
+        </select>
+    </div>
+
+
+
 
 
     <button type="submit">Filter</button>
 </form>
 
     <div th:switch="${tasks}">
-    <h2 th:case="null">No Tasks yet!</h2>
+        <h2 th:case="null">No Tasks yet!</h2>
     <div th:case="*">
-        <h2>Notes</h2>
+        <h2>Tasks</h2>
         <table>
             <thead>
             <tr>
@@ -86,11 +96,14 @@
                 <th>Delete/edit</th>
                 <th>Add to favorites</th>
                 <th>Archive</th>
+                <th>Category</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="task : ${tasks}">
-                <td th:text="${task.taskName}"></td>
+            <tr th:each="task : ${tasks}"
+                th:style="${task.category != null and task.category.color != null ? 'background-color:' + task.category.color : 'background-color: #ece9d0'}">
+
+            <td th:text="${task.taskName}" ></td>
                 <td th:text="${task.taskNote}"></td>
                 <td th:text="${task.status}"></td>
                 <td th:text="${task.priority}"></td>
@@ -115,6 +128,7 @@
                         <button type="submit">Archive</button>
                     </form>
                 </td>
+                <td th:text="${task.category != null ? task.category.categoryName : 'Uncategorized'}"></td> <!-- Category Column -->
 
             </tr>
             </tbody>
@@ -123,14 +137,9 @@
 
     <p><a href="/newTask">Add a new task</a></p>
 
-    <div th:if="${user != null}">
-        <p>User is logged in as: <span th:text="${user.username}"></span></p>
-        <a th:href="@{/update-username/{id}(id=${user.id})}">Update Username</a>
-    </div>
+        <p> <a th:href="@{/archive}">Archived tasks</a></p>
 
-
-
-        <a th:href="@{/archive}">Archived tasks</a>
+        <p><a th:href="@{/categories}">My Categories</a></p>
 
 
 </div>

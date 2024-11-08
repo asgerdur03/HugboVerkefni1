@@ -22,15 +22,19 @@ public class Category {
     private long id;
 
     @ManyToOne(optional = true) //(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = true)
+    @JoinColumn(name = "user_id")
     private User user;
 
+
+    @Column(unique = true, nullable = false)
     private String categoryName;
 
     private String color;
 
     @OneToMany(mappedBy = "category", cascade= CascadeType.ALL, orphanRemoval = true)
-    private List<Task> tasks;
+    private List<Task> tasks = new ArrayList<>();
+
+
 
     public Category() {
     }
@@ -40,9 +44,10 @@ public class Category {
         this.categoryName = categoryName;
     }
 
-    public Category(User user, String categoryName) {
+    public Category(User user, String categoryName, String color) {
         this.user = user;
         this.categoryName = categoryName;
+        this.color = color;
     }
 
     public void setId(Long id) {
@@ -77,6 +82,23 @@ public class Category {
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
     }
+
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    @Override
+    public String toString() {
+        return categoryName;
+    }
+
+
+
 }
 
 

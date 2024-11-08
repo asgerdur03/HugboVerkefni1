@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>My Categories</title>
+</head>
+
+<body>
+
+<div class="navbar">
+  <a href="/settings">Stillingar</a>
+  <a class="active" href="/">Heim</a>
+
+  <a href="/logout" class="split">Logout</a>
+
+
+</div>
+<h1>My Categories</h1>
+
+
+<div th:switch="${categories}">
+  <h2 th:case="null">No Categories yet!</h2>
+  <div th:case="*">
+    <h2>My Categories</h2>
+    <p> It is not possible to delete a catagory that is currently in use</p>
+    <table>
+      <thead>
+      <tr>
+        <th>Category Name</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="category : ${categories}">
+        <!-- Set background color dynamically based on category color -->
+        <td th:text="${category.categoryName}"> <!--th:style="'background-color:' + ${category.color} + '; color: white;'"--> </td>
+        <td><a th:href="@{/categories/delete/{id}(id=${category.id})}">Delete</a></td>
+
+      </tr>
+
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<h1>Manage Categories</h1>
+
+
+<div class="form-container">
+  <h2>Create New Category</h2>
+  <form th:action="@{/categories}" th:object="${category}" method="post">
+    <label for="categoryName">Category Name:</label>
+    <input type="text" id="categoryName" th:field="*{categoryName}" placeholder="Enter category name" required>
+
+    <label for="color">Select Color:</label>
+    <input type="color" id="color" th:field="*{color}" required>
+
+    <button type="submit">Create Category</button>
+  </form>
+</div>
+
+
+</body>
+
+</html>

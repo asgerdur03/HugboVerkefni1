@@ -1,8 +1,11 @@
 package hi.hugboverkefni1.services.implementation;
 
+import hi.hugboverkefni1.Controllers.CategoryController;
 import hi.hugboverkefni1.persistence.entities.Category;
+import hi.hugboverkefni1.persistence.entities.Task;
 import hi.hugboverkefni1.persistence.entities.User;
 import hi.hugboverkefni1.persistence.respositories.CategoryRepository;
+import hi.hugboverkefni1.persistence.respositories.TaskRepository;
 import hi.hugboverkefni1.persistence.respositories.UserRepository;
 import hi.hugboverkefni1.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +18,13 @@ public class CategoryServiceImplementation implements CategoryService {
 
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
+    private final TaskRepository taskRepository;
 
     @Autowired
-    public CategoryServiceImplementation(CategoryRepository categoryRepository,UserRepository userRepository) {
+    public CategoryServiceImplementation(CategoryRepository categoryRepository, UserRepository userRepository, TaskRepository taskRepository) {
         this.categoryRepository = categoryRepository;
         this.userRepository = userRepository;
+        this.taskRepository = taskRepository;
     }
 
     @Override
@@ -55,7 +60,16 @@ public class CategoryServiceImplementation implements CategoryService {
 
     @Override
     public void delete(Category category) {
-        categoryRepository.delete(category);
+        List<Task> tasksInCategory = taskRepository.findByCategory(category);
+        if (tasksInCategory.isEmpty()) {
+            categoryRepository.delete(category);
+        } else {
+            System.out.println("Category in use");
+        }
+    }
 
+    @Override
+    public List<Category> getAllCategoriesByUser(User user) {
+        return categoryRepository.findByUser(user);
     }
 }
