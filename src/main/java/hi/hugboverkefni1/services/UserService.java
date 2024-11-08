@@ -13,6 +13,7 @@ public interface UserService {
     void deleteUser(User user);
     User findUsername(String username);
     boolean validateUser(String username, String password);
+    User findGmail(String gmail);
 
 
     public User updateUser(User user);

@@ -29,6 +29,11 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
+    public User findGmail(String gmail) {
+        return userRepository.findByGmail(gmail).orElse(null);
+    }
+
+    @Override
     public User findUserById(long id) {
 
         return userRepository.findById(id);

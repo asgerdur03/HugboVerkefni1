@@ -13,7 +13,7 @@
 ```
 git fetch origin
 git checkout <local branch>  # Switch to the branch where you want to make changes
-git pull origin Main  # Pull changes from the 'Main' branch into 'local branch'
+git pull origin Master  # Pull changes from the 'Master' branch into 'local branch'
 ```
 
 - Commita á remote branch:
