@@ -14,6 +14,7 @@ public interface UserService {
     User findUsername(String username);
     boolean validateUser(String username, String password);
     User findGmail(String gmail);
+    User findPassword(String password);
 
 
     public User updateUser(User user);

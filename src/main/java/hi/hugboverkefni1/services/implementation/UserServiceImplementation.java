@@ -34,6 +34,11 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
+    public User findPassword(String password) {
+        return userRepository.findByPassword(password).orElse(null);
+    }
+
+    @Override
     public User findUserById(long id) {
 
         return userRepository.findById(id);

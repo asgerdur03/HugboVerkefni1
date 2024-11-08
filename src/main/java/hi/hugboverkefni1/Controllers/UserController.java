@@ -189,6 +189,37 @@ public class UserController {
         return "redirect:/";  // Redirect back to home after successful update
     }
 
+    //update password
+    @GetMapping("/update-password")
+    public String showChangePasswordForm(HttpSession session, Model model) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            model.addAttribute("errorMessage", "Please log in to update password");
+            return "redirect:/";
+        }
+        model.addAttribute("user", loggedInUser);
+        return "update-password";
+    }
+
+    //handle password update
+    @PostMapping("/update-password")
+    public String updatePassword(@RequestParam("newPassword") String newPassword, HttpSession session, ModelMap model) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            model.put("errorMessage", "Please log in to update password");
+            return "redirect:/login";
+        }
+
+
+        // Update password and save the user
+        loggedInUser.setPassword(newPassword);
+        userService.saveUser(loggedInUser);
+
+        return "redirect:/";  // Redirect back to home after successful update
+    }
+
+
+
 
     @GetMapping("/settings")
     public String settings() {
