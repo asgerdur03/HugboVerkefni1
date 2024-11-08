@@ -3,6 +3,8 @@ package hi.hugboverkefni1.Controllers;
 import hi.hugboverkefni1.persistence.entities.Category;
 import hi.hugboverkefni1.persistence.entities.User;
 import hi.hugboverkefni1.services.CategoryService;
+import hi.hugboverkefni1.services.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,35 +17,35 @@ import java.util.List;
 public class CategoryController {
 
     private CategoryService categoryService;
+    private UserService userService;
 
     @Autowired
-    public CategoryController(CategoryService categoryService) {
+    public CategoryController(CategoryService categoryService, UserService userService) {
         this.categoryService = categoryService;
+        this.userService = userService;
     }
 
-    @RequestMapping("/categories")
-    public String category(Model model) {
-        //Call a method in a Service Class
-        List<Category> categories = categoryService.getAllCategories();
-        //Add some data to the Model
+
+    @GetMapping("/categories")
+    public String newCategory(Model model, HttpSession session) {
+        User loggedUser = (User) session.getAttribute("loggedInUser");
+
+        List<Category> categories = categoryService.getAllCategoriesByUser(loggedUser);  // laga í get all með user_id
         model.addAttribute("categories", categories);
-        return "categories";
+        model.addAttribute("category", new Category());
+        return "myCategories";
     }
 
-    @GetMapping("/categories/new")
-    public String newCategory(Category category) {
-        return "new";
-    }
+    @PostMapping("/categories")
+    public String createCategory(@ModelAttribute("categories") Category category, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        category.setUser(loggedInUser);
 
-    @PostMapping("/categories/new")
-    public String newCategory(Model model, Category category, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "new";
-        }
-        
         categoryService.save(category);
         return "redirect:/categories";
     }
+
+
 
     @RequestMapping("/categories/delete/{id}")
     public String deleteCategory(@PathVariable("id") long id, Model model) {

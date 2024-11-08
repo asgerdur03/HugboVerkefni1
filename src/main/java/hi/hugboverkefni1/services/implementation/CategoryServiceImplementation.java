@@ -58,4 +58,9 @@ public class CategoryServiceImplementation implements CategoryService {
         categoryRepository.delete(category);
 
     }
+
+    @Override
+    public List<Category> getAllCategoriesByUser(User user) {
+        return categoryRepository.findByUser(user);
+    }
 }

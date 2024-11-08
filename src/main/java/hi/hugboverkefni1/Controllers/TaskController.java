@@ -95,7 +95,7 @@ public class TaskController {
 
         model.addAttribute("tasks", tasks);
 
-        List<Category> userCategories = categoryService.getAllCategories();
+        List<Category> userCategories = categoryService.getAllCategoriesByUser(loggedInUser);
         model.addAttribute("categoryNames", userCategories);
 
         return "home";
@@ -168,14 +168,15 @@ public class TaskController {
     // edit task
     // edit the task attributes
     @RequestMapping(value="/editTask/{id}", method = RequestMethod.GET)
-    public String editTaskForm(@PathVariable("id") long id, Model model) {
+    public String editTaskForm(@PathVariable("id") long id, Model model, HttpSession session) {
         Task taskToEdit = taskService.findById(id);
+        User user = (User) session.getAttribute("loggedInUser");
 
         model.addAttribute("task", taskToEdit);
         model.addAttribute("taskStatuses", TaskStatus.values());
         model.addAttribute("taskPriorities", TaskPriority.values());
 
-        List<Category> userCategories = categoryService.getAllCategories();
+        List<Category> userCategories = categoryService.getAllCategoriesByUser(user);
         model.addAttribute("categoryNames", userCategories);
 
         taskToEdit.setCategoryId(taskToEdit.getCategory() != null ? taskToEdit.getCategory().getId() : null);
@@ -185,11 +186,12 @@ public class TaskController {
 
     // update task
     @RequestMapping(value="/editTask/{id}", method = RequestMethod.POST)
-    public String updateTask(@PathVariable("id") long id, @ModelAttribute Task updatedTask, BindingResult result, Model model) {
+    public String updateTask(@PathVariable("id") long id, @ModelAttribute Task updatedTask, BindingResult result, Model model, HttpSession session) {
+        User user = (User) session.getAttribute("loggedInUser");
         if (result.hasErrors()) {
             model.addAttribute("taskStatuses", TaskStatus.values());
             model.addAttribute("taskPriorities", TaskPriority.values());
-            List<Category> userCategories = categoryService.getAllCategories();
+            List<Category> userCategories = categoryService.getAllCategoriesByUser(user);
             model.addAttribute("categoryNames", userCategories);
             return "edittask";
         }

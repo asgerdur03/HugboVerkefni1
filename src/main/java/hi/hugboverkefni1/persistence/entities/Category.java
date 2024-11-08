@@ -22,10 +22,11 @@ public class Category {
     private long id;
 
     @ManyToOne(optional = true) //(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = true)
+    @JoinColumn(name = "user_id")
     private User user;
 
 
+    @Column(unique = true, nullable = false)
     private String categoryName;
 
     private String color;
@@ -82,6 +83,14 @@ public class Category {
         this.tasks = tasks;
     }
 
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
 
     @Override
     public String toString() {

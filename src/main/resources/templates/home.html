@@ -135,14 +135,9 @@
 
     <p><a href="/newTask">Add a new task</a></p>
 
-    <div th:if="${user != null}">
-        <p>User is logged in as: <span th:text="${user.username}"></span></p>
-        <a th:href="@{/update-username/{id}(id=${user.id})}">Update Username</a>
-    </div>
+        <p> <a th:href="@{/archive}">Archived tasks</a></p>
 
-
-
-        <a th:href="@{/archive}">Archived tasks</a>
+        <p><a th:href="@{/categories}">My Categories</a></p>
 
 
 </div>
