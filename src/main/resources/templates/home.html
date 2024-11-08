@@ -66,6 +66,16 @@
         <option value="false">Non-favorites</option>
     </select>
 
+    <div>
+        <label for="category">Category:</label>
+        <select id="category" name="category">
+            <option value="">All</option>
+            <option th:each="category : ${categoryNames}" th:value="${category.id}" th:text="${category.categoryName}"></option>
+        </select>
+    </div>
+
+
+
 
 
     <button type="submit">Filter</button>

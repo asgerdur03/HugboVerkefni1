@@ -41,6 +41,7 @@ public class TaskController {
                        @RequestParam(required = false) String startDate,
                        @RequestParam(required = false) String endDate,
                        @RequestParam(required = false) Boolean favorites,
+                       @RequestParam(required = false) Long category,
                        Model model,
                        HttpSession session) {
 
@@ -85,9 +86,17 @@ public class TaskController {
                     .collect(Collectors.toList());
         }
 
+        if (category != null) {
+            tasks = tasks.stream()
+                    .filter(task -> task.getCategory() != null && task.getCategory().getId().equals(category))
+                    .collect(Collectors.toList());
+        }
+
 
         model.addAttribute("tasks", tasks);
 
+        List<Category> userCategories = categoryService.getAllCategories();
+        model.addAttribute("categoryNames", userCategories);
 
         return "home";
 
