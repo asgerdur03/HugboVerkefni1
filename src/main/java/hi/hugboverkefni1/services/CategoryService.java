@@ -19,4 +19,6 @@ public interface CategoryService {
 
     List<Category> getAllCategoriesByUser(User uses);
 
+
+
 }

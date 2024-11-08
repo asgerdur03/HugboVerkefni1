@@ -27,7 +27,7 @@ public class Task{
     private LocalDate dueDate;
 
     @ManyToOne
-    @JoinColumn(name="category_id")
+    @JoinColumn(name="category_id", nullable= true)
     private Category category;
 
     @Transient

@@ -108,18 +108,10 @@ public class TaskServiceImplementation implements TaskService {
     }
 
 
-
     @Override
-    public void assignTaskToCategory(long taskId, long categoryId) {
-        Task task = taskRepository.findById(taskId);
-        Category category = categoryRepository.findById(categoryId);
-        task.setCategory(category);
-        taskRepository.save(task);
+    public List<Task> findByCategoryId(long id) {
+        Category category = categoryRepository.findById(id);
 
-
+        return taskRepository.findByCategory(category);
     }
-
-
-
-
 }

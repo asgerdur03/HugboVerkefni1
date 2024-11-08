@@ -25,6 +25,9 @@ public class TaskController {
     private TaskService taskService;
     private UserService userService;
 
+
+    Category noCategory = new Category("No category");
+
     @Autowired
     public TaskController(TaskService taskService, UserService userService, CategoryService categoryService) {
         this.taskService = taskService;
@@ -95,8 +98,11 @@ public class TaskController {
 
         model.addAttribute("tasks", tasks);
 
+
         List<Category> userCategories = categoryService.getAllCategoriesByUser(loggedInUser);
+
         model.addAttribute("categoryNames", userCategories);
+
 
         return "home";
 
@@ -116,7 +122,8 @@ public class TaskController {
         model.addAttribute("taskPriorities", TaskPriority.values()); // Pass TaskPriority enum values to the form
 
 
-        List<Category> userCategories = categoryService.getAllCategories();
+        List<Category> userCategories = categoryService.getAllCategoriesByUser(user);
+        userCategories.add(noCategory);
 
         model.addAttribute("categoryNames", userCategories);
 
@@ -134,9 +141,10 @@ public class TaskController {
         if (result.hasErrors()) {
             model.addAttribute("taskStatuses", TaskStatus.values()); //
             model.addAttribute("taskPriorities", TaskPriority.values()); //
-            List<Category> userCategories = categoryService.getAllCategories();
-            model.addAttribute("categoryNames", userCategories);
+            List<Category> userCategories = categoryService.getAllCategoriesByUser(user);
+            userCategories.add(noCategory);
 
+            model.addAttribute("categoryNames", userCategories);
 
             //return "newTask";
             System.out.println(result.getAllErrors());
@@ -145,9 +153,8 @@ public class TaskController {
 
         Long categoryId = task.getCategoryId();
         Category category = categoryService.findById(categoryId);
+
         task.setCategory(category);
-
-
         task.setUser(user);
 
 
@@ -177,6 +184,7 @@ public class TaskController {
         model.addAttribute("taskPriorities", TaskPriority.values());
 
         List<Category> userCategories = categoryService.getAllCategoriesByUser(user);
+        userCategories.add(noCategory);
         model.addAttribute("categoryNames", userCategories);
 
         taskToEdit.setCategoryId(taskToEdit.getCategory() != null ? taskToEdit.getCategory().getId() : null);
@@ -192,6 +200,7 @@ public class TaskController {
             model.addAttribute("taskStatuses", TaskStatus.values());
             model.addAttribute("taskPriorities", TaskPriority.values());
             List<Category> userCategories = categoryService.getAllCategoriesByUser(user);
+            userCategories.add(noCategory);
             model.addAttribute("categoryNames", userCategories);
             return "edittask";
         }

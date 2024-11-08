@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>My Categories</title>
 </head>
-<body>
+
 <body>
 
 <div class="navbar">
@@ -17,10 +17,12 @@
 </div>
 <h1>My Categories</h1>
 
+
 <div th:switch="${categories}">
   <h2 th:case="null">No Categories yet!</h2>
   <div th:case="*">
     <h2>My Categories</h2>
+    <p> It is not possible to delete a catagory that is currently in use</p>
     <table>
       <thead>
       <tr>
