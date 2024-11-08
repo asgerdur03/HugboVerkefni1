@@ -38,10 +38,4 @@ public interface TaskRepository extends JpaRepository<Task, Long>{
                                  @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
 
-
-
-
-
-
-
 }

@@ -253,4 +253,25 @@ public class UserController {
         session.setAttribute("loggedInUser", loggedInUser);
         return "redirect:/";
     }
+
+    // eyða acc
+    @GetMapping("/confirm-delete")
+    public String showDeleteConfirmation() {
+        return "confirm-delete";
+    }
+
+    // eyða acc
+    @PostMapping("/delete-account")
+    public String deleteAccount(HttpSession session, Model model) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+
+        if (loggedInUser != null) {
+            userService.delete(loggedInUser);
+            session.invalidate();
+            return "redirect:/login?accountDeleted=true";
+        } else {
+            model.addAttribute("error", "User not logged in");
+            return "error";
+        }
+    }
 }

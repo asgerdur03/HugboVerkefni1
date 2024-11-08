@@ -1,10 +1,8 @@
 package hi.hugboverkefni1.persistence.entities;
 
-
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -29,6 +27,7 @@ public class Task implements List<Task> {
     private LocalDate dueDate;
 
     @ManyToOne
+
     private Category category;
 
     @ManyToOne
