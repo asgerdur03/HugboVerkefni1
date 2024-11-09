@@ -1,41 +1,42 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>signup</title>
+    <meta charset="UTF-8">
+    <title>signup</title>
+    <link rel="stylesheet" th:href="@{/css/mutual.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
 <body>
 
-<h2>Sign up</h2>
+<div class="wrapper">
+    <h1>Sign up</h1>
 
-<div th:if="${errorMessage != null}" style="color: #ff002f;">
-  <p th:text="${errorMessage}"></p>
+    <div th:if="${errorMessage != null}" style="color: #ff002f;">
+        <p th:text="${errorMessage}"></p>
+    </div>
+
+    <div class="all-forms">
+        <form action="#" th:action="@{/signup}" th:object="${user}" method="post">
+            <div>
+                <label for="username">username: </label>
+                <input type="text" id="username" th:field="*{username}" required>
+            </div>
+            <div>
+                <label>email: </label>
+                <input type="text" id="email" th:field="*{gmail}" required>
+            </div>
+            <div>
+                <label>password: </label>
+                <input type="text" id="password" th:field="*{password}" required>
+            </div>
+
+            <input type="submit" value="Sign Up">
+            <p><a href="/">Til baka</a></p>
+        </form>
+    </div>
+
 </div>
-
-
-<form action="#" th:action="@{/signup}" th:object="${user}" method="post">
-
-  <div>
-    <label for ="username">username: </label>
-    <input type="text" id="username" th:field="*{username}" required>
-  </div>
-  <div>
-    <label >email: </label>
-    <input type="text" id="email" th:field="*{gmail}" required>
-
-  </div>
-
-  <div>
-    <label >password: </label>
-    <input type="text" id="password" th:field="*{password}" required>
-
-  </div>
-
-  <input type="submit" value="Signup">
-  <p><a href="/">Til baka</a></p>
-
-</form>
-
 
 
 </body>

@@ -5,34 +5,28 @@
     <title>Task System</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" th:href="@{/css/look.css}">
+    <link rel="stylesheet" th:href="@{/css/mutual.css}">
 </head>
 <body>
 
+<div class="navbar">
+    <a href="/settings">Stillingar</a>
+    <a class="active" href="/">Heim</a>
+    <a href="/logout" class="split">Logout</a>
+</div>
 
 
+<h1><span>Velkominn, <span th:text="${loggedInUser.username}"></span>!</span></h1>
+<!-- Birtir profile mynd user, bein vitnun var ekki að virka með thymeleaf þannig þetta er lengri workaround með  -->
+<span id="profilePicturePath" th:text="${loggedInUser.profilePicture}" style="display: none;"></span>
+<img id="profilePicture" alt="Profile Picture" width="100" height="100"/>
+<script>
+    const profilePicturePath = document.getElementById('profilePicturePath').textContent;
 
-    <div class="navbar" >
-        <a href="/settings">Stillingar</a>
-        <a class="active" href="/">Heim</a>
-
-        <a href="/logout" class="split">Logout</a>
-
-
-    </div>
-
-
-   <h1><span>Velkominn, <span th:text="${loggedInUser.username}"></span>!</span></h1>
-    <!-- Birtir profile mynd user, bein vitnun var ekki að virka með thymeleaf þannig þetta er lengri workaround með  -->
-    <span id="profilePicturePath" th:text="${loggedInUser.profilePicture}" style="display: none;"></span>
-    <img id="profilePicture" alt="Profile Picture" width="100" height="100"/>
-    <script>
-        const profilePicturePath = document.getElementById('profilePicturePath').textContent;
-
-        // Ef user ekki með mynd þá er vbeint í default
-        const imgElement = document.getElementById('profilePicture');
-        imgElement.src = profilePicturePath ? profilePicturePath : '/profilePics/default.png';
-    </script>
+    // Ef user ekki með mynd þá er vbeint í default
+    const imgElement = document.getElementById('profilePicture');
+    imgElement.src = profilePicturePath ? profilePicturePath : '/profilePics/default.png';
+</script>
 
 
 <form action="/" method="get">
@@ -74,15 +68,11 @@
         </select>
     </div>
 
-
-
-
-
     <button type="submit">Filter</button>
 </form>
 
-    <div th:switch="${tasks}">
-        <h2 th:case="null">No Tasks yet!</h2>
+<div th:switch="${tasks}">
+    <h2 th:case="null">No Tasks yet!</h2>
     <div th:case="*">
         <h2>Tasks</h2>
         <table>
@@ -103,7 +93,7 @@
             <tr th:each="task : ${tasks}"
                 th:style="${task.category != null and task.category.color != null ? 'background-color:' + task.category.color : 'background-color: #ece9d0'}">
 
-            <td th:text="${task.taskName}" ></td>
+                <td th:text="${task.taskName}"></td>
                 <td th:text="${task.taskNote}"></td>
                 <td th:text="${task.status}"></td>
                 <td th:text="${task.priority}"></td>
@@ -118,7 +108,8 @@
                         <button type="submit" th:if="${!task.favorite}">Add</button>
                         <span th:if="${task.favorite}" style="color: green;">Favorite</span>
                     </form>
-                    <form th:if="${task.favorite}" th:action="@{/removeFromFavorites/{id}(id=${task.id})}" method="post" style="display:inline;">
+                    <form th:if="${task.favorite}" th:action="@{/removeFromFavorites/{id}(id=${task.id})}" method="post"
+                          style="display:inline;">
                         <button type="submit">Remove</button>
                     </form>
 
@@ -128,7 +119,8 @@
                         <button type="submit">Archive</button>
                     </form>
                 </td>
-                <td th:text="${task.category != null ? task.category.categoryName : 'Uncategorized'}"></td> <!-- Category Column -->
+                <td th:text="${task.category != null ? task.category.categoryName : 'Uncategorized'}"></td>
+                <!-- Category Column -->
 
             </tr>
             </tbody>
@@ -137,9 +129,9 @@
 
     <p><a href="/newTask">Add a new task</a></p>
 
-        <p> <a th:href="@{/archive}">Archived tasks</a></p>
+    <p><a th:href="@{/archive}">Archived tasks</a></p>
 
-        <p><a th:href="@{/categories}">My Categories</a></p>
+    <p><a th:href="@{/categories}">My Categories</a></p>
 
 
 </div>

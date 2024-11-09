@@ -3,53 +3,67 @@
 <head>
   <meta charset="UTF-8">
   <title>add new Task</title>
+  <link rel="stylesheet" th:href="@{/css/mutual.css}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
 <body>
-<form th:action="@{/editTask/{id}(id=${task.id})}" th:object="${task}" method="post">
+<div class="navbar" >
+  <a href="/settings">Stillingar</a>
+  <a class="active" href="/">Heim</a>
+  <a href="/logout" class="split">Logout</a>
+</div>
 
-  <!-- Hidden ID Field -->
-  <input type="hidden" th:field="*{id}"/>
+<div class="wrapper">
+  <h1>Edit task</h1>
+  <div class="all-forms">
+    <form th:action="@{/editTask/{id}(id=${task.id})}" th:object="${task}" method="post">
 
-  <!-- Hidden _method field to simulate PATCH request -->
-  <input type="hidden" name="_method" value="PATCH" />
+      <!-- Hidden ID Field -->
+      <input type="hidden" th:field="*{id}"/>
 
-  <div>
-    <label for="taskName">Task Name: </label>
-    <input type="text" id="taskName" th:field="*{taskName}" placeholder="Enter taskname" required>
+      <!-- Hidden _method field to simulate PATCH request -->
+      <input type="hidden" name="_method" value="PATCH" />
+
+      <div>
+        <label for="taskName">Task Name: </label>
+        <input type="text" id="taskName" th:field="*{taskName}" placeholder="Enter taskname" required>
+      </div>
+
+      <div>
+        <label for="taskNote" >Additional notes: </label>
+        <textarea id="taskNote" th:field="*{taskNote}"></textarea>
+      </div>
+
+      <div>
+        <label for="status">Task Status:</label>
+        <select id="status" th:field="*{status}">
+          <option th:each="status : ${taskStatuses}" th:value="${status}" th:text="${status}"></option>
+        </select>
+      </div>
+      <div>
+        <label for="priority">Task Priority:</label>
+        <select id="priority" th:field="*{priority}">
+          <option th:each="priority : ${taskPriorities}" th:value="${priority}" th:text="${priority}"></option>
+        </select>
+      </div>
+
+      <div>
+        <label for="dueDate">Due Date:</label>
+        <input type="date" id="dueDate" th:field="*{dueDate}" required>
+      </div>
+
+      <div>
+        <label for="category">Category:</label>
+        <select id="category" th:field="*{categoryId}">
+          <option th:each="category : ${categoryNames}" th:value="${category.id}" th:text="${category.categoryName}"></option>
+        </select>
+      </div>
+
+      <input type="submit" value="Save changes">
+    </form>
   </div>
-
-  <div>
-    <label for="taskNote" >Additional notes: </label>
-    <textarea id="taskNote" th:field="*{taskNote}"></textarea>
-  </div>
-
-  <div>
-    <label for="status">Task Status:</label>
-    <select id="status" th:field="*{status}">
-      <option th:each="status : ${taskStatuses}" th:value="${status}" th:text="${status}"></option>
-    </select>
-  </div>
-  <div>
-    <label for="priority">Task Priority:</label>
-    <select id="priority" th:field="*{priority}">
-      <option th:each="priority : ${taskPriorities}" th:value="${priority}" th:text="${priority}"></option>
-    </select>
-  </div>
-
-  <div>
-    <label for="dueDate">Due Date:</label>
-    <input type="date" id="dueDate" th:field="*{dueDate}" required>
-  </div>
-
-  <div>
-    <label for="category">Category:</label>
-    <select id="category" th:field="*{categoryId}">
-      <option th:each="category : ${categoryNames}" th:value="${category.id}" th:text="${category.categoryName}"></option>
-    </select>
-  </div>
-
-  <input type="submit" value="Save changes">
-</form>
+</div>
 
 </body>
 </html>

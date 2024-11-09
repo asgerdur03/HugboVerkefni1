@@ -3,9 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <title>Archived Tasks</title>
+  <link rel="stylesheet" th:href="@{/css/mutual.css}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
 </head>
 <body>
+
+<div class="navbar" >
+  <a href="/settings">Stillingar</a>
+  <a class="active" href="/">Heim</a>
+
+  <a href="/logout" class="split">Logout</a>
+
+
+</div>
 <h1>Archived Tasks</h1>
+
+
 
 <div th:switch="${tasks}">
   <h2 th:case="null">No Tasks yet!</h2>
