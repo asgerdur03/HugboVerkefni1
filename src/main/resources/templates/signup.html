@@ -18,17 +18,17 @@
 
     <div class="all-forms">
         <form action="#" th:action="@{/signup}" th:object="${user}" method="post">
-            <div>
-                <label for="username">username: </label>
+            <div class="name-response">
+                <label for="username">Username: </label>
                 <input type="text" id="username" th:field="*{username}" required>
             </div>
-            <div>
-                <label>email: </label>
+            <div class="name-response">
+                <label>Email: </label>
                 <input type="text" id="email" th:field="*{gmail}" required>
             </div>
-            <div>
-                <label>password: </label>
-                <input type="text" id="password" th:field="*{password}" required>
+            <div class="name-response">
+                <label>Password: </label>
+                <input type="password" id="password" th:field="*{password}" required>
             </div>
 
             <input type="submit" value="Sign Up">

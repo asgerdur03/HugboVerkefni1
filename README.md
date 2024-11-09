@@ -50,21 +50,16 @@ Seinna: postgres
 
 ## Uppsetning Viðmóts: localhost:8080
 
-** TODO- laga þetta **
-
 - `/` home page, lists the tasks, and has navbar to logout, settings and home
 - `/login` login page, opens if no current user is logged in, else it's linked in the nav?
 - `/signup` signup form, adds user to the database if username is not taken
-- `/settings` uppdate all user attributes, and delete account (not yet inmplemented)
+- `/settings` update all user attributes, and delete account
 -
 - `/newTask` Create new task, and add to the `/home` page
 - `/archive` List of archived tasks, can be unarchived
+- `/categories` List of each users categories, and where they can create new categories
+
 - More, but not mentioned (don't have their own page in the UI)
-
-
-
-
-
 
 
 ### Todo sem er ekki endpoints
@@ -74,15 +69,12 @@ Seinna: postgres
 - laga date, viljum hafa það optiona
 
 
-### TODO, sem varðar endpoints en er ekki endilega point
-- Category
-   - create
-   - make new categories
-      - add color just here maybe (just use hex color picker, then pipe into css?)
-   - assign the category_id to a task (like tasks have user_id to associate)
-   - assign user_id to category (so we can display only each users categories)
-   - update UI accordingly (maybe bail and just use filters)
-   - add filter function category
+### TODO, css
+
+- home
+- archive
+- categories
+- stillingar
 
 
 ###  Úr verk 1, það sem er must have að við gerum
