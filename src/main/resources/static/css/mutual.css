@@ -1,0 +1,23 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.navbar img{
+    max-width: 30px;
+    width: 30px;
+}
+
+.navbar{
+    display: flex;
+    background-color: aqua;
+    padding: 1rem;
+    justify-content: space-between;
+
+    position: sticky;
+    top:0;
+}
+
+.navbar a{
+    text-decoration: none;
+}
