@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Clock</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        .timer {
+            text-align: center;
+        }
+        .time {
+            font-size: 48px;
+            margin: 20px;
+        }
+        .controls button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        .session-control {
+            margin: 10px;
+        }
+        .session-control label {
+            font-size: 18px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="timer">
+    <h1>Pomodoro Clock</h1>
+
+    <!-- Control fyrir lengd focus tíma -->
+    <div class="session-control">
+        <label for="session">Focus Time (minutes):</label>
+        <input type="number" id="session" value="25" min="1" max="60" style="width: 60px;">
+    </div>
+
+    <div class="time" id="timer">25:00</div>
+    <div class="controls">
+        <button onclick="startTimer()">Start</button>
+        <button onclick="stopTimer()">Stop</button>
+        <button onclick="resetTimer()">Reset</button>
+    </div>
+</div>
+
+<script>
+        let timer;
+        let minutes;
+        let seconds = 0;
+        let isRunning = false;
+
+        function updateDisplay() {
+            const timerDisplay = document.getElementById("timer");
+            timerDisplay.textContent =
+                `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            if (!isRunning) {
+                isRunning = true;
+
+                minutes = parseInt(document.getElementById("session").value);
+                seconds = 0;
+                updateDisplay();
+
+                timer = setInterval(() => {
+                    if (seconds === 0) {
+                        if (minutes === 0) {
+                            clearInterval(timer);
+                            alert("Time's up!");
+                            resetTimer();
+                        } else {
+                            minutes--;
+                            seconds = 59;
+                        }
+                    } else {
+                        seconds--;
+                    }
+                    updateDisplay();
+                }, 1000);
+            }
+        }
+
+        function stopTimer() {
+            clearInterval(timer);
+            isRunning = false;
+        }
+
+        function resetTimer() {
+            stopTimer();
+            // Reset based on input
+            minutes = parseInt(document.getElementById("session").value);
+            seconds = 0;
+            updateDisplay();
+        }
+
+        // Initialize with default time
+        minutes = parseInt(document.getElementById("session").value);
+        updateDisplay();
+    </script>
+</body>
+</html>

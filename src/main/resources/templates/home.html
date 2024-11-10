@@ -141,7 +141,13 @@
 
         <p><a th:href="@{/categories}">My Categories</a></p>
 
-
+        <a th:href="@{/pomodoro}" onclick="openPomodoro()">Pomodoro Clock</a>
+        <script>
+        function openPomodoro() {
+        event.preventDefault();
+        window.open("/pomodoro", "Pomodoro Clock", "width=400,height=500");
+    }
+    </script>
 </div>
 
 
