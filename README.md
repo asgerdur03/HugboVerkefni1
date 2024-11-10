@@ -59,6 +59,7 @@ Seinna: postgres
 - `/archive` List of archived tasks, can be unarchived
 - `/categories` List of each users categories, and where they can create new categories
 
+
 - More, but not mentioned (don't have their own page in the UI)
 
 
