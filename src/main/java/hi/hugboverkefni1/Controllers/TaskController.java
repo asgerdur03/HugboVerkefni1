@@ -271,6 +271,14 @@ public class TaskController {
         return "redirect:/archive";
     }
 
+    @Controller
+    public class PomodoroController {
+
+        @GetMapping("/pomodoro")
+        public String pomodoro() {
+            return "pomodoro";
+        }
+    }
 
 
 }
