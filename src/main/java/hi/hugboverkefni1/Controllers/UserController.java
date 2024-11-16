@@ -23,6 +23,12 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/admin")
+    public String showAdminPage(Model model){
+        List<User> allUsers = userService.getUsers();
+        model.addAttribute("users", allUsers);
+        return "admin";
+    }
     // Web opening page, login form and link to signup screen
     @RequestMapping("/login")
     public String home(Model model) {
@@ -59,11 +65,11 @@ public class UserController {
     }
 
     // Delete user
-    @RequestMapping(value = "/login/delete/{id}")
+    @RequestMapping(value = "/admin/delete/{id}")
     public String deleteUser(@PathVariable("id") long id) {
         User userToDelete = userService.findUserById(id);
         userService.deleteUser(userToDelete);
-        return "redirect:/login";
+        return "redirect:/admin";
     }
 
 
