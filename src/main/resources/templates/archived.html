@@ -15,9 +15,9 @@
   <a class="active" href="/">Heim</a>
 
   <a href="/logout" class="split">Logout</a>
-
-
 </div>
+
+<div class="wrapper">
 <h1>Archived Tasks</h1>
 
 
@@ -39,7 +39,8 @@
       </thead>
       <tbody>
       <tr th:each="task : ${tasks}">
-        <td th:text="${task.taskName}"></td>
+
+      <td th:text="${task.taskName}"></td>
         <td th:text="${task.taskNote}"></td>
         <td th:text="${task.status}"></td>
         <td th:text="${task.priority}"></td>
@@ -62,6 +63,7 @@
 
 
 <a th:href="@{/}">Back to Task List</a>
+</div>
 </body>
 </html>
 

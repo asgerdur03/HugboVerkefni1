@@ -9,17 +9,21 @@
 </head>
 <body>
 
+<div class="wrapper">
 
-      <h2>Edit Gmail</h2>
+    <h2>Edit Gmail</h2>
 
-      <form th:action="@{/update-gmail}" method="post">
-        <div>
-          <label for="gmail">New Gmail :</label>
-          <input type="email" id="gmail" name="newGmail" required/>
-        </div>
+    <div class="all-forms">
+        <form th:action="@{/update-gmail}" method="post">
+            <div>
+                <label for="gmail">New Gmail :</label>
+                <input type="email" id="gmail" name="newGmail" required/>
+            </div>
 
-        <input type="submit" value="Update Gmail"/>
-      </form>
+            <input type="submit" value="Update Gmail"/>
+        </form>
+    </div>
+
 
       <!-- Back to Home button -->
       <p>
@@ -27,5 +31,6 @@
           <button type="button">Back to Home</button>
         </a>
       </p>
+</div>
 </body>
 </html>

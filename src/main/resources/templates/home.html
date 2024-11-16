@@ -16,7 +16,7 @@
     <a href="/logout" class="split">Logout</a>
 </div>
 
-
+<div class="wrapper">
 <h1><span>Velkominn, <span th:text="${loggedInUser.username}"></span>!</span></h1>
 <!-- Birtir profile mynd user, bein vitnun var ekki að virka með thymeleaf þannig þetta er lengri workaround með  -->
 <span id="profilePicturePath" th:text="${loggedInUser.profilePicture}" style="display: none;"></span>
@@ -180,6 +180,6 @@
     </script>
 </div>
 
-
+</div>
 </body>
 </html>

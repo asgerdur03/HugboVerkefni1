@@ -131,4 +131,5 @@ public class TaskServiceImplementation implements TaskService {
     public List<Task> getAllTasksInCategoriesOrder(long userId) {
         return taskRepository.GetAllTasksCategoryOrder(userId);
     }
+
 }
