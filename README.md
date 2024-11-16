@@ -9,7 +9,7 @@
 
 ## Því ég kann ekki á git
 
-- Pull changes from Main: 
+- Pull changes from Master: 
 ```
 git fetch origin
 git checkout <local branch>  # Switch to the branch where you want to make changes
@@ -62,6 +62,12 @@ Seinna: postgres
 
 - More, but not mentioned (don't have their own page in the UI)
 
+## How to access the admin page
+As this function is mainly to have an easy overview of existing users and a way to ease delete the current way to access this page is 
+accessed by changing the url to 
+- **localhost:8080/admin**.
+
+This is not intended for users to access and therefore we did not implement a way to access this within the application
 
 ### Todo sem er ekki endpoints
 
