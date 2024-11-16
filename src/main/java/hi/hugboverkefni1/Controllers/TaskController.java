@@ -105,9 +105,56 @@ public class TaskController {
 
 
         return "home";
-
-
     }
+
+    @RequestMapping("/sort-by-name")
+    public String sortName(Model model, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+        List<Task> tasks= taskService.getAllTasksAlphabeticalOrder(loggedInUser.getId());
+
+        model.addAttribute("tasks", tasks);
+        model.addAttribute("loggedInUser", loggedInUser);
+
+        List<Category> userCategories = categoryService.getAllCategoriesByUser(loggedInUser);
+        model.addAttribute("categoryNames", userCategories);
+        return "home";
+    }
+
+    @RequestMapping("/sort-by-date")
+    public String sortDate(Model model, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+        List<Task> tasks= taskService.getAllTasksInDateOrder(loggedInUser.getId());
+
+        model.addAttribute("tasks", tasks);
+        model.addAttribute("loggedInUser", loggedInUser);
+
+        List<Category> userCategories = categoryService.getAllCategoriesByUser(loggedInUser);
+        model.addAttribute("categoryNames", userCategories);
+        return "home";
+    }
+
+    @RequestMapping("/sort-by-category")
+    public String sortCategory(Model model, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+        List<Task> tasks= taskService.getAllTasksInCategoriesOrder(loggedInUser.getId());
+
+        model.addAttribute("tasks", tasks);
+        model.addAttribute("loggedInUser", loggedInUser);
+
+        List<Category> userCategories = categoryService.getAllCategoriesByUser(loggedInUser);
+        model.addAttribute("categoryNames", userCategories);
+        return "home";
+    }
+
 
     // Show the new task form and add enums to the model
     @GetMapping("/newTask")

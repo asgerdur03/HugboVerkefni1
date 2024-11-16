@@ -3,6 +3,7 @@ package hi.hugboverkefni1.persistence.respositories;
 import hi.hugboverkefni1.persistence.entities.Category;
 import hi.hugboverkefni1.persistence.entities.Task;
 import hi.hugboverkefni1.persistence.entities.User;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -25,6 +26,17 @@ public interface TaskRepository extends JpaRepository<Task, Long>{
     List<Task> findByUser(User user);
 
 
+    @Query("SELECT t from Task t where t.user.id = :userId Order by t.taskName asc")
+    List<Task> GetAllTasksAlphabeticalOrder(@Param("userId") long userId);
+
+    @Query("select t from Task t where t.user.id = :userId Order by t.dueDate ")
+    List<Task> GetAllTasksDateOrder(@Param("userId") long userId);
+
+    @Query("select t from Task t where t.user.id = :userId order by t.category.categoryName ")
+    List<Task> GetAllTasksCategoryOrder(@Param("userId") long userId);
+
+    List<Task> findAll(Sort sort);
+
     List<Task> findByUserId(long userId);
 
 
@@ -36,6 +48,7 @@ public interface TaskRepository extends JpaRepository<Task, Long>{
             "(t.dueDate BETWEEN :startDate AND :endDate OR (:startDate IS NULL AND :endDate IS NULL))")
     List<Task> findFilteredTasks(@Param("priority") String priority, @Param("status") String status,
                                  @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+
 
 
 }

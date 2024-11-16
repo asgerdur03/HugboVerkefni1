@@ -6,6 +6,7 @@ import hi.hugboverkefni1.persistence.respositories.CategoryRepository;
 import hi.hugboverkefni1.persistence.respositories.TaskRepository;
 import hi.hugboverkefni1.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -113,5 +114,21 @@ public class TaskServiceImplementation implements TaskService {
         Category category = categoryRepository.findById(id);
 
         return taskRepository.findByCategory(category);
+    }
+
+
+    @Override
+    public List<Task> getAllTasksAlphabeticalOrder(long userId) {
+        return taskRepository.GetAllTasksAlphabeticalOrder(userId);
+    }
+
+    @Override
+    public List<Task> getAllTasksInDateOrder(long userId) {
+        return taskRepository.GetAllTasksDateOrder(userId);
+    }
+
+    @Override
+    public List<Task> getAllTasksInCategoriesOrder(long userId) {
+        return taskRepository.GetAllTasksCategoryOrder(userId);
     }
 }

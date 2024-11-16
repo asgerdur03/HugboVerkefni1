@@ -33,6 +33,12 @@ public interface TaskService {
     List<Task> findByUserId(long userId);
 
     List<Task> findByCategoryId(long id);
+
+
+    List<Task> getAllTasksAlphabeticalOrder(long userId);
+    List<Task> getAllTasksInDateOrder(long userId);
+    List<Task> getAllTasksInCategoriesOrder(long userId);
+
 }
 
 
