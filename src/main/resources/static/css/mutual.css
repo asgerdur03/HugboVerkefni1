@@ -81,24 +81,26 @@ form input{
 
 
 /* Nav bar allstaðar*/
-.navbar img{
-    max-width: 30px;
-    width: 30px;
-}
 
 .navbar{
     display: flex;
-    background-color: aqua;
+    background-color: pink;
     padding: 1rem;
-    justify-content: space-between;
-
+    justify-content: space-evenly;
+    align-items: center;
     position: sticky;
     top:0;
+    max-width: 80%;
+    margin: 0 auto;
+    border-bottom: 2px #b55385;
 }
+
+.navbar a.active {
+            font-weight: bold;
+        }
 
 
 
 /* Buttons allstaðar*/
-
 
 
