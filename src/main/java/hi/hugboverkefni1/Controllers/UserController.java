@@ -234,7 +234,7 @@ public class UserController {
         }
 
         // Gefur options af x myndum með nafnscheme pic1,pic2.....
-        List<String> profilePics = List.of("profilePics/pic1.png", "profilePics/pic2.png", "profilePics/pic3.png");
+        List<String> profilePics = List.of("profilePics/pic1.png", "profilePics/pic2.png", "profilePics/pic3.png","profilePics/pic4.png","profilePics/pic5.png","profilePics/pic6.png","profilePics/pic7.png","profilePics/pic8.png","profilePics/pic9.png","profilePics/pic10.png","profilePics/pic11.png","profilePics/pic12.png");
         model.addAttribute("profilePics", profilePics);
         model.addAttribute("loggedInUser", loggedInUser);
         return "profile-pic-selection";
