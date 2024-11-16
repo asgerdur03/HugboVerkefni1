@@ -127,11 +127,28 @@
         </table>
     </div>
 
+    <!-- bæta task takki -->
+    <form action="/newTask" method="get">
+        <button type="submit">Add a New Task</button>
+    </form>
+
+    <!-- sjá archived tasks takki -->
+    <form th:action="@{/archive}" method="get">
+        <button type="submit">Archived Tasks</button>
+    </form>
+
+    <!-- fara í categories takki -->
+    <form th:action="@{/categories}" method="get">
+        <button type="submit">My Categories</button>
+    </form>
+
+    <!--  Gömlu linkar a new task,archived og categories
     <p><a href="/newTask">Add a new task</a></p>
 
     <p><a th:href="@{/archive}">Archived tasks</a></p>
 
     <p><a th:href="@{/categories}">My Categories</a></p>
+    -->
 
         <a th:href="@{/pomodoro}" onclick="openPomodoro()">Pomodoro Clock</a>
         <script>
