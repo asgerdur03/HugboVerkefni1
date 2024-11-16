@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Admin page</title>
 </head>
 <body>
-
 <div th:switch="${users}">
     <h2 th:case="null">No users yet!</h2>
     <div th:case="*">
         <h2>Users</h2>
-        <p>For testing purposes only (And maybe for admin privaleges) </p>
+        <p>For display of all users accounts </p>
         <table>
             <thead>
             <tr>
@@ -24,14 +23,13 @@
                 <td th:text="${user.username}"></td>
                 <td th:text="${user.password}"></td>
                 <td th:text="${user.gmail}"></td>
-                <td><a th:href="@{/login/delete/{id}(id=${user.id})}">Delete</a></td>
+                <td><a th:href="@{/admin/delete/{id}(id=${user.id})}">Delete</a></td>
             </tr>
             </tbody>
         </table>
     </div>
-
-
 </div>
 
+</div>
 </body>
 </html>
