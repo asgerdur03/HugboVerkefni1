@@ -59,12 +59,14 @@ textarea {
     justify-content: center;
     flex-direction: column;
     gap: 2rem;
+    align-items: center;
 
 }
 .all-forms{
     display: flex;
-    align-content: center;
+    align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 .all-forms form{
     align-content: center;
@@ -132,3 +134,21 @@ h3 {
     background-color: red;
 }
 
+h1,
+h2,
+h3,
+p{
+    margin-bottom: 10px;
+}
+
+
+table{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+table button{
+    min-width: auto;
+}
