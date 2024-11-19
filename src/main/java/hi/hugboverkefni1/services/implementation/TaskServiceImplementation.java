@@ -16,13 +16,10 @@ import java.util.List;
 public class TaskServiceImplementation implements TaskService {
 
     private TaskRepository taskRepository;
-    private CategoryRepository categoryRepository;
-
 
     @Autowired
-    public TaskServiceImplementation(TaskRepository taskRepository, CategoryRepository categoryRepository) {
+    public TaskServiceImplementation(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
-        this.categoryRepository = categoryRepository;
     }
 
     @Override
@@ -37,8 +34,8 @@ public class TaskServiceImplementation implements TaskService {
             task.setFavorite(true);
             taskRepository.save(task);
         }
-
     }
+
     @Override
     public void removeFromFavorites(long id){
         Task task = taskRepository.findById(id);
@@ -46,16 +43,6 @@ public class TaskServiceImplementation implements TaskService {
             task.setFavorite(false);
             taskRepository.save(task);
         }
-    }
-
-    @Override
-    public Task findByTitle(String title) {
-        return null;
-    }
-
-    @Override
-    public List<Task> findAllTasks() {
-        return taskRepository.findAll();
     }
 
     @Override
@@ -71,11 +58,6 @@ public class TaskServiceImplementation implements TaskService {
     @Override
     public void delete(Task task) {
         taskRepository.delete(task);
-
-    }
-
-    public List<Task> findFilteredTasks(String priority, String status, LocalDate startDate, LocalDate endDate) {
-        return taskRepository.findFilteredTasks(priority, status, startDate, endDate);
     }
 
     @Override
@@ -95,7 +77,6 @@ public class TaskServiceImplementation implements TaskService {
             task.setArchived(true);
             taskRepository.save(task);
         }
-
     }
 
     @Override
@@ -105,23 +86,12 @@ public class TaskServiceImplementation implements TaskService {
             task.setArchived(false);
             taskRepository.save(task);
         }
-
     }
-
-
-    @Override
-    public List<Task> findByCategoryId(long id) {
-        Category category = categoryRepository.findById(id);
-
-        return taskRepository.findByCategory(category);
-    }
-
 
     @Override
     public List<Task> getAllTasksAlphabeticalOrder(long userId) {
         return taskRepository.GetAllTasksAlphabeticalOrder(userId);
     }
-
     @Override
     public List<Task> getAllTasksInDateOrder(long userId) {
         return taskRepository.GetAllTasksDateOrder(userId);
@@ -131,5 +101,4 @@ public class TaskServiceImplementation implements TaskService {
     public List<Task> getAllTasksInCategoriesOrder(long userId) {
         return taskRepository.GetAllTasksCategoryOrder(userId);
     }
-
 }

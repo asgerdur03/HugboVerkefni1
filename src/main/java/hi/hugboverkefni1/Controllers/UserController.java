@@ -23,6 +23,7 @@ public class UserController {
         this.userService = userService;
     }
 
+
     @GetMapping("/admin")
     public String showAdminPage(Model model){
         List<User> allUsers = userService.getUsers();

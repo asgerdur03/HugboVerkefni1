@@ -155,8 +155,5 @@ public class Task{
         this.categoryId = categoryId;
     }
 
-
-
-
 }
 

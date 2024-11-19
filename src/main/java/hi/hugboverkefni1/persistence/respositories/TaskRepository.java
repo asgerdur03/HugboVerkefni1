@@ -23,7 +23,6 @@ public interface TaskRepository extends JpaRepository<Task, Long>{
     List<Task> findByIsArchivedIsTrue();
 
     List<Task> findByCategory(Category category);
-    List<Task> findByUser(User user);
 
 
     @Query("SELECT t from Task t where t.user.id = :userId and t.isArchived=false Order by t.taskName asc ")

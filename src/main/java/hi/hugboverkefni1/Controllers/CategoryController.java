@@ -22,15 +22,12 @@ import java.util.List;
 public class CategoryController {
 
     private CategoryService categoryService;
-    private UserService userService;
-    private TaskService taskService;
 
     @Autowired
-    public CategoryController(CategoryService categoryService, UserService userService, TaskService taskService) {
+    public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
-        this.userService = userService;
-        this.taskService = taskService;
     }
+
 
 
     @GetMapping("/categories")
@@ -41,12 +38,18 @@ public class CategoryController {
             return "redirect:/login";
         }
 
-        List<Category> categories = categoryService.getAllCategoriesByUser(loggedUser);  // laga í get all með user_id
+        List<Category> categories = categoryService.getAllCategoriesByUser(loggedUser);
         model.addAttribute("categories", categories);
         model.addAttribute("category", new Category());
         return "myCategories";
     }
 
+    /**
+     *
+     * @param category
+     * @param session
+     * @return
+     */
     @PostMapping("/categories")
     public String createCategory(@ModelAttribute("categories") Category category, HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");

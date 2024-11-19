@@ -33,10 +33,6 @@ public class UserServiceImplementation implements UserService {
         return userRepository.findByGmail(gmail).orElse(null);
     }
 
-    @Override
-    public User findPassword(String password) {
-        return userRepository.findByPassword(password).orElse(null);
-    }
 
     @Override
     public User findUserById(long id) {
@@ -56,20 +52,13 @@ public class UserServiceImplementation implements UserService {
 
     }
 
-    /*
-    *Validates user by checking if the username exists and if the password matches the username
-    * returns true if both conditions are met otherwise false.
-    */
-
     @Override
     public boolean validateUser(String username, String password) {
         Optional<User> user = userRepository.findByUsername(username);
-
         if (user.isEmpty()) {
             System.out.println("User not found: " + username);
             return false;
         }
-
 
         if (user.get().getPassword().equals(password)) {
             System.out.println("User validated successfully: " + username);
@@ -78,11 +67,6 @@ public class UserServiceImplementation implements UserService {
             System.out.println("Invalid password for user: " + username);
             return false;
         }
-    }
-
-    @Override
-    public User updateUser(User user) {
-        return userRepository.save(user);
     }
 
     @Override

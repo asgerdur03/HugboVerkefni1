@@ -39,7 +39,6 @@ public class Category {
     public Category() {
     }
 
-    // to create category
     public Category(String categoryName) {
         this.categoryName = categoryName;
     }
