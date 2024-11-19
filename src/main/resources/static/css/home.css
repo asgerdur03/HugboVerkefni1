@@ -1,0 +1,55 @@
+.user-info{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.user-info h1 {
+    margin-left: 1rem;
+    margin-bottom: 0;
+}
+
+.filter-sort{
+    display: flex;
+    flex-direction: row-reverse;
+    max-width: 1000px;
+    width: 100%;
+
+}
+
+.filter{
+    flex: 6.5;
+
+}
+
+.takkar{
+    flex: 3.5;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+}
+
+.sort,
+.takkar-sort{
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: nowrap;
+    flex-direction: column;
+
+}
+
+
+.tasklist{
+
+}
+
+.takkar{
+
+}
+
+.pomo{
+
+}

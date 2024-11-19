@@ -147,6 +147,8 @@ public class TaskController {
         }
         List<Task> tasks= taskService.getAllTasksInCategoriesOrder(loggedInUser.getId());
 
+
+
         model.addAttribute("tasks", tasks);
         model.addAttribute("loggedInUser", loggedInUser);
 
@@ -318,13 +320,15 @@ public class TaskController {
         return "redirect:/archive";
     }
 
+    /*
     @Controller
     public class PomodoroController {
 
-        @GetMapping("/pomodoro")
-        public String pomodoro() {
-            return "pomodoro";
-        }
+    }
+*/
+    @GetMapping("/pomodoro")
+    public String pomodoro() {
+        return "pomodoro";
     }
 
 

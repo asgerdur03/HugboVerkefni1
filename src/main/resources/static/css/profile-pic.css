@@ -1,0 +1,27 @@
+
+.images{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+
+.images div{
+    border: 2px solid black;
+    border-radius: 10px;
+    margin :10px;
+
+}
+
+.images label{
+    display: flex;
+}
+
+.images input[type="radio"]{
+    width:fit-content;
+    margin: 1rem;
+    transform: scale(1.5);
+
+
+
+}

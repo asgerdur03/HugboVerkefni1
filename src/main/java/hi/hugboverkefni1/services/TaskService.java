@@ -39,6 +39,7 @@ public interface TaskService {
     List<Task> getAllTasksInDateOrder(long userId);
     List<Task> getAllTasksInCategoriesOrder(long userId);
 
+
 }
 
 

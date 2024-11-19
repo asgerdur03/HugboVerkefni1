@@ -10,16 +10,20 @@
 </head>
 <body>
 
+<div class="wrapper">
 <h2>Update Username</h2>
 
-<form th:action="@{/update-username}" method="post">
-  <div>
-    <label for="username">New Username:</label>
-    <input type="text" id="username" name="newUsername" required/>
-  </div>
+  <div class="all-forms">
+    <form th:action="@{/update-username}" method="post">
+      <div>
+        <label for="username">New Username:</label>
+        <input type="text" id="username" name="newUsername" required/>
+      </div>
 
-  <input type="submit" value="Update Username"/>
-</form>
+      <input type="submit" value="Update Username"/>
+    </form>
+
+  </div>
 
 <!-- Back to Home button -->
 <p>
@@ -27,6 +31,7 @@
     <button type="button">Back to Home</button>
   </a>
 </p>
+</div>
 
 </body>
 </html>
