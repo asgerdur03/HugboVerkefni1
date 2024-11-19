@@ -114,3 +114,5 @@ This is not intended for users to access and therefore we did not implement a wa
    A user selects a task from their list that is no longer needed and chooses the delete option. The system confirms the action to prevent accidental deletions. Once confirmed the task is then permanently removed from the task list. The system updates the user’s dashboard reflecting the changes.
 8. User management:
    Authorised admin can access stored user data. Admins can view detailed user profiles and see a statistical overview of the platform, such as user engagement, account status and activity history.
+
+kill me
