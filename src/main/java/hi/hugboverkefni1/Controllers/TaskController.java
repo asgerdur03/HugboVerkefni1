@@ -293,7 +293,6 @@ public class TaskController {
     }
 
     // birta archived page
-    // er ekki að birta archived tasks
     @GetMapping("/archive")
     public String archivedTasks(Model model,  HttpSession session) {
         User user = (User) session.getAttribute("loggedInUser");
@@ -320,17 +319,11 @@ public class TaskController {
         return "redirect:/archive";
     }
 
-    /*
-    @Controller
-    public class PomodoroController {
-
-    }
-*/
+    // birtir pomodoro
     @GetMapping("/pomodoro")
     public String pomodoro() {
         return "pomodoro";
     }
-
 
 }
 
