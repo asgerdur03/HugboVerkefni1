@@ -41,8 +41,8 @@ public class Task{
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean favorite= false;
 
-    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
-    private boolean isArchived=false;
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE" )
+    private boolean Archived=false;
 
     public Task() {
 
@@ -61,17 +61,17 @@ public class Task{
         this.dueDate = dueDate;
         this.category = category;
         this.favorite = favorite;
-        this.isArchived = isArchived;
+        this.Archived = isArchived;
 
 
     }
 
     public boolean isArchived() {
-        return isArchived;
+        return Archived;
     }
 
     public void setArchived(boolean archived) {
-        isArchived = archived;
+        Archived = archived;
     }
 
     public long getId() {
@@ -155,5 +155,15 @@ public class Task{
         this.categoryId = categoryId;
     }
 
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                ", taskName='" + taskName + '\'' +
+                ", category=" + category +
+                ", user=" + user +
+                ", isArchived=" + Archived +
+                '}';
+    }
 }
 

@@ -19,16 +19,20 @@ public interface TaskRepository extends JpaRepository<Task, Long>{
     Task findById(long id);
 
 
-    List<Task> findByIsArchivedIsFalse();
-    List<Task> findByIsArchivedIsTrue();
+    @Query("select t from Task t where t.user.id = :userId and t.Archived = false")
+    List<Task> findUnarchivedTasks(@Param("userId") long userId);
+
+    @Query("select t from Task t where t.user.id = :userId and t.Archived = true")
+    List<Task> findArchivedTasks(@Param("userId") long userId);
+
 
     List<Task> findByCategory(Category category);
 
 
-    @Query("SELECT t from Task t where t.user.id = :userId and t.isArchived=false Order by t.taskName asc ")
+    @Query("SELECT t from Task t where t.user.id = :userId and t.Archived=false Order by t.taskName asc ")
     List<Task> GetAllTasksAlphabeticalOrder(@Param("userId") long userId);
 
-    @Query("select t from Task t where t.user.id = :userId and t.isArchived=false Order by t.dueDate ")
+    @Query("select t from Task t where t.user.id = :userId and t.Archived=false Order by t.dueDate ")
     List<Task> GetAllTasksDateOrder(@Param("userId") long userId);
 
     @Query("select t from Task t where t.user.id = :userId order by t.category.categoryName ")

@@ -13,8 +13,8 @@ public interface TaskService {
     void delete(Task task);
     void addToFavorites(long id);
     void removeFromFavorites(long id);
-    List<Task> findActiveTasks();
-    List<Task> findArchivedTasks();
+    List<Task> findActiveTasks(long userId);
+    List<Task> findArchivedTasks(long userid);
     void archiveTask(long id);
     void unarchiveTask(long id);
     List<Task> findByUserId(long userId);

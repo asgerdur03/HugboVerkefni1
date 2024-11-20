@@ -61,13 +61,13 @@ public class TaskServiceImplementation implements TaskService {
     }
 
     @Override
-    public List<Task> findActiveTasks() {
-        return taskRepository.findByIsArchivedIsFalse();
+    public List<Task> findActiveTasks(long userId) {
+        return taskRepository.findUnarchivedTasks(userId);
     }
 
     @Override
-    public List<Task> findArchivedTasks() {
-        return taskRepository.findByIsArchivedIsTrue();
+    public List<Task> findArchivedTasks(long userId) {
+        return taskRepository.findArchivedTasks(userId);
     }
 
     @Override
