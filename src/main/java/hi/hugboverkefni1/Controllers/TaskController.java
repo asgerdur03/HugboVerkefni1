@@ -56,14 +56,15 @@ public class TaskController {
         }
 
 
-        List<Task> activeTasks= taskService.findActiveTasks();
+        List<Task> tasks= taskService.findActiveTasks(loggedInUser.getId());
         // get all tasks with that user id
-        List<Task> tasks = taskService.findByUserId(loggedInUser.getId());
+        //List<Task> tasks = taskService.findByUserId(loggedInUser.getId());
 
         //tasks á báðum listum
-        tasks.retainAll(activeTasks);
 
-        model.addAttribute("tasks", tasks);
+        System.out.print(tasks.toString());
+
+        //model.addAttribute("tasks", tasks);
 
         model.addAttribute("loggedInUser", loggedInUser);
 
@@ -293,15 +294,14 @@ public class TaskController {
     }
 
     // birta archived page
-    // er ekki að birta archived tasks
     @GetMapping("/archive")
     public String archivedTasks(Model model,  HttpSession session) {
         User user = (User) session.getAttribute("loggedInUser");
-        List<Task> userTask = taskService.findByUserId(user.getId());
-        List<Task> archivedTasks = taskService.findArchivedTasks();
-
-        archivedTasks.retainAll(userTask);
-        model.addAttribute("tasks", archivedTasks);
+        if (user == null) {
+            return "redirect:/";
+        }
+        List<Task> tasks = taskService.findArchivedTasks(user.getId());
+        model.addAttribute("tasks", tasks);
         return "archived";
     }
 
@@ -320,17 +320,11 @@ public class TaskController {
         return "redirect:/archive";
     }
 
-    /*
-    @Controller
-    public class PomodoroController {
-
-    }
-*/
+    // birtir pomodoro
     @GetMapping("/pomodoro")
     public String pomodoro() {
         return "pomodoro";
     }
-
 
 }
 

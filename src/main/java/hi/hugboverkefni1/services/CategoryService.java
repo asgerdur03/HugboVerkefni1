@@ -8,15 +8,10 @@ import java.util.List;
 
 @Service
 public interface CategoryService {
-    List<Category> getAllCategories();
 
-    Category createCategoryForUser(Long id, String name);
-    void deleteCategory(Long id);
     Category findById(Long id);
-
     Category save(Category category);
     void delete(Category category);
-
     List<Category> getAllCategoriesByUser(User uses);
 
 

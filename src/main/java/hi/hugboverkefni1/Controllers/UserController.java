@@ -23,12 +23,14 @@ public class UserController {
         this.userService = userService;
     }
 
+    // admin page, only for development purposes, not very safe
     @GetMapping("/admin")
     public String showAdminPage(Model model){
         List<User> allUsers = userService.getUsers();
         model.addAttribute("users", allUsers);
         return "admin";
     }
+
     // Web opening page, login form and link to signup screen
     @RequestMapping("/login")
     public String home(Model model) {
@@ -72,11 +74,10 @@ public class UserController {
         return "redirect:/admin";
     }
 
-
+    // login
     @PostMapping("/login")
     public String login(ModelMap model, @RequestParam String username, @RequestParam String password, HttpSession session) {
         boolean isValidUser = userService.validateUser(username, password);
-
         if (!isValidUser) {
           // model.put("errorMessage", "Invalid username or password");
             //List<User> allUsers = userService.getUsers();
@@ -86,44 +87,19 @@ public class UserController {
         User loggedInUser = userService.findUsername(username);
 
         session.setAttribute("loggedInUser", loggedInUser);
-        //model.put("user", loggedInUser);
 
         System.out.println(session.getAttribute("loggedInUser").toString());
 
         return "redirect:/";
     }
 
-    // Handles login submission
-    // weird, does not work correctly
-    /*
-
-    @RequestMapping(value = "/opening-page", method = RequestMethod.POST)
-    public String handleLogin(ModelMap model, @RequestParam String username, @RequestParam String password, HttpSession session ) {
-        boolean isValidUser = userService.validateUser(username, password);
-
-        if (!isValidUser) {
-            model.put("errorMessage", "Access Denied: Invalid Credentials");
-            List<User> allUsers = userService.getUsers();
-            model.put("users", allUsers);
-            return "opening-page";
-        }
-        // Connects username to login
-        User loggedInUser = userService.findUsername(username);
-
-        session.setAttribute("loggedInUser", loggedInUser);
-        model.put("user", loggedInUser);
-
-        return "home";
-
-    }*/
-
+    // logout
     @RequestMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        System.out.println("session invalidated");
+        System.out.println("logged out");
         return "redirect:/";
     }
-
 
 
     // Show update username form
@@ -224,14 +200,14 @@ public class UserController {
         return "redirect:/";  // Redirect back to home after successful update
     }
 
-
-
-
+    // setting page
     @GetMapping("/settings")
     public String settings() {
         return "settings";
 
     }
+
+    // profile pic selection page
     @GetMapping("/profile-pic-selection")
     public String showProfilePicSelection(Model model, HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");

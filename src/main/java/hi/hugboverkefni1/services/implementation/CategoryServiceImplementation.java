@@ -17,35 +17,14 @@ import java.util.List;
 public class CategoryServiceImplementation implements CategoryService {
 
     private final CategoryRepository categoryRepository;
-    private final UserRepository userRepository;
     private final TaskRepository taskRepository;
 
     @Autowired
-    public CategoryServiceImplementation(CategoryRepository categoryRepository, UserRepository userRepository, TaskRepository taskRepository) {
+    public CategoryServiceImplementation(CategoryRepository categoryRepository, TaskRepository taskRepository) {
         this.categoryRepository = categoryRepository;
-        this.userRepository = userRepository;
         this.taskRepository = taskRepository;
     }
 
-    @Override
-    public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
-    }
-
-    @Override
-    public Category createCategoryForUser(Long id, String name) {
-        User user = userRepository.findById(id).get();
-        Category category = new Category();
-        category.setCategoryName(name);
-        category.setUser(user);
-        return null;
-    }
-
-    @Override
-    public void deleteCategory(Long id) {
-        categoryRepository.deleteById(id);
-
-    }
 
     @Override
     public Category findById(Long id) {

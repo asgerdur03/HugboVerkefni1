@@ -61,6 +61,8 @@ textarea {
     gap: 2rem;
     align-items: center;
 
+    margin-bottom: 5rem;
+
 }
 .all-forms{
     display: flex;
@@ -139,14 +141,6 @@ h2,
 h3,
 p{
     margin-bottom: 10px;
-}
-
-
-table{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
 }
 
 table button{
