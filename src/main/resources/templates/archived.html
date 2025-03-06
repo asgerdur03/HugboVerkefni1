@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Archived Tasks</title>
+  <link rel="stylesheet" th:href="@{/css/mutual.css}">
+  <link rel="stylesheet" th:href="@{/css/archive.css}">
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+</head>
+<body>
+
+<div class="navbar" >
+  <a href="/settings">Stillingar</a>
+  <a class="active" href="/">Heim</a>
+
+  <a href="/logout" class="split">Logout</a>
+</div>
+
+<div class="wrapper">
+<h1>Archived Tasks</h1>
+
+
+<div class="tasklist">
+  <div th:switch="${tasks}">
+    <h2 th:case="null">No Tasks yet!</h2>
+    <div th:case="*">
+      <h2>Tasks</h2>
+      <table>
+        <thead>
+        <tr>
+          <th>Task</th>
+          <th>Note</th>
+          <th>Status</th>
+          <th>Priority</th>
+          <th>Duedate</th>
+          <th>Unarchive</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="task : ${tasks}">
+
+          <td th:text="${task.taskName}"></td>
+          <td th:text="${task.taskNote}"></td>
+          <td th:text="${task.status}"></td>
+          <td th:text="${task.priority}"></td>
+          <td th:text="${task.dueDate}"></td>
+
+          <td>
+            <form th:action="@{/archive/unarchived/{id}(id=${task.id})}" method="post">
+              <button type="submit">Unarchive</button>
+            </form>
+          </td>
+
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+
+  </div>
+</div>
+
+
+
+<a th:href="@{/}">Back to Task List</a>
+</div>
+</body>
+</html>
+
+
+

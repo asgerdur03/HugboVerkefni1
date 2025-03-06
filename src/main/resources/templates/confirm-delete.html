@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirm Account Deletion</title>
+    <link rel="stylesheet" th:href="@{/css/mutual.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body>
+
+<div class="wrapper">
+    <h2>Are you sure you want to delete your account?</h2>
+    <p>This action cannot be undone.</p>
+
+
+        <form action="/delete-account" method="post">
+            <button type="submit" style="background-color: red; color: white;">Yes, delete my account</button>
+        </form>
+
+
+
+    <a href="/settings">
+        <button type="button">Cancel</button>
+    </a>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>My Categories</title>
+  <link rel="stylesheet" th:href="@{/css/mutual.css}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+</head>
+
+<body>
+
+<div class="navbar">
+  <a href="/settings">Stillingar</a>
+  <a class="active" href="/">Heim</a>
+  <a href="/logout" class="split">Logout</a>
+</div>
+
+<div class="wrapper">
+  <h1>Category management</h1>
+
+  <div class="category-list">
+    <div th:switch="${categories}">
+      <h2 th:case="null">No Categories yet!</h2>
+      <div th:case="*">
+        <h2>My Categories</h2>
+        <p> It is not possible to delete a catagory that is currently in use</p>
+        <table>
+          <thead>
+          <tr>
+            <th>Category Name</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="category : ${categories}">
+            <td th:text="${category.categoryName}"></td>
+            <td><a th:href="@{/categories/delete/{id}(id=${category.id})}"><button class="delete-button">Delete</button></a></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="form-container">
+
+    <h2>Create New Category</h2>
+
+    <div class="all-forms">
+      <form th:action="@{/categories}" th:object="${category}" method="post">
+        <div class="name-response">
+          <label for="categoryName">Category Name:</label>
+          <input type="text" id="categoryName" th:field="*{categoryName}" placeholder="Enter category name" required>
+        </div>
+
+        <div class="name-response">
+          <label for="color">Select Color:</label>
+          <input type="color" id="color" th:field="*{color}" required>
+        </div>
+
+
+        <input type="submit" value="Create Category">
+
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Settings</title>
+    <link rel="stylesheet" th:href="@{/css/mutual.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+</head>
+<body>
+<div class="navbar" >
+    <a href="/settings">Stillingar</a>
+    <a class="active" href="/">Heim</a>
+    <a href="/logout" class="split">Logout</a>
+</div>
+<h3>Settings</h3>
+
+
+<div class="button-container">
+    <!-- Update username -->
+    <a href="/update-username">
+        <button type="button">Edit Username</button>
+    </a>
+
+    <!-- Update email -->
+    <a href="/update-gmail">
+        <button type="button">Edit Email</button>
+    </a>
+
+    <!-- New profile picture -->
+    <a href="/profile-pic-selection">
+        <button type="button">Choose Profile Picture</button>
+    </a>
+
+    <!-- Edit password -->
+    <a href="/update-password">
+        <button type="button">Edit Password</button>
+    </a>
+
+    <!-- Delete account button -->
+    <a href="/confirm-delete">
+        <button type="button" class="delete-button">Delete Account</button>
+    </a>
+
+</div>
+
+</body>
+</html>
+

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Gmail</title>
+    <link rel="stylesheet" th:href="@{/css/mutual.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body>
+
+<div class="wrapper">
+
+    <h2>Edit Gmail</h2>
+
+    <div class="all-forms">
+        <form th:action="@{/update-gmail}" method="post">
+            <div>
+                <label for="gmail">New Gmail :</label>
+                <input type="email" id="gmail" name="newGmail" required/>
+            </div>
+
+            <input type="submit" value="Update Gmail"/>
+        </form>
+    </div>
+
+
+      <!-- Back to Home button -->
+      <p>
+        <a href="/">
+          <button type="button">Back to Home</button>
+        </a>
+      </p>
+</div>
+</body>
+</html>

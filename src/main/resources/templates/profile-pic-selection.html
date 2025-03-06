@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Select Profile Picture</title>
+  <link rel="stylesheet" th:href="@{/css/mutual.css}">
+  <link rel="stylesheet" th:href="@{/css/profile-pic.css}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body>
+<div class="wrapper">
+<h2>Select a Profile Picture</h2>
+
+  <div class="pic-select">
+    <form action="/profile-pic" method="post">
+      <div class="images">
+        <div>
+          <label>
+            <input type="radio" name="profilePic" value="profilePics/pic1.png"
+                   th:checked="${loggedInUser.profilePicture == 'profilePics/pic1.png'}"/>
+            <img src="/profilePics/pic1.png" alt="Profile Picture 1" width="100" height="100"/>
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" name="profilePic" value="profilePics/pic2.png"
+                   th:checked="${loggedInUser.profilePicture == 'profilePics/pic2.png'}"/>
+            <img src="/profilePics/pic2.png" alt="Profile Picture 2" width="100" height="100"/>
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" name="profilePic" value="profilePics/pic3.png"
+                   th:checked="${loggedInUser.profilePicture == 'profilePics/pic3.png'}"/>
+            <img src="/profilePics/pic3.png" alt="Profile Picture 3" width="100" height="100"/>
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" name="profilePic" value="profilePics/pic4.png"
+                   th:checked="${loggedInUser.profilePicture == 'profilePics/pic4.png'}"/>
+            <img src="/profilePics/pic4.png" alt="Profile Picture 4" width="100" height="100"/>
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" name="profilePic" value="profilePics/pic5.png"
+                   th:checked="${loggedInUser.profilePicture == 'profilePics/pic5.png'}"/>
+            <img src="/profilePics/pic5.png" alt="Profile Picture 5" width="100" height="100"/>
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" name="profilePic" value="profilePics/pic6.png"
+                   th:checked="${loggedInUser.profilePicture == 'profilePics/pic6.png'}"/>
+            <img src="/profilePics/pic6.png" alt="Profile Picture 6" width="100" height="100"/>
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" name="profilePic" value="profilePics/pic7.png"
+                   th:checked="${loggedInUser.profilePicture == 'profilePics/pic7.png'}"/>
+            <img src="/profilePics/pic7.png" alt="Profile Picture 7" width="100" height="100"/>
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" name="profilePic" value="profilePics/pic8.png"
+                   th:checked="${loggedInUser.profilePicture == 'profilePics/pic8.png'}"/>
+            <img src="/profilePics/pic8.png" alt="Profile Picture 8" width="100" height="100"/>
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" name="profilePic" value="profilePics/pic9.png"
+                   th:checked="${loggedInUser.profilePicture == 'profilePics/pic9.png'}"/>
+            <img src="/profilePics/pic9.png" alt="Profile Picture 9" width="100" height="100"/>
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" name="profilePic" value="profilePics/pic10.png"
+                   th:checked="${loggedInUser.profilePicture == 'profilePics/pic10.png'}"/>
+            <img src="/profilePics/pic10.png" alt="Profile Picture 10" width="100" height="100"/>
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" name="profilePic" value="profilePics/pic11.png"
+                   th:checked="${loggedInUser.profilePicture == 'profilePics/pic11.png'}"/>
+            <img src="/profilePics/pic11.png" alt="Profile Picture 11" width="100" height="100"/>
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" name="profilePic" value="profilePics/pic11.png"
+                   th:checked="${loggedInUser.profilePicture == 'profilePics/pic12.png'}"/>
+            <img src="/profilePics/pic12.png" alt="Profile Picture 12" width="100" height="100"/>
+          </label>
+        </div>
+      </div>
+      <button type="submit">Save</button>
+    </form>
+
+  </div>
+</div>
+</body>
+</html>
