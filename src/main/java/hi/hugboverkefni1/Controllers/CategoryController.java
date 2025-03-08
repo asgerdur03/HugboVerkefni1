@@ -22,6 +22,7 @@ public class CategoryController {
     }
 
     // category page, has all category functions
+    /*
     @GetMapping("/categories")
     public String newCategory(Model model, HttpSession session) {
         User loggedUser = (User) session.getAttribute("loggedInUser");
@@ -34,7 +35,7 @@ public class CategoryController {
         model.addAttribute("categories", categories);
         model.addAttribute("category", new Category());
         return "myCategories";
-    }
+    }*/
 
     // save category to the user
     @PostMapping("/categories")

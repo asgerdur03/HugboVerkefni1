@@ -1,5 +1,6 @@
 package hi.hugboverkefni1.persistence.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.persistence.CascadeType;
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class Category {
     private String color;
 
     @OneToMany(mappedBy = "category", cascade= CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore  // todo: laga seinna
     private List<Task> tasks = new ArrayList<>();
 
 

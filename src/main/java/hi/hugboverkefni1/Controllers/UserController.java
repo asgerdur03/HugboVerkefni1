@@ -24,30 +24,34 @@ public class UserController {
     }
 
     // admin page, only for development purposes, not very safe
+    /*
     @GetMapping("/admin")
     public String showAdminPage(Model model){
         List<User> allUsers = userService.getUsers();
         model.addAttribute("users", allUsers);
         return "admin";
-    }
+    }*/
 
     // Web opening page, login form and link to signup screen
+    /*
     @RequestMapping("/login")
     public String home(Model model) {
         List<User> allUsers = userService.getUsers();
         model.addAttribute("users", allUsers);
         model.addAttribute("loginUser", new User());
         return "login";
-    }
+    }*/
 
     // Add user from signup form
+    /*
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String signup(Model model) {
         model.addAttribute("user", new User());
         return "signup";
-    }
+    }*/
 
     // Add user to the database
+    /*
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String signup(User user, BindingResult result, ModelMap model) {
         if (result.hasErrors()) {
@@ -64,7 +68,7 @@ public class UserController {
         }
         userService.saveUser(user);
         return "redirect:/";
-    }
+    }*/
 
     // Delete user
     @RequestMapping(value = "/admin/delete/{id}")
@@ -75,6 +79,7 @@ public class UserController {
     }
 
     // login
+    /*
     @PostMapping("/login")
     public String login(ModelMap model, @RequestParam String username, @RequestParam String password, HttpSession session) {
         boolean isValidUser = userService.validateUser(username, password);
@@ -92,14 +97,15 @@ public class UserController {
 
         return "redirect:/";
     }
-
-    // logout
+*/
+    // logout+
+    /*
     @RequestMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
         System.out.println("logged out");
         return "redirect:/";
-    }
+    }*/
 
 
     // Show update username form
