@@ -71,12 +71,13 @@ public class UserController {
     }*/
 
     // Delete user
+    /*
     @RequestMapping(value = "/admin/delete/{id}")
     public String deleteUser(@PathVariable("id") long id) {
         User userToDelete = userService.findUserById(id);
         userService.deleteUser(userToDelete);
         return "redirect:/admin";
-    }
+    }*/
 
     // login
     /*

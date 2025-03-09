@@ -8,11 +8,15 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.lang.annotation.Retention;
 import java.util.List;
 import java.util.Map;
 
@@ -28,11 +32,11 @@ public class RESTUserController {
         this.jwtService = jwtService;
     }
 
+    // Virkar, skilar token
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(
             @RequestParam String username,
-            @RequestParam String password,
-            HttpServletRequest request){
+            @RequestParam String password){
 
         try{
             boolean isValidUser = userService.validateUser(username, password);
@@ -42,14 +46,6 @@ public class RESTUserController {
             User user = userService.findUsername(username);
 
             String token = jwtService.generateToken(user.getUsername());
-
-            /*
-            UsernamePasswordAuthenticationToken authenticationToken =
-                    new UsernamePasswordAuthenticationToken(username, password);
-
-            HttpSession session = request.getSession(true);
-            session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
-*/
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("user", user, "token", token));
 
         } catch (Exception e){
@@ -59,28 +55,26 @@ public class RESTUserController {
     }
 
 
+    // virkar, opin rn
     @GetMapping("/admin")
     public ResponseEntity<?> getAdminPage(HttpServletRequest request){
 
         try{
             List<User> users = userService.getUsers();
-            System.out.print(users);
-
             return ResponseEntity.status(HttpStatus.OK).body(users);
-
         }catch (Exception e)
         {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("what", "wrong username or password"));
-
         }
     }
 
+
+    // virkar
     @PostMapping("/signup")
     public ResponseEntity<?> signupUser(
             @RequestParam String username,
             @RequestParam String email,
-            @RequestParam String password,
-            HttpServletRequest request
+            @RequestParam String password
     ){
         try{
             User taken = userService.findUsername(username);
@@ -96,26 +90,18 @@ public class RESTUserController {
         return ResponseEntity.ok("signup successful");
     }
 
-    @PostMapping("/logout")
-    public ResponseEntity<?> logoutUser(HttpServletRequest request){
-        HttpSession session = request.getSession(false);
-        if(session != null){
-            session.invalidate();
-        }
-        SecurityContextHolder.clearContext();
-        return ResponseEntity.ok("logout successful");
-    }
 
-
+    // virkar jej, breytir bara email og passwordi ekki username
+    // Er örlg hægt, en nn ekki að leysa unique vesið á username
     @PatchMapping("/update")
     public ResponseEntity<?> updateUser(
             @RequestParam(required = false) String email,
             @RequestParam(required = false) String password,
-            HttpServletRequest request
+            @AuthenticationPrincipal UserDetails userDetails
     ) {
         try {
 
-            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User user = userService.findUsername(userDetails.getUsername());
 
             if (user == null) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "user not logged in"));
@@ -127,15 +113,29 @@ public class RESTUserController {
             if (password != null) {
                 user.setPassword(password);
             }
-            userService.saveUser(user);
-
-            request.getSession().setAttribute("loggedInUser", user);
-
             return ResponseEntity.ok(Map.of("message", "user updated", "user", user));
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", e.getMessage()));
         }
+    }
+
+    @DeleteMapping("/admin/delete/{id}")
+    public ResponseEntity<?> deleteUser(
+            @PathVariable Long id
+    ){
+        User userToBeDeleted = userService.findUserById(id);
+        userService.deleteUser(userToBeDeleted);
+        return ResponseEntity.ok(Map.of("message", "delete successful"));
+    }
+
+    @DeleteMapping("/delete/me")
+    public ResponseEntity<?> deleteMe(
+            @AuthenticationPrincipal UserDetails userdetails
+    ){
+        User user = userService.findUsername(userdetails.getUsername());
+        userService.deleteUser(user);
+        return ResponseEntity.ok(Map.of("message", "delete successful"));
     }
 
 }

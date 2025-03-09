@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,23 +31,25 @@ public class RESTCategoryController {
         this.userService = userService;
     }
 
+    // virkar
     @GetMapping("/categories")
-    public ResponseEntity<?> getCategories() {
-        //User loggedUser = (User) httpsession.getAttribute("loggedUser");
-
-        // temp, skipta ut fyrir validation
-        User loggedUser = userService.findUserById(1);
-
-        System.out.println(loggedUser);
-
-        if (loggedUser == null) {
-           return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "no logged in user"));
+    public ResponseEntity<?> getCategories(
+            @AuthenticationPrincipal UserDetails userDetails
+    ) {
+        if (userDetails == null) {
+            return ResponseEntity.status(401).body(Map.of("message", "User not logged in"));
         }
 
-        List<Category> categories = categoryService.getAllCategoriesByUser(loggedUser);
+        User user = userService.findUsername(userDetails.getUsername());
+       // User user = userService.findUserById(1);
 
-        System.out.println(categories);
-        return new ResponseEntity<>(categories, HttpStatus.OK);
+        if (user == null) {
+           return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "user with this username"));
+        }
+
+        List<Category> categories = categoryService.getAllCategoriesByUser(user);
+
+        return ResponseEntity.ok(categories);
 
     }
 
