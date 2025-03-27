@@ -24,7 +24,7 @@ public class SecurityConfiguration{
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         // TODO: remove all test routes that are not acctually public
-                        .requestMatchers("/login", "/signup", "/admin", "/admin/delete/").permitAll()
+                        .requestMatchers("/login", "/signup", "/admin", "/upload-pic").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

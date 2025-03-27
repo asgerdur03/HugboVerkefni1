@@ -36,6 +36,7 @@ public class TaskController {
     }
 
 
+    /*
     //home page, add all task by user_id
     // filters
     @RequestMapping("/")
@@ -319,7 +320,7 @@ public class TaskController {
         taskService.unarchiveTask(id);
         return "redirect:/archive";
     }
-
+*/
     // birtir pomodoro
     @GetMapping("/pomodoro")
     public String pomodoro() {

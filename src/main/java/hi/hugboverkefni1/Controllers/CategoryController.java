@@ -37,6 +37,7 @@ public class CategoryController {
         return "myCategories";
     }*/
 
+    /*
     // save category to the user
     @PostMapping("/categories")
     public String createCategory(@ModelAttribute("categories") Category category, HttpSession session) {
@@ -55,6 +56,8 @@ public class CategoryController {
         categoryService.delete(category);
         return "redirect:/categories";
     }
+
+     */
 }
 
 

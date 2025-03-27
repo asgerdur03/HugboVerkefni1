@@ -14,11 +14,16 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import java.lang.annotation.Retention;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 public class RESTUserController {
@@ -57,8 +62,7 @@ public class RESTUserController {
 
     // virkar, opin rn
     @GetMapping("/admin")
-    public ResponseEntity<?> getAdminPage(HttpServletRequest request){
-
+    public ResponseEntity<?> getAdminPage(){
         try{
             List<User> users = userService.getUsers();
             return ResponseEntity.status(HttpStatus.OK).body(users);
@@ -95,6 +99,7 @@ public class RESTUserController {
     // Er örlg hægt, en nn ekki að leysa unique vesið á username
     @PatchMapping("/update")
     public ResponseEntity<?> updateUser(
+            @RequestParam(required = false) String username,
             @RequestParam(required = false) String email,
             @RequestParam(required = false) String password,
             @AuthenticationPrincipal UserDetails userDetails
@@ -106,13 +111,24 @@ public class RESTUserController {
             if (user == null) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "user not logged in"));
             }
+            if (username != null && !username.isEmpty()) {
+                User exists = userService.findUsername(username);
+                if (exists != null) {
+                    return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("error", "username already exists"));
+                }
+                else{
+                    user.setUsername(username);
+                }
 
-            if (email != null) {
+            }
+
+            if (email != null && !email.isBlank() ) {
                 user.setGmail(email);
             }
-            if (password != null) {
+            if (password != null && !password.isBlank() ) {
                 user.setPassword(password);
             }
+
             return ResponseEntity.ok(Map.of("message", "user updated", "user", user));
 
         } catch (Exception e) {
@@ -120,21 +136,53 @@ public class RESTUserController {
         }
     }
 
-    @DeleteMapping("/admin/delete/{id}")
-    public ResponseEntity<?> deleteUser(
-            @PathVariable Long id
+    @PostMapping("/upload-pic")
+    public ResponseEntity<?> uploadPicture(
+            @RequestParam("image") MultipartFile file,
+            @AuthenticationPrincipal UserDetails userDetails
     ){
-        User userToBeDeleted = userService.findUserById(id);
-        userService.deleteUser(userToBeDeleted);
-        return ResponseEntity.ok(Map.of("message", "delete successful"));
+        if (userDetails == null || file.isEmpty()) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Missing user or file"));
+        }
+
+        User user = userService.findUsername(userDetails.getUsername());
+
+
+
+        try {
+            String uploadDir = "src/main/resources/static/uploads/";
+            Files.createDirectories(Paths.get(uploadDir));
+            String filename = UUID.randomUUID() + "-" + file.getOriginalFilename();
+            Path filePath = Paths.get(uploadDir + filename);
+
+            System.out.println(filePath);
+            Files.copy(file.getInputStream(), filePath);
+
+            user.setProfilePicture("/uploads/" + filename);
+            userService.saveUser(user);
+
+            return ResponseEntity.ok(Map.of("message", "Profile picture updated", "path", "/uploads/" + filename));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Map.of("error", "Failed to save file"));
+        }
+
     }
 
+
+    // virkar
     @DeleteMapping("/delete/me")
     public ResponseEntity<?> deleteMe(
             @AuthenticationPrincipal UserDetails userdetails
     ){
-        User user = userService.findUsername(userdetails.getUsername());
-        userService.deleteUser(user);
+        try{
+            User user = userService.findUsername(userdetails.getUsername());
+            if(user != null){
+                userService.deleteUser(user);
+            }
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", e.getMessage()));
+        }
+
         return ResponseEntity.ok(Map.of("message", "delete successful"));
     }
 
