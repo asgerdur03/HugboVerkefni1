@@ -87,11 +87,11 @@ public class RESTUserController {
             }
             User newUser = new User(username, password, email);
             userService.saveUser(newUser);
+            return ResponseEntity.ok(Map.of("message", "success", "user", newUser));
 
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", e.getMessage()));
         }
-        return ResponseEntity.ok("signup successful");
     }
 
 
@@ -106,34 +106,23 @@ public class RESTUserController {
     ) {
         try {
 
-            User user = userService.findUsername(userDetails.getUsername());
+            User user = userService.findUsername(userDetails.getUsername()); // logged in user
 
-            if (user == null) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "user not logged in"));
-            }
+            if (user == null) { return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "user not logged in"));}
+
             if (username != null && !username.isEmpty()) {
                 User exists = userService.findUsername(username);
-                if (exists != null) {
-                    return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("error", "username already exists"));
-                }
-                else{
-                    user.setUsername(username);
-                }
+                if (exists != null && exists.getId() != user.getId()) { return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("error", "username already exists"));}
+                else{ user.setUsername(username);}
+            }
+            if (email != null && !email.isBlank() ) {user.setGmail(email);}
+            if (password != null && !password.isBlank() ) {user.setPassword(password);}
 
-            }
-
-            if (email != null && !email.isBlank() ) {
-                user.setGmail(email);
-            }
-            if (password != null && !password.isBlank() ) {
-                user.setPassword(password);
-            }
+            userService.saveUser(user);
 
             return ResponseEntity.ok(Map.of("message", "user updated", "user", user));
 
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", e.getMessage()));
-        }
+        } catch (Exception e) { return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", e.getMessage())); }
     }
 
     @PostMapping("/upload-pic")

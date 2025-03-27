@@ -3,6 +3,7 @@ package hi.hugboverkefni1.RESTcontrollers;
 
 import hi.hugboverkefni1.config.JwtService;
 import hi.hugboverkefni1.persistence.entities.Category;
+import hi.hugboverkefni1.persistence.entities.Task;
 import hi.hugboverkefni1.persistence.entities.User;
 import hi.hugboverkefni1.services.CategoryService;
 import hi.hugboverkefni1.services.UserService;
@@ -90,22 +91,28 @@ public class RESTCategoryController {
     @PatchMapping("/categories/{id}")
     public ResponseEntity<?> updateCategory(
             @PathVariable long id,
-            @RequestBody Map<String,String> body
+            @RequestBody Category updated,
+            @AuthenticationPrincipal UserDetails userDetails
     ){
         String message = "PATCH //categories/" + id ;
+        User user = userService.findUsername(userDetails.getUsername());
         Category category = categoryService.findById(id);
-        String categoryName = body.get("category");
-        String color = body.get("color");
 
-        if (categoryName != null && !categoryName.isBlank()) {
-            category.setCategoryName(categoryName);
+        if (category == null || !category.getUser().getUsername().equals(user.getUsername())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "no category with id: "+ id));
         }
-        if (color != null && !color.isBlank()) {
-            category.setColor(color);
+        if (updated.getCategoryName() != null) {
+            category.setCategoryName(updated.getCategoryName());
+        }
+        if (updated.getColor() != null) {
+            category.setColor(updated.getColor());
         }
 
+        categoryService.save(category);
 
-        return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", message, "category", category));
+        return ResponseEntity.ok(Map.of("category", category));
+
+
     }
 
     @DeleteMapping("/categories/{id}")

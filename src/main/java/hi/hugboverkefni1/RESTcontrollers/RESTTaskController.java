@@ -105,10 +105,40 @@ public class RESTTaskController {
 
     @PatchMapping("/tasks/{id}")
     public ResponseEntity<?> updateTask(
-            @PathVariable String id
+            @PathVariable long id,
+            @AuthenticationPrincipal UserDetails userDetails,
+            @RequestBody Task updated
     ){
-        String message = "PATCH /tasks/{id}";
-        return ResponseEntity.ok(message);
+        String message = "PATCH /tasks/"+id;
+        if (userDetails == null)
+            return ResponseEntity.status(401).body(Map.of("message", "User not logged in"));
+
+        User user = userService.findUsername(userDetails.getUsername());
+        Task task = taskService.findById(id);
+
+        if (task == null || !task.getUser().getUsername().equals(user.getUsername()))
+            return ResponseEntity.status(401).body(Map.of("message", "Task not found"));
+
+        if (updated.getTaskName() != null) task.setTaskName(updated.getTaskName());
+        if (updated.getTaskNote() != null) task.setTaskNote(updated.getTaskNote());
+        if (updated.getPriority() != null) task.setPriority(updated.getPriority());
+        if (updated.getStatus() != null) task.setStatus(updated.getStatus());
+        if (updated.getDueDate() != null) task.setDueDate(updated.getDueDate());
+
+        task.setFavorite(updated.isFavorite());
+        task.setArchived(updated.isArchived());
+
+        if (updated.getCategoryId() != null){
+            Category category = categoryService.findById(updated.getCategoryId());
+            if (category == null) {
+                return ResponseEntity.status(401).body(Map.of("message", "Category not found"));
+            }
+            task.setCategory(category);
+        }
+
+        taskService.save(task);
+
+        return ResponseEntity.ok(Map.of("message", message, "task", task));
     }
 
     @DeleteMapping("/tasks/{id}")
