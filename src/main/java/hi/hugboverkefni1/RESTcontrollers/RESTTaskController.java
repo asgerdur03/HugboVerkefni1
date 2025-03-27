@@ -1,11 +1,14 @@
 package hi.hugboverkefni1.RESTcontrollers;
 
 import hi.hugboverkefni1.config.JwtService;
+import hi.hugboverkefni1.persistence.entities.Category;
 import hi.hugboverkefni1.persistence.entities.Task;
 import hi.hugboverkefni1.persistence.entities.User;
+import hi.hugboverkefni1.services.CategoryService;
 import hi.hugboverkefni1.services.TaskService;
 import hi.hugboverkefni1.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.batch.BatchTransactionManager;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,13 +25,15 @@ public class RESTTaskController {
     private final TaskService taskService;
     private final UserService userService;
     private final JwtService jwtService;
+    private final CategoryService categoryService;
 
 
     @Autowired
-    public RESTTaskController(TaskService taskService, UserService userService, JwtService jwtService) {
+    public RESTTaskController(TaskService taskService, UserService userService, JwtService jwtService,CategoryService categoryService) {
         this.taskService = taskService;
         this.userService = userService;
         this.jwtService = jwtService;
+        this.categoryService = categoryService;
     }
 
     // virkar, todo: bæta við fleiri filterum
@@ -75,9 +80,27 @@ public class RESTTaskController {
 
     @PostMapping("/tasks")
     public ResponseEntity<?> createTask(
+            @RequestBody Task task,
+            @AuthenticationPrincipal UserDetails userDetails
     ) {
         String message = "POST /tasks";
-        return ResponseEntity.ok(message);
+        if (userDetails == null)
+            return ResponseEntity.status(401).body(Map.of("message", "User not logged in"));
+
+        User user = userService.findUsername(userDetails.getUsername());
+        task.setUser(user);
+
+        if (task.getCategoryId() != null) {
+            Category category = categoryService.findById(task.getCategoryId());
+            if (category == null) {
+                return ResponseEntity.status(401).body(Map.of("message", "Category not found"));
+            }
+            task.setCategory(category);
+        }
+
+        Task saved = taskService.save(task);
+
+        return ResponseEntity.ok(Map.of("message", message, "task", saved));
     }
 
     @PatchMapping("/tasks/{id}")
@@ -90,9 +113,12 @@ public class RESTTaskController {
 
     @DeleteMapping("/tasks/{id}")
     public ResponseEntity<?> deleteTask(
-            @PathVariable String id
+            @PathVariable long id
     ){
-        String message = "DELETE /tasks/{id}";
+        Task task = taskService.findById(id);
+        String message = "DELETE /tasks/"+id;
+        taskService.delete(task);
+
         return ResponseEntity.ok(message);
     }
 

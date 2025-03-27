@@ -20,12 +20,9 @@ public class Task{
     private String taskName;
     private String taskNote;
 
-
     private TaskStatus status;
     private TaskPriority priority;
-
     private LocalDate dueDate;
-
     @ManyToOne
     @JoinColumn(name="category_id", nullable= true)
     private Category category;
@@ -33,14 +30,11 @@ public class Task{
     @Transient
     private Long categoryId;
 
-
     @ManyToOne
     private User user;
 
-
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean favorite= false;
-
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE" )
     private boolean Archived=false;
 

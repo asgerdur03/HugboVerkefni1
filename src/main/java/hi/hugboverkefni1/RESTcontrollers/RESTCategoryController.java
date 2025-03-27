@@ -75,26 +75,47 @@ public class RESTCategoryController {
 
     @PostMapping("/categories")
     public ResponseEntity<?> addCategory(
-            @RequestBody(required = false) Category category,
+            @RequestBody Category category,
             @AuthenticationPrincipal UserDetails userDetails
     ){
+        User user = userService.findUsername(userDetails.getUsername());
+        category.setUser(user);
+
+        Category saved = categoryService.save(category);
+
         String message = "POST /categories/";
-        return ResponseEntity.status(HttpStatus.OK).body(message);
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", message, "category", saved));
     }
 
     @PatchMapping("/categories/{id}")
     public ResponseEntity<?> updateCategory(
-            @PathVariable int id
+            @PathVariable long id,
+            @RequestBody Map<String,String> body
     ){
         String message = "PATCH //categories/" + id ;
-        return ResponseEntity.status(HttpStatus.OK).body(message);
+        Category category = categoryService.findById(id);
+        String categoryName = body.get("category");
+        String color = body.get("color");
+
+        if (categoryName != null && !categoryName.isBlank()) {
+            category.setCategoryName(categoryName);
+        }
+        if (color != null && !color.isBlank()) {
+            category.setColor(color);
+        }
+
+
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", message, "category", category));
     }
 
     @DeleteMapping("/categories/{id}")
     public ResponseEntity<?> deleteCategory(
-            @PathVariable int id
+            @PathVariable long id,
+            @AuthenticationPrincipal UserDetails userDetails
     ){
         String message = "DELETE //categories/" + id ;
+        Category category = categoryService.findById(id);
+        categoryService.delete(category);
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 
