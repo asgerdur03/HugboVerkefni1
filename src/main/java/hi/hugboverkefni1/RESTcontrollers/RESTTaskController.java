@@ -60,7 +60,7 @@ public class RESTTaskController {
 
 
 
-        return ResponseEntity.ok(tasks);
+        return ResponseEntity.ok(Map.of("tasks", tasks));
     }
 
     @GetMapping("/tasks/{id}")
@@ -75,7 +75,7 @@ public class RESTTaskController {
 
         if (task == null)
             return ResponseEntity.status(401).body(Map.of("message", "Task not found"));
-        return ResponseEntity.ok(task);
+        return ResponseEntity.ok(Map.of("task", task));
     }
 
     @PostMapping("/tasks")
@@ -83,7 +83,6 @@ public class RESTTaskController {
             @RequestBody Task task,
             @AuthenticationPrincipal UserDetails userDetails
     ) {
-        String message = "POST /tasks";
         if (userDetails == null)
             return ResponseEntity.status(401).body(Map.of("message", "User not logged in"));
 
@@ -100,7 +99,7 @@ public class RESTTaskController {
 
         Task saved = taskService.save(task);
 
-        return ResponseEntity.ok(Map.of("message", message, "task", saved));
+        return ResponseEntity.ok(Map.of("task", saved));
     }
 
     @PatchMapping("/tasks/{id}")
@@ -138,7 +137,7 @@ public class RESTTaskController {
 
         taskService.save(task);
 
-        return ResponseEntity.ok(Map.of("message", message, "task", task));
+        return ResponseEntity.ok(Map.of( "task", task));
     }
 
     @DeleteMapping("/tasks/{id}")
@@ -180,7 +179,7 @@ public class RESTTaskController {
 
         User user = userService.findUsername(userDetails.getUsername());
         List<Task> archivedTasks = taskService.findArchivedTasks(user.getId());
-        return ResponseEntity.ok(archivedTasks);
+        return ResponseEntity.ok(Map.of("archivedTasks", archivedTasks));
     }
 
 

@@ -22,6 +22,7 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
+}
 
     // admin page, only for development purposes, not very safe
     /*
@@ -108,6 +109,7 @@ public class UserController {
         return "redirect:/";
     }*/
 
+    /*
 
     // Show update username form
     @GetMapping("/update-username")
@@ -264,3 +266,4 @@ public class UserController {
         }
     }
 }
+*/

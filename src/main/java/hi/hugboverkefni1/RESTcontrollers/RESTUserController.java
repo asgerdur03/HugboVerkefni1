@@ -65,10 +65,10 @@ public class RESTUserController {
     public ResponseEntity<?> getAdminPage(){
         try{
             List<User> users = userService.getUsers();
-            return ResponseEntity.status(HttpStatus.OK).body(users);
+            return ResponseEntity.status(HttpStatus.OK).body(Map.of("users", users));
         }catch (Exception e)
         {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("what", "wrong username or password"));
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "wrong username or password"));
         }
     }
 
@@ -120,7 +120,7 @@ public class RESTUserController {
 
             userService.saveUser(user);
 
-            return ResponseEntity.ok(Map.of("message", "user updated", "user", user));
+            return ResponseEntity.ok(Map.of("user", user));
 
         } catch (Exception e) { return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", e.getMessage())); }
     }
