@@ -48,7 +48,9 @@ public class RESTTaskController {
 
         User user = userService.findUsername(userDetails.getUsername());
 
-        List<Task> tasks = taskService.findByUserId(user.getId());
+        //List<Task> tasks = taskService.findByUserId(user.getId());
+
+        List<Task> tasks = taskService.findActiveTasks(user.getId());
         /*
         if (name != null) tasks = tasks.stream().filter(t -> t.getName().contains(name)).toList();
         if (category != null) tasks = tasks.stream().filter(t -> t.getCategory().getName().equals(category)).toList();
@@ -170,6 +172,30 @@ public class RESTTaskController {
         return ResponseEntity.ok(message);
     }
 
+    @PutMapping("/tasks/toggle-like/{id}")
+    public ResponseEntity<?> toggleLike(@PathVariable long id){
+        Task task = taskService.findById(id);
+
+        if (task.isFavorite()){
+            taskService.removeFromFavorites(id);
+        } else {
+            taskService.addToFavorites(id);
+        }
+        return ResponseEntity.ok(Map.of("task", task));
+    }
+
+    @PutMapping("/tasks/toggle-archive/{id}")
+    public ResponseEntity<?> toggleArchive(@PathVariable long id){
+        Task task = taskService.findById(id);
+        if (task.isArchived()){
+            taskService.unarchiveTask(id);
+        }else {
+            taskService.archiveTask(id);
+        }
+        return ResponseEntity.ok(Map.of("task", task));
+    }
+
+
     @GetMapping("/tasks/archives")
     public ResponseEntity<?> getArchives(
             @AuthenticationPrincipal UserDetails userDetails
@@ -200,5 +226,9 @@ public class RESTTaskController {
         taskService.unarchiveTask(id);
         return ResponseEntity.ok(message);
     }
+
+
+
+
 
 }

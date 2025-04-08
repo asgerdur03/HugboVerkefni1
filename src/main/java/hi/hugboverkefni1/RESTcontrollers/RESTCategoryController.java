@@ -70,6 +70,9 @@ public class RESTCategoryController {
             @RequestBody Category category,
             @AuthenticationPrincipal UserDetails userDetails
     ){
+        if (userDetails ==null)
+            return ResponseEntity.status(401).body(Map.of("message", "User not logged in"));
+
         User user = userService.findUsername(userDetails.getUsername());
         category.setUser(user);
 
